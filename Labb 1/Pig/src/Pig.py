@@ -3,7 +3,6 @@
 #  * See http://en.wikipedia.org/wiki/Pig_%28dice_game%29
 #  *
 #  */
-
 from random import randrange
 
 def run():
@@ -12,7 +11,6 @@ def run():
     # Hard coded players, replace *last* of all with ... (see below)
     # players = [Player(0, name='Olle'), Player(1, name='Fia')]
     players = get_players()    # ... this (method to read in all players)
-
     welcome_msg(win_points)
     status_msg(players)
     current_player = players[randrange(0, len(players))]  # TODO Set random player to start
@@ -33,7 +31,7 @@ def run():
             if result:
                 current_player = next(current_player, players)
         else:
-            print("Seriously, are you retarded???")
+            print("Invalid input: Commands are: r = roll , n = next, q = quit")
 
 class Player:
 
@@ -41,7 +39,7 @@ class Player:
         self.name = name  # default ''
         self.totalPts = 0  # Total points for all rounds
         self.roundPts = 0  # Points for a single round
-        self.id = def_id
+        self.id = def_id # Unique ID for each player
 
 
 # ---- Game logic methods --------------
