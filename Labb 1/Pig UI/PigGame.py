@@ -24,5 +24,5 @@ if __name__ == "__main__":
     game.master.title("Pig Game")
     game.master.maxsize(1600,900)
     game.start()
-https://www.tutorialspoint.com/python/tk_pack.htm
-https://docs.python.org/3/library/tkinter.html#a-very-quick-look-at-tcl-tk
+# https://www.tutorialspoint.com/python/tk_pack.htm
+# https://docs.python.org/3/library/tkinter.html#a-very-quick-look-at-tcl-tk
