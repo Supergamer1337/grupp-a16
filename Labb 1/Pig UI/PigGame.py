@@ -1,14 +1,15 @@
 from tkinter import *
 
 
-class PigGame():
+class PigGame(Frame):
     def __init__(self, master=None):
         super().__init__(master)
+        self.master = master
         self.pack()
+        
 
     def start(self):
         # Inits GUI
-        root = Tk()
         frame = Frame(root)
         frame.pack()
         game_frame = Frame(root)
@@ -20,7 +21,8 @@ class PigGame():
 
 
 if __name__ == "__main__":
-    game = PigGame()
+    root = Tk()
+    game = PigGame(master=root)
     game.master.title("Pig Game")
     game.master.maxsize(1600,900)
     game.start()
