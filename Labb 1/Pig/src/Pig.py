@@ -5,6 +5,7 @@
 #  */
 from random import randrange
 
+
 def run():
     win_points = 20  # Points to win (decrease if testing)
     aborted = False
@@ -22,16 +23,17 @@ def run():
             aborted = True
             game_over_msg(current_player, aborted)
         elif choice == "n":
-            current_player = next(current_player, players)
+            current_player = next_player(current_player, players)
         elif choice == "r":
             result = roll(current_player)
             if (current_player.roundPts + current_player.totalPts) >= win_points:
                 game_over_msg(current_player, False)
                 aborted = True
             if result:
-                current_player = next(current_player, players)
+                current_player = next_player(current_player, players)
         else:
             print("Invalid input: Commands are: r = roll , n = next, q = quit")
+
 
 class Player:
 
@@ -39,7 +41,7 @@ class Player:
         self.name = name  # default ''
         self.totalPts = 0  # Total points for all rounds
         self.roundPts = 0  # Points for a single round
-        self.id = def_id # Unique ID for each player
+        self.id = def_id  # Unique ID for each player
 
 
 # ---- Game logic methods --------------
@@ -52,7 +54,8 @@ def roll(player):
         return True
     return False
 
-def next(player, players):
+
+def next_player(player, players):
     player.totalPts += player.roundPts
     player.roundPts = 0
     if player.id == len(players) - 1:
@@ -95,14 +98,14 @@ def get_player_choice(player):
 
 def get_players():
     amount_players = 0
-    while(amount_players < 2):
-        amount_players = int(input("How many players are playing?"))
+    while amount_players < 2:
+        amount_players = int(input("How many players are playing? "))
         if amount_players <= 1:
             print("Invalid number of players")
 
     players = []
     for i in range(amount_players):
-        name = input("Name of player %r?" % (i + 1))
+        name = input("Name of player %r? " % (i + 1))
         players.append(Player(i, name))
 
     return players
