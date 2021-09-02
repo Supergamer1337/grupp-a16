@@ -23,6 +23,11 @@ class PigGame(Frame):
         self.in_game = True
         self.current_screen = GameScreen(self.width, self.height, player_list)
 
+    def exit(self):
+        root.destroy()
+        self.run_game = False
+        exit()
+
     def switch_game_state(self):
         if self.in_game:
             self.in_game = False
@@ -84,33 +89,68 @@ class MenuScreen:
 
 class GameScreen:
     def __init__(self, width, height, player_list):
+        self.players = self.create_players(player_list)
+        self.current_player = self.players[randrange(0, len(self.players))]
+        # Graphics
         self.frame = Frame(root, height=height, width=width)
-        self.frame.pack(side=BOTTOM)
-        self.current_player = randrange(0, len(player_list))
+        self.frame.pack(side=TOP)
+        # tk string var
+        self.label_cp_str = StringVar()
+        self.label_cp_str.set("Current player: " + self.current_player.name)
+        self.label_r_str = StringVar()
+        self.label_r_str.set("Dice result: ")
         # Labels
-        self.label_current_player = Label(self.frame, text="Current player: " + str(player_list[self.current_player]))
-        self.label_result = Label(self.frame)
+        self.label_current_player = Label(self.frame, textvariable=self.label_cp_str)
+        self.label_result = Label(self.frame, textvariable=self.label_r_str)
         # Buttons
-        self.btn_roll = Button(self.frame, text="Roll")
-        self.btn_next = Button(self.frame, text="Next")
-        self.btn_quit = Button(self.frame, text="Quit")
+        self.btn_roll = Button(self.frame, text="Roll", command=self.roll)
+        self.btn_next = Button(self.frame, text="Next", command=self.next_player)
+        self.btn_quit = Button(self.frame, text="Quit", command=self.quit_game)
 
         self.set_style()
 
     def set_style(self):
-        # Label
-        self.label_current_player.pack(side=TOP)
         # Buttons
         self.btn_roll.pack(side=LEFT)
         self.btn_next.pack(side=LEFT)
         self.btn_quit.pack(side=LEFT)
+        # Label
+        self.label_current_player.pack(side=TOP)
+        self.label_result.pack(side=BOTTOM)
 
-    def create_players(self, player_list):
         pass
-
 
     def roll(self):
-        pass
+        result = randrange(1, 6)
+        self.label_r_str.set("Dice result: " + str(result))
+        if result == 1:
+            self.current_player.rnd_pts = 0
+            self.next_player()
+        else:
+            self.current_player.rnd_pts += result
+
+    def create_players(self, player_list):
+        players = []
+        for i in range(len(player_list)):
+            print(i)
+            players.append(Player(i, player_list[i]))
+        return players
+
+    def next_player(self):
+        self.current_player.tot_pts += self.current_player.rnd_pts
+        self.current_player.rnd_pts = 0
+        # Set next player
+        if self.current_player.id == len(self.players) - 1:
+            self.current_player = self.players[0]
+        else:
+            self.current_player = self.players[self.current_player.id + 1]
+        # Update label
+        self.label_cp_str.set("Current player: " + self.current_player.name)
+
+    def quit_game(self):
+        self.frame.destroy()
+        game.switch_game_state()
+
 
 class Player:
     def __init__(self, def_id, name=''):
@@ -118,6 +158,7 @@ class Player:
         self.tot_pts = 0
         self.rnd_pts = 0
         self.id = def_id
+
 
 if __name__ == "__main__":
     root = Tk()
