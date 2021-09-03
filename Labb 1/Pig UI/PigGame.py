@@ -97,17 +97,22 @@ class GameScreen:
         # tk string var
         self.label_cp_str = StringVar()
         self.label_cp_str.set("Current player: " + self.current_player.name)
-        self.label_r_str = StringVar()
-        self.label_r_str.set("Dice result: ")
+        self.label_result_str = StringVar()
+        self.label_result_str.set("Dice result: ")
+        self.label_curr_pts_str = StringVar()
+        self.label_curr_pts_str.set(self.current_player.name + " Points:\nTotal Points: " + str(self.current_player.tot_pts) + "\nRound Points: " + str(self.current_player.rnd_pts))
         # Labels
         self.label_current_player = Label(self.frame, textvariable=self.label_cp_str)
-        self.label_result = Label(self.frame, textvariable=self.label_r_str)
+        self.label_result = Label(self.frame, textvariable=self.label_result_str)
+        self.label_curr_pts = Label(self.frame, textvariable=self.label_curr_pts_str)
         # Buttons
         self.btn_roll = Button(self.frame, text="Roll", command=self.roll)
         self.btn_next = Button(self.frame, text="Next", command=self.next_player)
         self.btn_quit = Button(self.frame, text="Quit", command=self.quit_game)
 
         self.set_style()
+
+        self.win_pts = 20
 
     def set_style(self):
         # Buttons
@@ -117,17 +122,24 @@ class GameScreen:
         # Label
         self.label_current_player.pack(side=TOP)
         self.label_result.pack(side=BOTTOM)
+        self.label_curr_pts.pack(side=RIGHT)
 
         pass
 
     def roll(self):
         result = randrange(1, 6)
-        self.label_r_str.set("Dice result: " + str(result))
+        self.label_result_str.set(self.current_player.name + " rolled: " + str(result))
         if result == 1:
             self.current_player.rnd_pts = 0
             self.next_player()
         else:
             self.current_player.rnd_pts += result
+            self.win()
+        self.update_display_points()
+
+    def update_display_points(self):
+        self.label_curr_pts_str.set(self.current_player.name + " Points:\nTotal Points: " + str(self.current_player.tot_pts) + "\nRound Points: " + str(self.current_player.rnd_pts))
+
 
     def create_players(self, player_list):
         players = []
@@ -146,10 +158,22 @@ class GameScreen:
             self.current_player = self.players[self.current_player.id + 1]
         # Update label
         self.label_cp_str.set("Current player: " + self.current_player.name)
+        self.update_display_points()
 
     def quit_game(self):
         self.frame.destroy()
         game.switch_game_state()
+
+    def win(self):
+        if self.current_player.rnd_pts + self.current_player.tot_pts >= self.win_pts:
+            self.btn_roll.destroy()
+            self.btn_next.destroy()
+            self.label_curr_pts.destroy()
+            self.label_result.destroy()
+            self.label_current_player.destroy()
+            self.btn_quit.pack(side=BOTTOM)
+            self.label_win = Label(self.frame, text=self.current_player.name + " has WON with a total of " + str(self.current_player.tot_pts + self.current_player.rnd_pts))
+            self.label_win.pack(side=TOP)
 
 
 class Player:
