@@ -19,9 +19,9 @@ class PigGame(Frame):
         while self.run_game:
             root.mainloop()
 
-    def start_game(self, player_list):
+    def start_game(self, player_list, win_score):
         self.in_game = True
-        self.current_screen = GameScreen(self.width, self.height, player_list)
+        self.current_screen = GameScreen(self.width, self.height, player_list, win_score)
 
     def exit(self):
         root.destroy()
@@ -42,12 +42,14 @@ class MenuScreen:
         self.frame_start_cont = Frame(self.frame_root)
         # Labels
         self.label_title = Label(self.frame_title_cont, text="Pig Game")
+        self.label_set_score = Label(self.frame_input_cont, text="Score to win: ")
         # Buttons
         self.btn_name_add = Button(self.frame_input_cont, text="Add Player", command=self.add_name)
         self.btn_name_remove = Button(self.frame_input_cont, text="Remove Player", command=self.remove_name)
         self.btn_start = Button(self.frame_start_cont, text="Start", command=self.start_game)
         # Textbox
         self.input_player = Text(self.frame_input_cont, height=1, width=19)
+        self.input_win_score = Text(self.frame_input_cont, height=1, width=5)
         # Listbox
         self.list_player = Listbox(self.frame_list_cont)
 
@@ -68,6 +70,8 @@ class MenuScreen:
         self.label_title.pack(side=TOP, expand=True)
         self.btn_start.pack(side=BOTTOM, expand=True)
         # Input Container
+        self.label_set_score.pack()
+        self.input_win_score.pack()
         self.input_player.pack(side=BOTTOM)
         self.btn_name_remove.pack(side=RIGHT)
         self.btn_name_add.pack(side=RIGHT)
@@ -88,14 +92,15 @@ class MenuScreen:
     def start_game(self):
         length = int(self.list_player.size())
         if not length < 2:
-            game.start_game(self.list_player.get(0, length - 1))
+            game.start_game(self.list_player.get(0, length - 1), int(self.input_win_score.get("1.0", "end-1c")))
             self.frame_root.destroy()
 
 
 class GameScreen:
-    def __init__(self, width, height, player_list):
+    def __init__(self, width, height, player_list, win_score = 20):
         self.players = self.create_players(player_list)
         self.current_player = self.players[randrange(0, len(self.players))]
+        self.win_pts = win_score
         # Graphics
         self.frame = Frame(root, height=height, width=width)
         self.frame.pack(side=TOP)
@@ -119,7 +124,6 @@ class GameScreen:
 
         self.set_style()
 
-        self.win_pts = 20
         root.bind('<r>', (lambda event: self.roll()))
         root.bind('<n>', (lambda event: self.next_player()))
         root.bind('<q>', (lambda event: self.quit_game()))
@@ -135,7 +139,18 @@ class GameScreen:
         self.btn_quit.pack(side=LEFT)
 
     def roll(self):
-        result = randrange(1, 6)
+        # Name easter eggs
+        name = self.current_player.name.lower()
+        if name == "data":
+            result = 1
+        elif name.find("loser") != -1:
+            result = randrange(1, 3)
+        elif name == "max" or name == "fabian" or name == "felix":
+            result = randrange(4, 6)
+        elif name.find("smurf") != -1:
+            result = 6
+        else:
+            result = randrange(1, 6)
         self.label_result_str.set(self.current_player.name + " rolled: " + str(result))
         if result == 1:
             self.current_player.rnd_pts = 0
