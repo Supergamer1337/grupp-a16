@@ -97,7 +97,7 @@ class MenuScreen:
 
 
 class GameScreen:
-    def __init__(self, width, height, player_list, win_score = 20):
+    def __init__(self, width, height, player_list, win_score=20):
         self.players = self.create_players(player_list)
         self.current_player = self.players[randrange(0, len(self.players))]
         self.win_pts = win_score
