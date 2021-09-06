@@ -82,8 +82,8 @@ class MenuScreen:
 
     def remove_name(self):
         index = self.list_player.curselection()
-        self.list_player.delete(index)
-        pass
+        if index:
+            self.list_player.delete(index)
 
     def start_game(self):
         length = int(self.list_player.size())
