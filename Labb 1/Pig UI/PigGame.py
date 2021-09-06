@@ -19,7 +19,7 @@ class PigGame(Frame):
         while self.run_game:
             root.mainloop()
 
-    def start(self, player_list):
+    def start_game(self, player_list):
         self.in_game = True
         self.current_screen = GameScreen(self.width, self.height, player_list)
 
@@ -28,52 +28,57 @@ class PigGame(Frame):
         self.run_game = False
         exit()
 
-    def switch_game_state(self):
-        if self.in_game:
-            self.in_game = False
-            self.current_screen = MenuScreen(self.width, self.height)
-        else:
-            self.in_game = True
-            self.current_screen = GameScreen(self.width, self.height)
+    def start_menu(self):
+        self.in_game = False
+        self.current_screen = MenuScreen(self.width, self.height)
 
 
 class MenuScreen:
     def __init__(self, width, height):
-        self.frame = Frame(root, height=height, width=width)
+        self.frame_root = Frame(root, height=height, width=width)
+        self.frame_input_cont = Frame(self.frame_root)
+        self.frame_list_cont = Frame(self.frame_root)
+        self.frame_title_cont = Frame(self.frame_root)
+        self.frame_start_cont = Frame(self.frame_root)
         # Labels
-        self.label_title = Label(self.frame, text="Pig Game")
+        self.label_title = Label(self.frame_title_cont, text="Pig Game")
         # Buttons
-        self.btn_name_add = Button(self.frame, text="Add Player", command=self.add_name)
-        self.btn_start = Button(self.frame, text="Start", command=self.start_game)
-        self.btn_name_remove = Button(self.frame, text="Remove Player", command=self.remove_name)
+        self.btn_name_add = Button(self.frame_input_cont, text="Add Player", command=self.add_name)
+        self.btn_name_remove = Button(self.frame_input_cont, text="Remove Player", command=self.remove_name)
+        self.btn_start = Button(self.frame_start_cont, text="Start", command=self.start_game)
         # Textbox
-        self.input_player = Text(self.frame, height=1, width=10)
+        self.input_player = Text(self.frame_input_cont, height=1, width=19)
         # Listbox
-        self.list_player = Listbox(self.frame)
+        self.list_player = Listbox(self.frame_list_cont)
 
         self.set_style()
 
+        # Set enter key to run function
+        root.bind('<Return>', (lambda event: self.add_name()))
+
     def set_style(self):
         # https://www.pythontutorial.net/tkinter/tkinter-pack/
-        # TOD style the game
         # Frame
-        self.frame.pack(side=BOTTOM)
-        # Labels
-        self.label_title.pack(side=TOP)
-        # Buttons
-        self.btn_start.pack(side=BOTTOM)
+        self.frame_root.pack()
+        self.frame_title_cont.pack(side=TOP, ipadx=10, ipady=10)
+        self.frame_start_cont.pack(side=BOTTOM, ipadx=10, ipady=10)
+        self.frame_input_cont.pack(side=RIGHT)
+        self.frame_list_cont.pack(side=LEFT, ipadx=10, ipady=10)
+        # Title & Start Container
+        self.label_title.pack(side=TOP, expand=True)
+        self.btn_start.pack(side=BOTTOM, expand=True)
+        # Input Container
+        self.input_player.pack(side=BOTTOM)
         self.btn_name_remove.pack(side=RIGHT)
         self.btn_name_add.pack(side=RIGHT)
-        # Textbox
-        self.input_player.pack(side=RIGHT)
-        # Listbox
-        self.list_player.pack(side=TOP)
+        # List Container
+        self.list_player.pack(side=TOP, expand=True)
 
     def add_name(self):
-        name = self.input_player.get("1.0", "end-1c")
-        self.list_player.insert(END, name)
-        self.input_player.delete("1.0", "end-1c")
-        pass
+        name = self.input_player.get("1.0", "end-1c").rstrip('\n')
+        if not len(name) < 1:
+            self.list_player.insert(END, name)
+            self.input_player.delete("1.0", "end-1c")
 
     def remove_name(self):
         index = self.list_player.curselection()
@@ -83,8 +88,8 @@ class MenuScreen:
     def start_game(self):
         length = int(self.list_player.size())
         if not length < 2:
-            game.start(self.list_player.get(0, length - 1))
-            self.frame.destroy()
+            game.start_game(self.list_player.get(0, length - 1))
+            self.frame_root.destroy()
 
 
 class GameScreen:
@@ -100,11 +105,13 @@ class GameScreen:
         self.label_result_str = StringVar()
         self.label_result_str.set("Dice result: ")
         self.label_curr_pts_str = StringVar()
-        self.label_curr_pts_str.set(self.current_player.name + " Points:\nTotal Points: " + str(self.current_player.tot_pts) + "\nRound Points: " + str(self.current_player.rnd_pts))
+        self.update_display_points()
+        self.label_win_str = StringVar()
         # Labels
         self.label_current_player = Label(self.frame, textvariable=self.label_cp_str)
         self.label_result = Label(self.frame, textvariable=self.label_result_str)
         self.label_curr_pts = Label(self.frame, textvariable=self.label_curr_pts_str)
+        self.label_win = Label(self.frame, textvariable=self.label_win_str)
         # Buttons
         self.btn_roll = Button(self.frame, text="Roll", command=self.roll)
         self.btn_next = Button(self.frame, text="Next", command=self.next_player)
@@ -113,6 +120,9 @@ class GameScreen:
         self.set_style()
 
         self.win_pts = 20
+        root.bind('<r>', (lambda event: self.roll()))
+        root.bind('<n>', (lambda event: self.next_player()))
+        root.bind('<q>', (lambda event: self.quit_game()))
 
     def set_style(self):
         # Buttons
@@ -138,8 +148,9 @@ class GameScreen:
         self.update_display_points()
 
     def update_display_points(self):
-        self.label_curr_pts_str.set(self.current_player.name + " Points:\nTotal Points: " + str(self.current_player.tot_pts) + "\nRound Points: " + str(self.current_player.rnd_pts))
-
+        self.label_curr_pts_str.set(self.current_player.name +
+                                    " Points:\nTotal: " + str(self.current_player.tot_pts) +
+                                    "\nRound: " + str(self.current_player.rnd_pts))
 
     def create_players(self, player_list):
         players = []
@@ -162,7 +173,7 @@ class GameScreen:
 
     def quit_game(self):
         self.frame.destroy()
-        game.switch_game_state()
+        game.start_menu()
 
     def win(self):
         if self.current_player.rnd_pts + self.current_player.tot_pts >= self.win_pts:
@@ -172,7 +183,8 @@ class GameScreen:
             self.label_result.destroy()
             self.label_current_player.destroy()
             self.btn_quit.pack(side=BOTTOM)
-            self.label_win = Label(self.frame, text=self.current_player.name + " has WON with a total of " + str(self.current_player.tot_pts + self.current_player.rnd_pts))
+            self.label_win_str.set(self.current_player.name + " has WON with a total of " +
+                                   str(self.current_player.tot_pts + self.current_player.rnd_pts))
             self.label_win.pack(side=TOP)
 
 
