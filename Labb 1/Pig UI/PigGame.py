@@ -125,16 +125,14 @@ class GameScreen:
         root.bind('<q>', (lambda event: self.quit_game()))
 
     def set_style(self):
-        # Buttons
-        self.btn_roll.pack(side=LEFT)
-        self.btn_next.pack(side=LEFT)
-        self.btn_quit.pack(side=LEFT)
         # Label
         self.label_current_player.pack(side=TOP)
         self.label_result.pack(side=BOTTOM)
         self.label_curr_pts.pack(side=RIGHT)
-
-        pass
+        # Buttons
+        self.btn_roll.pack(side=LEFT)
+        self.btn_next.pack(side=LEFT)
+        self.btn_quit.pack(side=LEFT)
 
     def roll(self):
         result = randrange(1, 6)
