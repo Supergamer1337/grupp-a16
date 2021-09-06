@@ -168,7 +168,6 @@ class GameScreen:
     def create_players(self, player_list):
         players = []
         for i in range(len(player_list)):
-            print(i)
             players.append(Player(i, player_list[i]))
         return players
 
