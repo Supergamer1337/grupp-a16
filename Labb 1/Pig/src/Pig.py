@@ -111,15 +111,5 @@ def get_players():
     return players
 
 
-# ----- Testing -----------------
-# Here you run your tests i.e. call your game logic methods
-# to see that they really work (IO methods not tested here)
-def test():
-    # This is hard coded test data
-    # An array of (no name) Players (probably don't need any name to test)
-    test_players = [Player(), Player(), Player()]
-    # TODO Use for testing of logical methods (i.e. non-IO methods)
-
-
 if __name__ == "__main__":
     run()
