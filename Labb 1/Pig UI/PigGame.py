@@ -1,7 +1,5 @@
 from tkinter import *
 from random import randrange
-# https://www.tutorialspoint.com/python/tk_pack.htm
-# https://docs.python.org/3/library/tkinter.html#a-very-quick-look-at-tcl-tk
 
 
 class PigGame(Frame):
@@ -165,7 +163,8 @@ class GameScreen:
                                     " Points:\nTotal: " + str(self.current_player.tot_pts) +
                                     "\nRound: " + str(self.current_player.rnd_pts))
 
-    def create_players(self, player_list):
+    @staticmethod
+    def create_players(player_list):
         players = []
         for i in range(len(player_list)):
             players.append(Player(i, player_list[i]))
