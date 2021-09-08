@@ -25,9 +25,10 @@ def run():
             current_player = next_player(current_player, players)
         elif choice == "r":
             result = roll(current_player)
-            aborted = check_win(current_player, win_points)
             if result:
                 current_player = next_player(current_player, players)
+            else:
+                aborted = check_win(current_player, win_points)
         else:
             print("Invalid input; Commands are: r = roll , n = next, q = quit")
 
