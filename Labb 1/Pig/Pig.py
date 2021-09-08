@@ -14,7 +14,7 @@ def run():
     players = get_players()    # ... this (method to read in all players)
     welcome_msg(win_points)
     status_msg(players)
-    current_player = players[randrange(0, len(players))]  # TODO Set random player to start
+    current_player = players[randrange(0, len(players))]
 
     # TODO Game logic, using small step, functional decomposition
     while not aborted:
@@ -26,13 +26,11 @@ def run():
             current_player = next_player(current_player, players)
         elif choice == "r":
             result = roll(current_player)
-            if (current_player.roundPts + current_player.totalPts) >= win_points:
-                game_over_msg(current_player, False)
-                aborted = True
+            aborted = check_win(current_player, win_points)
             if result:
                 current_player = next_player(current_player, players)
         else:
-            print("Invalid input: Commands are: r = roll , n = next, q = quit")
+            print("Invalid input; Commands are: r = roll , n = next, q = quit")
 
 
 class Player:
@@ -45,6 +43,13 @@ class Player:
 
 
 # ---- Game logic methods --------------
+def check_win(current_player, win_points):
+    if (current_player.roundPts + current_player.totalPts) >= win_points:
+        game_over_msg(current_player, False)
+        return True
+    return False
+
+
 def roll(player):
     result = randrange(1, 6)
     player.roundPts += result
