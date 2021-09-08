@@ -1,7 +1,6 @@
 # /*
 #  * The Pig game
 #  * See http://en.wikipedia.org/wiki/Pig_%28dice_game%29
-#  *
 #  */
 from random import randrange
 
