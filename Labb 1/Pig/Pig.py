@@ -13,7 +13,7 @@ def run():
     players = get_players()    # ... this (method to read in all players)
     welcome_msg(win_points)
     status_msg(players)
-    current_player = players[randrange(0, len(players))]
+    current_player = randomize_starting_player(players)
 
     aborted = game_loop(current_player, players, win_points)
     game_over_msg(current_player, aborted)
@@ -29,6 +29,9 @@ class Player:
 
 
 # ---- Game logic methods --------------
+def randomize_starting_player(players):
+    return players[randrange(0, len(players))]
+
 def game_loop(current_player, players, win_pts):
     while True:
         choice = get_player_choice(current_player)
@@ -37,8 +40,8 @@ def game_loop(current_player, players, win_pts):
         elif choice == "n":
             current_player = next_player(current_player, players)
         elif choice == "r":
-            result = roll(current_player)
-            if result:
+            is_1 = roll(current_player)
+            if is_1:
                 current_player = next_player(current_player, players)
             else:
                 if check_win(current_player, win_pts):
@@ -104,9 +107,13 @@ def get_player_choice(player):
 def get_players():
     amount_players = 0
     while amount_players < 2:
-        amount_players = int(input("How many players are playing? "))
+        try:
+            amount_players = int(input("How many players are playing? "))
+        except: 
+            pass
+            
         if amount_players <= 1:
-            print("Invalid number of players")
+            print("Invalid input, must be an integer larger than 1")
 
     players = []
     for i in range(amount_players):
