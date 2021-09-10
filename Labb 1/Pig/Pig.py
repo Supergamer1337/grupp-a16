@@ -4,7 +4,6 @@
 #  */
 from random import randrange
 
-
 def run():
     win_points = 20  # Points to win
     players = get_players()
@@ -13,15 +12,23 @@ def run():
     current_player = randomize_starting_player(players)
     game_loop(current_player, players, win_points)
 
-
 class Player:
 
-    def __init__(self, def_id, name=''):
+    def __init__(self, name=''):
         self.name = name  # default ''
         self.totalPts = 0  # Total points for all rounds
         self.roundPts = 0  # Points for a single round
-        self.id = def_id  # Unique ID for each player
 
+    def clear_round_points(self):
+        self.roundPts = 0
+
+    def add_round_points(self, points):
+        if points != 1:
+            self.roundPts += points
+
+    def add_total_points(self):
+        self.totalPts += self.roundPts
+        self.clear_round_points()
 
 # ---- Game logic methods --------------
 def randomize_starting_player(players):
@@ -29,46 +36,51 @@ def randomize_starting_player(players):
 
 
 def game_loop(current_player, players, win_pts):
-    while True:
+    won = False
+    while not won:
         choice = get_player_choice(current_player)
         if choice == "q":
             print("Aborted")
             break
         elif choice == "n":
-            current_player = next_player(current_player, players)
+            current_player = next(current_player, players)
         elif choice == "r":
-            is_1 = roll(current_player)
-            if is_1:
-                current_player = next_player(current_player, players)
-            else:
-                if check_win(current_player, win_pts):
-                    game_over_msg(current_player)
-                    break
+            current_player = roll(current_player, players)
+            won = check_win(current_player, win_pts)
         else:
             print("Invalid input; Commands are: r = roll , n = next, q = quit")
 
 
-def roll(player):
-    result = randrange(1, 6)
-    player.roundPts += result
-    round_msg(result, player)
+def roll(current_player, players):
+    result = roll_dice()
+    current_player.add_round_points(result)
+    round_msg(result, current_player)
     if result == 1:
-        player.roundPts = 0
-        return True
-    return False
+        current_player.clear_round_points()
+        return next(current_player, players)
+    return current_player
 
 
-def next_player(player, players):
-    player.totalPts += player.roundPts
-    player.roundPts = 0
+def roll_dice():
+    return randrange(1, 6)
+
+
+def next(current_player, players):
+    current_player.add_total_points()
     status_msg(players)
-    if player.id == len(players) - 1:
+    return next_player(current_player, players)
+
+
+def next_player(current_player, players):
+    player_index = players.index(current_player)
+    if player_index == len(players) - 1:
         return players[0]
-    return players[player.id + 1]
+    return players[player_index + 1]
 
 
 def check_win(current_player, win_points):
     if (current_player.roundPts + current_player.totalPts) >= win_points:
+        game_over_msg(current_player)
         return True
     return False
 
@@ -117,7 +129,7 @@ def get_players():
     players = []
     for i in range(amount_players):
         name = input("Name of player %r? " % (i + 1))
-        players.append(Player(i, name))
+        players.append(Player(name))
 
     return players
 
