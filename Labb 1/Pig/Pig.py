@@ -7,7 +7,6 @@ from random import randrange
 
 def run():
     win_points = 20  # Points to win
-    aborted = False
     players = get_players()
     welcome_msg(win_points)
     status_msg(players)
