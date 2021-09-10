@@ -11,9 +11,7 @@ def run():
     welcome_msg(win_points)
     status_msg(players)
     current_player = randomize_starting_player(players)
-
-    aborted = game_loop(current_player, players, win_points)
-    game_over_msg(current_player, aborted)
+    game_loop(current_player, players, win_points)
 
 
 class Player:
@@ -34,7 +32,8 @@ def game_loop(current_player, players, win_pts):
     while True:
         choice = get_player_choice(current_player)
         if choice == "q":
-            return True
+            print("Aborted")
+            break
         elif choice == "n":
             current_player = next_player(current_player, players)
         elif choice == "r":
@@ -43,7 +42,8 @@ def game_loop(current_player, players, win_pts):
                 current_player = next_player(current_player, players)
             else:
                 if check_win(current_player, win_pts):
-                    return False
+                    game_over_msg(current_player)
+                    break
         else:
             print("Invalid input; Commands are: r = roll , n = next, q = quit")
 
@@ -61,9 +61,10 @@ def roll(player):
 def next_player(player, players):
     player.totalPts += player.roundPts
     player.roundPts = 0
+    status_msg(players)
     if player.id == len(players) - 1:
         return players[0]
-    return players[player.id+1]
+    return players[player.id + 1]
 
 
 def check_win(current_player, win_points):
@@ -93,12 +94,9 @@ def round_msg(result, current_player):
         print("Got 1 lost it all!")
 
 
-def game_over_msg(player, is_aborted):
-    if is_aborted:
-        print("Aborted")
-    else:
-        print("Game over! Winner is player " + player.name + " with "
-              + str(player.totalPts + player.roundPts) + " points")
+def game_over_msg(player):
+    print("Game over! Winner is player " + player.name + " with "
+          + str(player.totalPts + player.roundPts) + " points")
 
 
 def get_player_choice(player):
@@ -110,11 +108,11 @@ def get_players():
     while amount_players < 2:
         try:
             amount_players = int(input("How many players are playing? "))
-        except: 
+        except:
             pass
-            
-        if amount_players <= 1:
-            print("Invalid input, must be an integer larger than 1")
+
+        if amount_players < 2 or amount_players > 10:
+            print("Invalid input, must be an integer larger than 1 and less than 10")
 
     players = []
     for i in range(amount_players):
