@@ -4,6 +4,7 @@
 #  */
 from random import randrange
 
+
 def run():
     win_points = 20  # Points to win
     players = get_players()
@@ -11,6 +12,7 @@ def run():
     status_msg(players)
     current_player = randomize_starting_player(players)
     game_loop(current_player, players, win_points)
+
 
 class Player:
 
@@ -30,6 +32,7 @@ class Player:
         self.totalPts += self.roundPts
         self.clear_round_points()
 
+
 # ---- Game logic methods --------------
 def randomize_starting_player(players):
     return players[randrange(0, len(players))]
@@ -43,7 +46,7 @@ def game_loop(current_player, players, win_pts):
             print("Aborted")
             break
         elif choice == "n":
-            current_player = next(current_player, players)
+            current_player = next_round(current_player, players)
         elif choice == "r":
             current_player = roll(current_player, players)
             won = check_win(current_player, win_pts)
@@ -57,7 +60,7 @@ def roll(current_player, players):
     round_msg(result, current_player)
     if result == 1:
         current_player.clear_round_points()
-        return next(current_player, players)
+        return next_round(current_player, players)
     return current_player
 
 
@@ -65,7 +68,7 @@ def roll_dice():
     return randrange(1, 6)
 
 
-def next(current_player, players):
+def next_round(current_player, players):
     current_player.add_total_points()
     status_msg(players)
     return next_player(current_player, players)
