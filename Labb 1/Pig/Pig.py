@@ -6,11 +6,9 @@ from random import randrange
 
 
 def run():
-    win_points = 20  # Points to win (decrease if testing)
+    win_points = 20  # Points to win
     aborted = False
-    # Hard coded players, replace *last* of all with ... (see below)
-    # players = [Player(0, name='Olle'), Player(1, name='Fia')]
-    players = get_players()    # ... this (method to read in all players)
+    players = get_players()
     welcome_msg(win_points)
     status_msg(players)
     current_player = randomize_starting_player(players)
