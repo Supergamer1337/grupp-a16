@@ -15,22 +15,8 @@ def run():
     status_msg(players)
     current_player = players[randrange(0, len(players))]
 
-    # TODO Game logic, using small step, functional decomposition
-    while not aborted:
-        choice = get_player_choice(current_player)
-        if choice == "q":
-            aborted = True
-            game_over_msg(current_player, aborted)
-        elif choice == "n":
-            current_player = next_player(current_player, players)
-        elif choice == "r":
-            result = roll(current_player)
-            if result:
-                current_player = next_player(current_player, players)
-            else:
-                aborted = check_win(current_player, win_points)
-        else:
-            print("Invalid input; Commands are: r = roll , n = next, q = quit")
+    aborted = game_loop(current_player, players, win_points)
+    game_over_msg(current_player, aborted)
 
 
 class Player:
@@ -43,12 +29,22 @@ class Player:
 
 
 # ---- Game logic methods --------------
-def check_win(current_player, win_points):
-    if (current_player.roundPts + current_player.totalPts) >= win_points:
-        game_over_msg(current_player, False)
-        return True
-    return False
-
+def game_loop(current_player, players, win_pts):
+    while True:
+        choice = get_player_choice(current_player)
+        if choice == "q":
+            return True
+        elif choice == "n":
+            current_player = next_player(current_player, players)
+        elif choice == "r":
+            result = roll(current_player)
+            if result:
+                current_player = next_player(current_player, players)
+            else:
+                if check_win(current_player, win_pts):
+                    return False
+        else:
+            print("Invalid input; Commands are: r = roll , n = next, q = quit")
 
 def roll(player):
     result = randrange(1, 6)
@@ -67,6 +63,10 @@ def next_player(player, players):
         return players[0]
     return players[player.id+1]
 
+def check_win(current_player, win_points):
+    if (current_player.roundPts + current_player.totalPts) >= win_points:
+        return True
+    return False
 
 # ---- IO Methods --------------
 def welcome_msg(win_pts):
