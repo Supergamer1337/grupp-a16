@@ -32,6 +32,7 @@ class Player:
 def randomize_starting_player(players):
     return players[randrange(0, len(players))]
 
+
 def game_loop(current_player, players, win_pts):
     while True:
         choice = get_player_choice(current_player)
@@ -48,6 +49,7 @@ def game_loop(current_player, players, win_pts):
                     return False
         else:
             print("Invalid input; Commands are: r = roll , n = next, q = quit")
+
 
 def roll(player):
     result = randrange(1, 6)
@@ -66,10 +68,12 @@ def next_player(player, players):
         return players[0]
     return players[player.id+1]
 
+
 def check_win(current_player, win_points):
     if (current_player.roundPts + current_player.totalPts) >= win_points:
         return True
     return False
+
 
 # ---- IO Methods --------------
 def welcome_msg(win_pts):
