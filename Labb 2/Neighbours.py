@@ -95,14 +95,15 @@ class NeighborsModel:
                 self.check_cell(x, y)
 
     def check_cell(self, x, y):
-        result = self.count_neighbour_cells(x, y)
-        if self.world[x][y] == Actor.RED:
-            if result[1] / result[0] > self.THRESHOLD:
+        result = self.neighbour_cell_threshold(x, y)
+        if result > self.THRESHOLD:
+            return State.SATISFIED
+        return
 
 
-    def count_neighbour_cells(self, x: int, y: int):
+    def neighbour_cell_threshold(self, x: int, y: int):
         surrounding_cells = 0
-        colored_cells = 0
+        same_colored_cells = 0
         for i in range(-1, 2):
             for j in range(-1, 2):
                 if not (i == 0 and j == 0) and is_valid_location(len(self.world), i + x, j + y):
@@ -110,8 +111,10 @@ class NeighborsModel:
                     if curr_cell != Actor.NONE:
                         surrounding_cells += 1
                         if curr_cell == self.world[x][y]:
-                            colored_cells += 1
-        return surrounding_cells, colored_cells
+                            same_colored_cells += 1
+        if surrounding_cells == 0:
+            return 1
+        return same_colored_cells / surrounding_cells
 
     # ########### the rest of this class is already defined, to handle the simulation clock  ###########
     def __init__(self, size):
