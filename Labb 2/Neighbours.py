@@ -52,7 +52,6 @@ class NeighborsModel:
         # print(f"Not shuffled: {brave_new_world}")
         shuffle(brave_new_world)
         # print(f"Shuffled: {brave_new_world}")
-
         return self.list_to_matrix(brave_new_world, size)
 
     def gen_world_list(self, size):
@@ -86,8 +85,33 @@ class NeighborsModel:
     # This is the method called by the timer to update the world
     # (i.e move unsatisfied) each "frame".
     def __update_world(self):
-        # TOD Update logical state of world based on self.THRESHOLD satisfaction parameter
+        self.update_cells()
+
         pass
+
+    def update_cells(self):
+        for x in range(len[self.world]):
+            for y in range(len[self.world]):
+                self.check_cell(x, y)
+
+    def check_cell(self, x, y):
+        result = self.count_neighbour_cells(x, y)
+        if self.world[x][y] == Actor.RED:
+            if result[1] / result[0] > self.THRESHOLD:
+
+
+    def count_neighbour_cells(self, x: int, y: int):
+        surrounding_cells = 0
+        colored_cells = 0
+        for i in range(-1, 2):
+            for j in range(-1, 2):
+                if not (i == 0 and j == 0) and is_valid_location(len(self.world), i + x, j + y):
+                    curr_cell = self.world[i + x][j + y]
+                    if curr_cell != Actor.NONE:
+                        surrounding_cells += 1
+                        if curr_cell == self.world[x][y]:
+                            colored_cells += 1
+        return surrounding_cells, colored_cells
 
     # ########### the rest of this class is already defined, to handle the simulation clock  ###########
     def __init__(self, size):
