@@ -77,13 +77,8 @@ class NeighborsModel:
     # This is the method called by the timer to update the world
     # (i.e move unsatisfied) each "frame".
     def __update_world(self):
-        self.update_cells()
-
-        pass
-
-    def update_cells(self):
         all_cell_states = self.get_world_state()
-        self.world = self.new_cell_world(all_cell_states)
+        self.world = self.new_cell_world(all_cell_states)        
 
     def new_cell_world(self, cell_state_map):
         new_cell_map = []
