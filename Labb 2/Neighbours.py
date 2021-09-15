@@ -25,8 +25,6 @@ class State(Enum):
 
 
 World = List[List[Actor]]  # Type alias
-
-
 SIZE = 30
 
 
@@ -49,16 +47,13 @@ class NeighborsModel:
     # using randomization according to the given arguments.
     def __create_world(self, size) -> World:
         brave_new_world = self.gen_world_list(size)
-        # print(f"Not shuffled: {brave_new_world}")
-        shuffle(brave_new_world)
-        # print(f"Shuffled: {brave_new_world}")
+        shuffle(brave_new_world)  # Randomizes to positions of the list
         return self.list_to_matrix(brave_new_world, size)
 
     def gen_world_list(self, size):
         world_list = self.add_element(Actor.RED, self.DIST[0], size)
         world_list += self.add_element(Actor.BLUE, self.DIST[1], size)
         world_list += self.add_element(Actor.NONE, self.DIST[2], size)
-
         return world_list
 
     @staticmethod
@@ -78,8 +73,6 @@ class NeighborsModel:
             matrix.append(array[start:end])
             start += add
             end += add
-        # for row in matrix:
-        #     print(f"{row}")
         return matrix
 
     # This is the method called by the timer to update the world
@@ -90,16 +83,28 @@ class NeighborsModel:
         pass
 
     def update_cells(self):
-        for x in range(len[self.world]):
-            for y in range(len[self.world]):
-                self.check_cell(x, y)
+        all_cell_states = self.get_world_state()
+        self.world = self.new_cell_world(all_cell_states)
+
+    def new_cell_world(self, cell_state_map):
+        new_cell_map = []
+        return new_cell_map
+
+    def get_world_state(self):
+        cell_state = []
+        for x in range(len(self.world)):
+            cell_state_row = []
+            for y in range(len(self.world)):
+                cell_state_row.append(self.check_cell(x, y))
+            cell_state.append(cell_state_row)
 
     def check_cell(self, x, y):
+        if self.world[x][y] == Actor.NONE:
+            return State.NA
         result = self.neighbour_cell_threshold(x, y)
         if result > self.THRESHOLD:
             return State.SATISFIED
-        return
-
+        return State.UNSATISFIED
 
     def neighbour_cell_threshold(self, x: int, y: int):
         surrounding_cells = 0
