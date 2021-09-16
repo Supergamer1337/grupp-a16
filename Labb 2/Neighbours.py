@@ -1,4 +1,3 @@
-import random
 from typing import List
 from enum import Enum, auto
 from random import *
@@ -11,7 +10,6 @@ import pygame as pg
 #
 # Enumeration type for the Actors
 class Actor(Enum):
-    # Inte logiskt att ha olika platser för röd och blå!!!!
     RED = auto()
     BLUE = auto()
     NONE = auto()  # NONE used for empty locations
@@ -25,7 +23,7 @@ class State(Enum):
 
 
 World = List[List[Actor]]  # Type alias
-SIZE = 30
+SIZE = 80
 
 
 def neighbours():
@@ -39,8 +37,9 @@ class NeighborsModel:
 
     # Tune these numbers to test different distributions or update speeds
     FRAME_RATE = 20            # Increase number to speed simulation up
-    DIST = [0.25, 0.25, 0.50]  # % of RED, BLUE, and NONE
+    DIST = [0.2, 0.6, 0.20]  # % of RED, BLUE, and NONE
     THRESHOLD = 0.7            # % of surrounding neighbours that should be like me for satisfaction
+    done = False
 
     # ########### These following two methods are what you're supposed to implement  ###########
     # In this method you should generate a new world
@@ -48,36 +47,19 @@ class NeighborsModel:
     def __create_world(self) -> World:
         brave_new_world = self.gen_world_list()
         shuffle(brave_new_world)  # Randomizes to positions of the list
-        return self.list_to_matrix(brave_new_world)
+        return list_to_matrix(self.size, brave_new_world)
 
     def gen_world_list(self):
-        world_list = self.add_element(Actor.RED, self.DIST[0], self.size)
-        world_list += self.add_element(Actor.BLUE, self.DIST[1], self.size)
-        world_list += self.add_element(Actor.NONE, self.DIST[2], self.size)
+        world_list = add_element(Actor.RED, self.DIST[0], self.size)
+        world_list += add_element(Actor.BLUE, self.DIST[1], self.size)
+        world_list += add_element(Actor.NONE, self.DIST[2], self.size)
         return world_list
-
-    @staticmethod
-    def add_element(actor_type, percentage, size):
-        amount = round(size * size * percentage)
-        array = []
-        for i in range(amount):
-            array.append(actor_type)
-        return array
-
-    def list_to_matrix(self, array):
-        matrix = []
-        start = 0
-        end = add = self.size
-        for i in range(self.size):
-            matrix.append(array[start:end])
-            start += add
-            end += add
-        return matrix
 
     # This is the method called by the timer to update the world
     # (i.e move unsatisfied) each "frame".
     def __update_world(self):
-        self.world = self.new_cell_world()
+        if not self.done:
+            self.world = self.new_cell_world()
 
     def new_cell_world(self):
         new_cell_map = []
@@ -95,15 +77,11 @@ class NeighborsModel:
                     new_cell_map.append(Actor.NONE)
                     if current_cell != Actor.NONE:
                         cell_pos.append((x, y))
-        new_cell_map = self.list_to_matrix(new_cell_map)
+        if len(cell_pos) < 1:
+            self.done = True
+            print("Done!")
         # Place every unsatisfied actor onto new location
-        shuffle(valid_pos)
-        for i in range(len(cell_pos)):
-            old_pos = cell_pos[i]
-            new_pos = valid_pos[i]
-            # print(f"Old: {old_pos[0]}, {old_pos[1]}\nNew: {new_pos[0]}, {new_pos[1]}")
-            new_cell_map[new_pos[0]][new_pos[1]] = self.world[old_pos[0]][old_pos[1]]
-        return new_cell_map
+        return self.shuffle_unsatisfied_cells(list_to_matrix(self.size, new_cell_map), valid_pos, cell_pos)
 
     def check_cell(self, x, y):
         if self.world[x][y] == Actor.NONE:
@@ -128,11 +106,19 @@ class NeighborsModel:
             return 1
         return same_colored_cells / surrounding_cells
 
+    def shuffle_unsatisfied_cells(self, new_cell_map, valid_pos, cell_pos):
+        shuffle(valid_pos)
+        for i in range(len(cell_pos)):
+            old_pos = cell_pos[i]
+            new_pos = valid_pos[i]
+            # print(f"Old: {old_pos[0]}, {old_pos[1]}\nNew: {new_pos[0]}, {new_pos[1]}")
+            new_cell_map[new_pos[0]][new_pos[1]] = self.world[old_pos[0]][old_pos[1]]
+        return new_cell_map
+
     # ########### the rest of this class is already defined, to handle the simulation clock  ###########
     def __init__(self, size):
         self.size = size
         self.world: World = self.__create_world()
-
         self.observers = []  # for enabling discoupled updating of the view, ignore
 
     def run(self):
@@ -177,6 +163,25 @@ class NeighborsModel:
 # Check if inside world
 def is_valid_location(size: int, row: int, col: int):
     return 0 <= row < size and 0 <= col < size
+
+
+def add_element(actor_type, percentage, size):
+    amount = round(size * size * percentage)
+    array = []
+    for i in range(amount):
+        array.append(actor_type)
+    return array
+
+
+def list_to_matrix(size, array):
+    matrix = []
+    start = 0
+    end = add = size
+    for i in range(size):
+        matrix.append(array[start:end])
+        start += add
+        end += add
+    return matrix
 
 
 # ------- Testing -------------------------------------
