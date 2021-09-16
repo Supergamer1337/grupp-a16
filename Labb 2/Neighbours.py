@@ -77,18 +77,18 @@ class NeighborsModel:
     # This is the method called by the timer to update the world
     # (i.e move unsatisfied) each "frame".
     def __update_world(self):
-        all_cell_states = self.get_world_state()
-        self.world = self.new_cell_world(all_cell_states)        
+        self.world = self.new_cell_world()
 
-    def new_cell_world(self, cell_state_map):
+    def new_cell_world(self):
         new_cell_map = []
         valid_pos = []
-        cell_pos = []
+        cell_pos = []  # TODO len(cell_pos) == 0 to see when it is done
         # Places every satisfied actor onto map
-        for x in range(len(cell_state_map)):
-            for y in range(len(cell_state_map)):
-                current_cell = cell_state_map[x][y]
-                if current_cell == State.SATISFIED:
+        for x in range(len(self.world)):
+            for y in range(len(self.world)):
+                current_state = self.check_cell(x, y)
+                current_cell = self.world[x][y]
+                if current_state == State.SATISFIED:
                     new_cell_map.append(self.world[x][y])
                 else:
                     valid_pos.append((x, y))
@@ -101,18 +101,9 @@ class NeighborsModel:
         for i in range(len(cell_pos)):
             old_pos = cell_pos[i]
             new_pos = valid_pos[i]
-            print(f"Old: {old_pos[0]}, {old_pos[1]}\nNew: {new_pos[0]}, {new_pos[1]}")
+            # print(f"Old: {old_pos[0]}, {old_pos[1]}\nNew: {new_pos[0]}, {new_pos[1]}")
             new_cell_map[new_pos[0]][new_pos[1]] = self.world[old_pos[0]][old_pos[1]]
         return new_cell_map
-
-    def get_world_state(self):
-        cell_state = []
-        for x in range(len(self.world)):
-            cell_state_row = []
-            for y in range(len(self.world)):
-                cell_state_row.append(self.check_cell(x, y))
-            cell_state.append(cell_state_row)
-        return cell_state
 
     def check_cell(self, x, y):
         if self.world[x][y] == Actor.NONE:
@@ -226,8 +217,8 @@ def count(a_list, to_find):
 # ... but by all means have a look at it, it's fun!
 class NeighboursView:
     # static class variables
-    WIDTH = 400   # Size for window
-    HEIGHT = 400
+    WIDTH = 700   # Size for window
+    HEIGHT = 700
     MARGIN = 50
 
     WHITE = (255, 255, 255)
