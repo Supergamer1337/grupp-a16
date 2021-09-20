@@ -64,7 +64,7 @@ class NeighborsModel:
     def new_cell_world(self):
         new_cell_map = []
         valid_pos = []
-        cell_pos = []  # TODO len(cell_pos) == 0 to see when it is done
+        cell_pos = []
         # Places every satisfied actor onto map
         for x in range(len(self.world)):
             for y in range(len(self.world)):
