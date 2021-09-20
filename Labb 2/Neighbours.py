@@ -28,12 +28,12 @@ SIZE = 80
 
 def neighbours():
     pg.init()
-    model = NeighborsModel(SIZE)
+    model = NeighboursModel(SIZE)
     _view = NeighboursView(model)
     model.run()
 
 
-class NeighborsModel:
+class NeighboursModel:
 
     # Tune these numbers to test different distributions or update speeds
     FRAME_RATE = 20            # Increase number to speed simulation up
@@ -232,7 +232,7 @@ class NeighboursView:
 
     # Instance methods
 
-    def __init__(self, model: NeighborsModel):
+    def __init__(self, model: NeighboursModel):
         pg.init()  # initialize pygame, in case not already done
         self.dot_size = self.__calculate_dot_size(len(model.world))
         self.screen = pg.display.set_mode([self.WIDTH, self.HEIGHT])
