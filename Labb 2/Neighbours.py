@@ -23,23 +23,24 @@ class State(Enum):
 
 
 World = List[List[Actor]]  # Type alias
-SIZE = 80
+SIZE = 300
 
 
 def neighbours():
     pg.init()
-    model = NeighborsModel(SIZE)
+    test()
+    model = NeighboursModel(SIZE)
     _view = NeighboursView(model)
     model.run()
 
 
-class NeighborsModel:
+class NeighboursModel:
 
     # Tune these numbers to test different distributions or update speeds
     FRAME_RATE = 20            # Increase number to speed simulation up
-    DIST = [0.2, 0.6, 0.20]  # % of RED, BLUE, and NONE
+    DIST = [0.4, 0.4, 0.20]  # % of RED, BLUE, and NONE
     THRESHOLD = 0.7            # % of surrounding neighbours that should be like me for satisfaction
-    done = False
+    cells_satisfied = False
 
     # ########### These following two methods are what you're supposed to implement  ###########
     # In this method you should generate a new world
@@ -50,6 +51,9 @@ class NeighborsModel:
         return list_to_matrix(self.size, brave_new_world)
 
     def gen_world_list(self):
+        """
+            Adds RED, BLUE and NONE actors according to set distribution values.
+        """
         world_list = add_element(Actor.RED, self.DIST[0], self.size)
         world_list += add_element(Actor.BLUE, self.DIST[1], self.size)
         world_list += add_element(Actor.NONE, self.DIST[2], self.size)
@@ -58,32 +62,46 @@ class NeighborsModel:
     # This is the method called by the timer to update the world
     # (i.e move unsatisfied) each "frame".
     def __update_world(self):
-        if not self.done:
+        # Will not run if all cells are satisfied to save performance
+        if not self.cells_satisfied:
             self.world = self.new_cell_world()
 
     def new_cell_world(self):
+        """
+            Generates new cell map based on satisfied and unsatisfied actors.
+        """
+        (new_cell_map, valid_pos, cell_pos) = self.get_satisfied_cells()
+        # If cell_pos is empty all cells are satisfied
+        if len(cell_pos) < 1:
+            self.cells_satisfied = True
+            print("Done!")
+        # Place every unsatisfied actor onto new location
+        return self.shuffle_unsatisfied_cells(list_to_matrix(self.size, new_cell_map), valid_pos, cell_pos)
+    
+    def get_satisfied_cells(self):
+        """
+            Places satisfied cells in new cell map, and returns map, valid positions and unsatisfied cell positions.
+        """
         new_cell_map = []
         valid_pos = []
         cell_pos = []
-        # Places every satisfied actor onto map
         for x in range(len(self.world)):
             for y in range(len(self.world)):
                 current_state = self.check_cell(x, y)
                 current_cell = self.world[x][y]
                 if current_state == State.SATISFIED:
-                    new_cell_map.append(self.world[x][y])
+                    new_cell_map.append(current_cell)
                 else:
                     valid_pos.append((x, y))
                     new_cell_map.append(Actor.NONE)
                     if current_cell != Actor.NONE:
                         cell_pos.append((x, y))
-        if len(cell_pos) < 1:
-            self.done = True
-            print("Done!")
-        # Place every unsatisfied actor onto new location
-        return self.shuffle_unsatisfied_cells(list_to_matrix(self.size, new_cell_map), valid_pos, cell_pos)
+        return (new_cell_map, valid_pos, cell_pos)
 
     def check_cell(self, x, y):
+        """
+            Check state of given cell and returns the state.
+        """
         if self.world[x][y] == Actor.NONE:
             return State.NA
         result = self.neighbour_cell_threshold(x, y)
@@ -92,6 +110,9 @@ class NeighborsModel:
         return State.UNSATISFIED
 
     def neighbour_cell_threshold(self, x: int, y: int):
+        """
+            Checks surrounding cells to calculate the given cell's threshold value
+        """
         surrounding_cells = 0
         same_colored_cells = 0
         for i in range(-1, 2):
@@ -107,6 +128,9 @@ class NeighborsModel:
         return same_colored_cells / surrounding_cells
 
     def shuffle_unsatisfied_cells(self, new_cell_map, valid_pos, cell_pos):
+        """
+            Shuffles location of unsatisfied cells to all eligible cell locations, and returns it.
+        """
         shuffle(valid_pos)
         for i in range(len(cell_pos)):
             old_pos = cell_pos[i]
@@ -166,21 +190,27 @@ def is_valid_location(size: int, row: int, col: int):
 
 
 def add_element(actor_type, percentage, size):
-    amount = round(size * size * percentage)
+    """
+        Adds elements to a list. 
+    """
+    amount = round(size * size * percentage) # Sets the amount of elements to input to the given specifications.
     array = []
     for i in range(amount):
-        array.append(actor_type)
+        array.append(actor_type) # Adds the elements to the array.
     return array
 
 
 def list_to_matrix(size, array):
+    """
+        Converts given list to a matrix.
+    """
     matrix = []
     start = 0
     end = add = size
     for i in range(size):
-        matrix.append(array[start:end])
-        start += add
-        end += add
+        matrix.append(array[start:end]) # Adds array to the matrix given start and end points of elements in the array.
+        start += add 
+        end += add # Once all elements are in the matrix, go to next row and do the same in the matrix and continue adding upcoming elements.
     return matrix
 
 
@@ -196,6 +226,8 @@ def test():
         [Actor.RED, Actor.NONE, Actor.BLUE]
     ]
 
+    test_world_list = matrix_to_list(test_world) # Turns the matrix into an array.
+
     th = 0.5  # Simpler threshold used for testing
 
     size = len(test_world)
@@ -203,8 +235,11 @@ def test():
     print(not is_valid_location(size, -1, 0))
     print(not is_valid_location(size, 0, 3))
     print(is_valid_location(size, 2, 2))
+    # TODO More tests
+    print(count(test_world_list, Actor.NONE) == 4)
+    print(count(test_world_list, Actor.RED) == 3)
+    print(count(test_world_list, Actor.BLUE) == 2)
 
-    # TOD More tests
 
     exit(0)
 
@@ -217,6 +252,13 @@ def count(a_list, to_find):
             the_count += 1
     return the_count
 
+
+def matrix_to_list(matrix):
+    temp_list = []
+    for row in matrix:
+        for elem in row:
+            temp_list.append(elem)
+    return temp_list
 
 # ###########  NOTHING to do below this row, it's pygame display stuff  ###########
 # ... but by all means have a look at it, it's fun!
@@ -232,7 +274,7 @@ class NeighboursView:
 
     # Instance methods
 
-    def __init__(self, model: NeighborsModel):
+    def __init__(self, model: NeighboursModel):
         pg.init()  # initialize pygame, in case not already done
         self.dot_size = self.__calculate_dot_size(len(model.world))
         self.screen = pg.display.set_mode([self.WIDTH, self.HEIGHT])
