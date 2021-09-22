@@ -1,7 +1,6 @@
 from typing import List
 from enum import Enum, auto
 from random import *
-
 import pygame as pg
 
 
@@ -246,7 +245,6 @@ def test():
     print(count(test_world_list, Actor.RED) == 3)
     print(count(test_world_list, Actor.BLUE) == 2)
 
-
     exit(0)
 
 
@@ -265,6 +263,7 @@ def matrix_to_list(matrix):
         for elem in row:
             temp_list.append(elem)
     return temp_list
+
 
 # ###########  NOTHING to do below this row, it's pygame display stuff  ###########
 # ... but by all means have a look at it, it's fun!
