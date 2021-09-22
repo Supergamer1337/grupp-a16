@@ -72,12 +72,18 @@ class NeighboursModel:
         """
         (new_cell_map, valid_pos, cell_pos) = self.get_satisfied_cells()
         # If cell_pos is empty all cells are satisfied
+        self.check_done(cell_pos)
+        # Place every unsatisfied actor onto new location
+        return self.shuffle_unsatisfied_cells(list_to_matrix(self.size, new_cell_map), valid_pos, cell_pos)
+
+    def check_done(self, cell_pos):
+        """
+        If all cells are satisfied it stops the update loop
+        """
         if len(cell_pos) < 1:
             self.cells_satisfied = True
             print("Done!")
-        # Place every unsatisfied actor onto new location
-        return self.shuffle_unsatisfied_cells(list_to_matrix(self.size, new_cell_map), valid_pos, cell_pos)
-    
+
     def get_satisfied_cells(self):
         """
             Places satisfied cells in new cell map, and returns map, valid positions and unsatisfied cell positions.
@@ -96,7 +102,7 @@ class NeighboursModel:
                     new_cell_map.append(Actor.NONE)
                     if current_cell != Actor.NONE:
                         cell_pos.append((x, y))
-        return (new_cell_map, valid_pos, cell_pos)
+        return new_cell_map, valid_pos, cell_pos
 
     def check_cell(self, x, y):
         """
