@@ -52,17 +52,6 @@ class Deck:
         self.card_pile = self.gen_new_deck()
         self.drawn_cards = deque()
 
-    def gen_new_deck(self):
-        new_deck = self.get_all_cards()
-        shuffle(new_deck)
-        return new_deck
-
-    def get_all_cards(self):
-        all_cards = deque()
-        for suite in Suite:
-            all_cards += self.add_suite(suite)
-        return all_cards
-
     def draw_card(self):
         # Conditional shuffle function
         self.shuffle_discard_pile()
@@ -75,6 +64,17 @@ class Deck:
         if len(self.card_pile) < 1:
             for card in self.drawn_cards:
                 self.card_pile.append(card)
+
+    def gen_new_deck(self):
+        new_deck = self.get_all_cards()
+        shuffle(new_deck)
+        return new_deck
+
+    def get_all_cards(self):
+        all_cards = deque()
+        for suite in Suite:
+            all_cards += self.add_suite(suite)
+        return all_cards
 
     @staticmethod
     def add_suite(suite: Suite):
