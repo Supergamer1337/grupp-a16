@@ -41,10 +41,18 @@ class Rank(Enum):
 
 
 class Card:
+
+    card_back = pygame.image.load("card_back.png")
+
     def __init__(self, suite: Suite, rank: Rank, hidden: bool = True):
         self.suite = suite
         self.rank = rank
         self.hidden = hidden
+        self.size = self.card_back.get_size()
+        self.card_front = self.get_card_front()
+
+    def get_card_front(self):
+        return pygame.image.load(f"{self.suite.name}_{self.rank.name}.png")
 
 
 class Deck:
@@ -149,6 +157,7 @@ class GameView:
 
 
 def klondike_game():
+    print(Suite.Clubs.name)
     pygame.init()
     game = Game()
     GameView(game)
