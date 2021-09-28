@@ -104,11 +104,23 @@ class Game:
     def __init__(self):
         self.deck = Deck()
         self.board = Board(self.deck)
+        self.clock = pygame.time.Clock()
 
     def update(self):
-        self.notify_observers() # Update Render
+        self.notify_observers()  # Update Render
 
     def run(self):
+        run = True
+        # Main loop
+        while run:
+            self.update()
+            # Ensure program maintains a rate of 2 frames per second
+            self.clock.tick(2)
+            # Look at every event in the queue
+            for event in pygame.event.get():
+                # Did the user hit a key?
+                if event.type == pygame.QUIT:
+                    run = False
         pass
 
     def add_observer(self, observer):
@@ -128,18 +140,18 @@ class GameView:
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.game.add_observer(self)
 
-        pass
-
     def notify(self):
         self.render()
 
     def render(self):
         self.screen.fill((255, 255, 255))
+        pygame.display.flip()
 
 
 def klondike_game():
+    pygame.init()
     game = Game()
-    view = GameView(game)
+    GameView(game)
     game.run()
     pass
 
