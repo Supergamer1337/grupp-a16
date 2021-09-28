@@ -11,8 +11,10 @@
 # - UseAList
 # - UseString
 # - SwitchStatement
-
+from random import shuffle
 from enum import Enum, auto
+from collections import deque
+import pygame
 
 
 class Suite(Enum):
@@ -45,8 +47,45 @@ class Card:
         self.hidden = hidden
 
 
-class Board:
+class Deck:
     def __init__(self):
+        self.card_pile = self.gen_new_deck()
+        self.drawn_cards = deque()
+
+    def gen_new_deck(self):
+        new_deck = self.get_all_cards()
+        shuffle(new_deck)
+        return new_deck
+
+    def get_all_cards(self):
+        all_cards = deque()
+        for suite in Suite:
+            all_cards += self.add_suite(suite)
+        return all_cards
+
+    def draw_card(self):
+        # Conditional shuffle function
+        self.shuffle_discard_pile()
+        card = self.card_pile.pop()
+        self.drawn_cards.append(card)
+
+    # TODO: Set a better name
+    # Shuffles back drawn cards into deck if deck is empty
+    def shuffle_discard_pile(self):
+        if len(self.card_pile) < 1:
+            for card in self.drawn_cards:
+                self.card_pile.append(card)
+
+    @staticmethod
+    def add_suite(suite: Suite):
+        suite_cards = deque()
+        for rank in Rank:
+            suite_cards.append(Card(suite, rank))
+        return suite_cards
+
+
+class Board:
+    def __init__(self, deck: Deck):
         self.gen_board()
         pass
 
@@ -58,11 +97,18 @@ class Board:
 
 
 class Game:
-    pass
+    def __init__(self):
+        self.deck = Deck()
+        self.board = Board(self.deck)
+        pass
+
+    def run(self):
+        pass
 
 
 class GameView:
     def __init__(self, game: Game):
+        self.game = game
         pass
 
 
