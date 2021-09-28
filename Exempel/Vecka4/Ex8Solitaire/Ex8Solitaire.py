@@ -45,12 +45,14 @@ class Deck:
         self.card_pile = self.gen_new_deck()
         self.drawn_cards = deque()
 
+    # Draws card and puts it in drawn pile
     def draw_card(self):
         # Conditional shuffle function
         self.shuffle_discard_pile()
         card = self.card_pile.pop()
         self.drawn_cards.append(card)
 
+    # Draws and removes card from deck
     def deal_card(self):
         return self.card_pile.pop()
 
@@ -61,19 +63,22 @@ class Deck:
             for card in self.drawn_cards:
                 self.card_pile.append(card)
 
+    # Returns a shuffled and full deck
     def gen_new_deck(self):
         new_deck = self.get_all_cards()
         shuffle(new_deck)
         return new_deck
 
+    # Returns all cards that are going to be in play
     def get_all_cards(self):
         all_cards = deque()
         for suite in Suite:
-            all_cards += self.add_suite(suite)
+            all_cards += self.get_suite(suite)
         return all_cards
 
+    # Returns all the cards in a suite
     @staticmethod
-    def add_suite(suite: Suite):
+    def get_suite(suite: Suite):
         suite_cards = deque()
         for rank in Rank:
             suite_cards.append(Card(suite, rank))
@@ -83,19 +88,20 @@ class Deck:
 class Board:
     def __init__(self, deck: Deck):
         self.board = self.gen_board(deck)
-        # self.print_board()
-        pass
 
+    # Moves a set of cards from one column to another
     def move_cards(self):
+        # TODO: Move cards logic
         pass
 
-    # Print cards in board for debugging
+    # Prints  cards in board to console for debugging
     def print_board(self):
         for column in self.board:
             print(f"Column {self.board.index(column)}")
             for card in column:
                 print(f"{card.rank.name} {card.suite.name}")
 
+    # Generates board by drawing cards from deck
     @staticmethod
     def gen_board(deck):
         temp_board = []
@@ -104,7 +110,6 @@ class Board:
             for j in range(i+1):
                 column.append(deck.deal_card())
             temp_board.append(column)
-
         return temp_board
 
 
@@ -121,9 +126,12 @@ class Game:
         self.board = Board(self.deck)
         self.clock = pygame.time.Clock()
 
+    # Game update (tick)
     def update(self):
+        # TODO: Update board, take input, etc
         self.notify_observers()  # Update Render
 
+    # Executed at game start, main game loop
     def run(self):
         run = True
         # Main loop
@@ -156,13 +164,14 @@ class Card:
         self.size = self.img_card_back.get_size()
         self.img_card_front = self.get_card_front()
 
+    # Loads card front image for the specific card
     def get_card_front(self):
         return pygame.image.load(f"cards/{self.suite.name}_{self.rank.name}.png")
 
 
 class GameView:
 
-    # Currently disgusting green
+    # Currently disgusting green TODO: Fix a better color
     color_background = (31, 125, 50)
 
     def __init__(self, game: Game):
@@ -173,20 +182,28 @@ class GameView:
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.game.add_observer(self)
 
+    # Called by observers when its time to render
     def notify(self):
         self.render()
 
+    # Renders the screen
     def render(self):
         self.screen.fill(self.color_background)
-        self.render_card(Card(Suite.Clubs, Rank.Seven), (100, 100))
+        self.render_deck()
+        self.render_board()
         pygame.display.flip()
 
+    # Renders the game board
     def render_board(self):
+        # TODO: Render board logic
         pass
 
+    # Renders the deck
     def render_deck(self):
+        # TODO: Render Deck logic
         pass
 
+    # Renders a card and takes into account if its hidden or not
     def render_card(self, card: Card, position: (int, int)):
         if card.hidden:
             self.screen.blit(card.img_card_back, position)
