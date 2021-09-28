@@ -42,7 +42,7 @@ class Rank(Enum):
 
 class Card:
 
-    card_back = pygame.image.load("card_back.png")
+    card_back = pygame.image.load("cards/card_back.png")
 
     def __init__(self, suite: Suite, rank: Rank, hidden: bool = True):
         self.suite = suite
@@ -52,7 +52,7 @@ class Card:
         self.card_front = self.get_card_front()
 
     def get_card_front(self):
-        return pygame.image.load(f"{self.suite.name}_{self.rank.name}.png")
+        return pygame.image.load(f"cards/{self.suite.name}_{self.rank.name}.png")
 
 
 class Deck:
@@ -122,8 +122,8 @@ class Game:
         # Main loop
         while run:
             self.update()
-            # Ensure program maintains a rate of 2 frames per second
-            self.clock.tick(2)
+            # Ensure program maintains a rate of 60 frames per second
+            self.clock.tick(60)
             # Look at every event in the queue
             for event in pygame.event.get():
                 # Did the user hit a key?
@@ -157,7 +157,6 @@ class GameView:
 
 
 def klondike_game():
-    print(Suite.Clubs.name)
     pygame.init()
     game = Game()
     GameView(game)
