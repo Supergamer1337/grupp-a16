@@ -86,10 +86,11 @@ class Deck:
 
 class Board:
     def __init__(self, deck: Deck):
-        self.gen_board()
+        self.gen_board(deck)
         pass
 
-    def gen_board(self):
+    def gen_board(self, deck):
+
         pass
 
     def move_card(self):
@@ -97,19 +98,43 @@ class Board:
 
 
 class Game:
+
+    observers = []
+
     def __init__(self):
         self.deck = Deck()
         self.board = Board(self.deck)
-        pass
+
+    def update(self):
+        self.notify_observers() # Update Render
 
     def run(self):
         pass
 
+    def add_observer(self, observer):
+        self.observers.append(observer)
+
+    def notify_observers(self):
+        for observer in self.observers:
+            observer.notify()
+
 
 class GameView:
-    def __init__(self, game: Game):
+    def __init__(self, game: Game, screen_width: int = 800, screen_height: int = 600):
+        pygame.display.set_caption('Solitaire')
         self.game = game
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+        self.game.add_observer(self)
+
         pass
+
+    def notify(self):
+        self.render()
+
+    def render(self):
+        self.screen.fill((255, 255, 255))
 
 
 def klondike_game():
