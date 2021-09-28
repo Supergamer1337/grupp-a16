@@ -40,21 +40,6 @@ class Rank(Enum):
     King = 13
 
 
-class Card:
-
-    card_back = pygame.image.load("cards/card_back.png")
-
-    def __init__(self, suite: Suite, rank: Rank, hidden: bool = True):
-        self.suite = suite
-        self.rank = rank
-        self.hidden = hidden
-        self.size = self.card_back.get_size()
-        self.card_front = self.get_card_front()
-
-    def get_card_front(self):
-        return pygame.image.load(f"cards/{self.suite.name}_{self.rank.name}.png")
-
-
 class Deck:
     def __init__(self):
         self.card_pile = self.gen_new_deck()
@@ -65,6 +50,9 @@ class Deck:
         self.shuffle_discard_pile()
         card = self.card_pile.pop()
         self.drawn_cards.append(card)
+
+    def deal_card(self):
+        return self.card_pile.pop()
 
     # TODO: Set a better name
     # Shuffles back drawn cards into deck if deck is empty
@@ -94,20 +82,39 @@ class Deck:
 
 class Board:
     def __init__(self, deck: Deck):
-        self.gen_board(deck)
+        self.board = self.gen_board(deck)
+        # self.print_board()
         pass
 
-    def gen_board(self, deck):
-
+    def move_cards(self):
         pass
 
-    def move_card(self):
-        pass
+    # Print cards in board for debugging
+    def print_board(self):
+        for column in self.board:
+            print(f"Column {self.board.index(column)}")
+            for card in column:
+                print(f"{card.rank.name} {card.suite.name}")
+
+    @staticmethod
+    def gen_board(deck):
+        temp_board = []
+        for i in range(7):
+            column = deque()
+            for j in range(i+1):
+                column.append(deck.deal_card())
+            temp_board.append(column)
+
+        return temp_board
 
 
 class Game:
 
     observers = []
+
+    SCREEN_WIDTH = 1600
+    SCREEN_HEIGHT = 900
+    SCREEN_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT
 
     def __init__(self):
         self.deck = Deck()
@@ -129,7 +136,6 @@ class Game:
                 # Did the user hit a key?
                 if event.type == pygame.QUIT:
                     run = False
-        pass
 
     def add_observer(self, observer):
         self.observers.append(observer)
@@ -139,12 +145,31 @@ class Game:
             observer.notify()
 
 
+class Card:
+
+    img_card_back = pygame.transform.rotozoom(pygame.image.load("cards/card_back.png"), 0, 0.2)
+
+    def __init__(self, suite: Suite, rank: Rank, hidden: bool = True):
+        self.suite = suite
+        self.rank = rank
+        self.hidden = hidden
+        self.size = self.img_card_back.get_size()
+        self.img_card_front = self.get_card_front()
+
+    def get_card_front(self):
+        return pygame.image.load(f"cards/{self.suite.name}_{self.rank.name}.png")
+
+
 class GameView:
-    def __init__(self, game: Game, screen_width: int = 800, screen_height: int = 600):
+
+    # Currently disgusting green
+    color_background = (31, 125, 50)
+
+    def __init__(self, game: Game):
         pygame.display.set_caption('Solitaire')
         self.game = game
-        self.screen_width = screen_width
-        self.screen_height = screen_height
+        self.screen_width = Game.SCREEN_WIDTH
+        self.screen_height = Game.SCREEN_HEIGHT
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.game.add_observer(self)
 
@@ -152,8 +177,21 @@ class GameView:
         self.render()
 
     def render(self):
-        self.screen.fill((255, 255, 255))
+        self.screen.fill(self.color_background)
+        self.render_card(Card(Suite.Clubs, Rank.Seven), (100, 100))
         pygame.display.flip()
+
+    def render_board(self):
+        pass
+
+    def render_deck(self):
+        pass
+
+    def render_card(self, card: Card, position: (int, int)):
+        if card.hidden:
+            self.screen.blit(card.img_card_back, position)
+        else:
+            self.screen.blit(card.img_card_front, position)
 
 
 def klondike_game():
