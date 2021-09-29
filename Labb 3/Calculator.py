@@ -1,5 +1,6 @@
 # package calculator
 
+from collections import deque
 from math import nan
 from enum import Enum
 
@@ -25,15 +26,57 @@ DIV_BY_ZERO:      str = "Division with 0"
 MISSING_OPERATOR: str = "Missing operator or parenthesis"
 OP_NOT_FOUND:     str = "Operator not found"
 OPERATORS:        str = "+-*/^"
-
+### TEST NUMBERS ###
+# (5+4)*(7-3)
+# (5*(3-1)+2)
+# (5+10)*64^8+(8 + (4*(3+4))
 
 def infix_to_postfix(tokens):
+    tokens = "".join(tokens)
+    ### Add in this order to stack
+    stack = deque()
+    # First check for parenthesis
+    
+    if find_all(tokens, "(") != find_all(tokens, ")"):
+        # TODO: error
+        pass
+    positions = find_all(tokens, "(")
+    print(f"Input: {tokens}")
+    for i in range(len(positions), 0, -1):
+        
+        first_paranthesis = positions[i-1]
+        second_paranthesis = tokens.rfind(")") + 1
+        substring = tokens[first_paranthesis: second_paranthesis]
+        tokens = tokens.replace(substring, "")
+        print(f"Substr: {substring}")
+        print(f"Input removed substr: {tokens}")
+
+        
+
+    
+    # while subtoken.find("(") != -1:
+    #     if tokens.rfind(")") == -1:
+    #         return ValueError(MISSING_OPERATOR)
+    #     subtoken = tokens[tokens.find("("): tokens.rfind(")")]
+    
+    # Second check power
+    # Third check multiplication and division
+    # Fourth check addition and subtraction
     return []  # TODO
 
 
+def find_all(a_str, sub):
+    start = 0
+    result = []
+    while True:
+        start = a_str.find(sub, start)
+        if start == -1: return result
+        result.append(start)
+        start += len(sub) # use start += 1 to find overlapping matches
+
 # -----  Evaluate RPN expression -------------------
 def eval_postfix(postfix_tokens):
-    return 0  # TODO
+    return "inte dab"  # TODO
 
 
 # Method used in REPL
