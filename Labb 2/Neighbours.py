@@ -37,7 +37,7 @@ class NeighboursModel:
 
     # Tune these numbers to test different distributions or update speeds
     FRAME_RATE = 20            # Increase number to speed simulation up
-    DIST = [0.4, 0.4, 0.20]  # % of RED, BLUE, and NONE
+    DIST = [0.2, 0.2, 0.6]     # % of RED, BLUE, and NONE
     THRESHOLD = 0.7            # % of surrounding neighbours that should be like me for satisfaction
     cells_satisfied = False
 
