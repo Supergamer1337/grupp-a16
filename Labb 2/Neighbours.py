@@ -22,7 +22,7 @@ class State(Enum):
 
 
 World = List[List[Actor]]  # Type alias
-SIZE = 300
+SIZE = 30
 
 
 def neighbours():
@@ -92,7 +92,7 @@ class NeighboursModel:
         cell_pos = []
         for x in range(len(self.world)):
             for y in range(len(self.world)):
-                current_state = self.check_cell(x, y)
+                current_state = self.check_cell_state(x, y)
                 current_cell = self.world[x][y]
                 if current_state == State.SATISFIED:
                     new_cell_map.append(current_cell)
@@ -103,7 +103,7 @@ class NeighboursModel:
                         cell_pos.append((x, y))
         return new_cell_map, valid_pos, cell_pos
 
-    def check_cell(self, x, y):
+    def check_cell_state(self, x, y):
         """
             Check state of given cell and returns the state.
         """
@@ -141,7 +141,7 @@ class NeighboursModel:
             old_pos = cell_pos[i]
             new_pos = valid_pos[i]
             # print(f"Old: {old_pos[0]}, {old_pos[1]}\nNew: {new_pos[0]}, {new_pos[1]}")
-            new_cell_map[new_pos[0]][new_pos[1]] = self.world[old_pos[0]][old_pos[1]]
+            new_cell_map[new_pos[0]][new_pos[1]] = self.world[old_pos[0]][old_pos[1]] # 0 gives the x-coordinate, 1 gives the y-coordinate
         return new_cell_map
 
     # ########### the rest of this class is already defined, to handle the simulation clock  ###########
@@ -245,7 +245,11 @@ def test():
     print(count(test_world_list, Actor.RED) == 3)
     print(count(test_world_list, Actor.BLUE) == 2)
 
-    exit(0)
+    # test_model = NeighboursModel(9)
+    # (test_cell_map, test_valid_pos, test_cell_pos) = test_model.get_satisfied_cells()
+    # print(test_cell_map, test_valid_pos, test_cell_pos)
+    # print(test_model.check_cell_state(1, 1))
+    # exit(0)
 
 
 # Helper method for testing
