@@ -22,7 +22,7 @@ class State(Enum):
 
 
 World = List[List[Actor]]  # Type alias
-SIZE = 30
+SIZE = 300
 
 
 def neighbours():
@@ -92,7 +92,7 @@ class NeighboursModel:
         cell_pos = []
         for x in range(len(self.world)):
             for y in range(len(self.world)):
-                current_state = self.check_cell_state(x, y)
+                current_state = self.get_cell_state(x, y)
                 current_cell = self.world[x][y]
                 if current_state == State.SATISFIED:
                     new_cell_map.append(current_cell)
@@ -103,10 +103,11 @@ class NeighboursModel:
                         cell_pos.append((x, y))
         return new_cell_map, valid_pos, cell_pos
 
-    def check_cell_state(self, x, y):
+    def get_cell_state(self, x, y):
         """
             Check state of given cell and returns the state.
         """
+        # print(x, y) # For test purposes!
         if self.world[x][y] == Actor.NONE:
             return State.NA
         result = self.neighbour_cell_threshold(x, y)
@@ -122,7 +123,7 @@ class NeighboursModel:
         same_colored_cells = 0
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if not (i == 0 and j == 0) and is_valid_location(len(self.world), i + x, j + y):
+                if correct_location(self, i, j, i + x, j + y):
                     curr_cell = self.world[i + x][j + y]
                     if curr_cell != Actor.NONE:
                         surrounding_cells += 1
@@ -193,6 +194,8 @@ class NeighboursModel:
 def is_valid_location(size: int, row: int, col: int):
     return 0 <= row < size and 0 <= col < size
 
+def correct_location(self, i, j, row, col):
+    return not (i == 0 and j == 0) and is_valid_location(len(self.world), row, col)
 
 def add_element(actor_type, percentage, size):
     """
@@ -245,11 +248,13 @@ def test():
     print(count(test_world_list, Actor.RED) == 3)
     print(count(test_world_list, Actor.BLUE) == 2)
 
-    # test_model = NeighboursModel(9)
-    # (test_cell_map, test_valid_pos, test_cell_pos) = test_model.get_satisfied_cells()
-    # print(test_cell_map, test_valid_pos, test_cell_pos)
-    # print(test_model.check_cell_state(1, 1))
-    # exit(0)
+    test_model = NeighboursModel(3)
+    test_model.get_cell_state(0,0)
+    (test_cell_map, test_valid_pos, test_cell_pos) = test_model.get_satisfied_cells()
+    test_model.new_cell_world()
+    print(test_cell_map)
+    print(test_valid_pos)
+    print(test_cell_pos)
 
 
 # Helper method for testing
