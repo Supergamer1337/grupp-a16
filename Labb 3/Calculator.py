@@ -40,54 +40,20 @@ def infix_to_postfix(tokens):
     test()
     ### Add in this order to stack
     stack = deque()
-    # First check for parenthesis
-    if len(find_all(tokens, "(")) > 0 or len(find_all(tokens, ")")) > 0:
-        paren_depth(tokens)
-        # handle_parenthesis()
-    else:
-        pass
-    positions = find_all(tokens, "(")
-    print(f"Positions of opening parenthesis: {positions}")
+    valid_parentheses(tokens)
     print(f"Input was: {tokens}")
-    
+
     # Second check power
     # Third check multiplication and division
     # Fourth check addition and subtraction
-    return []  # TODO
+    return stack
 
 
-# Rekursiv metod som appendar till en stack för paranteser?
-def handle_parenthesis():
-    if not find_all(tokens, "(") == find_all(tokens, ")"):
-        return ValueError(MISSING_OPERATOR)
-    parentheses = {"open": "(", "closed": ")"}
-
-
-def paren_depth(tokens) -> list:
-    print(tokens)
-    depth: int = -1
-    parentheses = {"open": "(", "closed": ")"}
-    paren_pos_pairs = []
-    open: int = 0
-    close: int = 0
-    for i in range(len(tokens)):
-        if tokens[i] in parentheses["open"]:
-            print(f'Token "{tokens[i]}" at {i} was open')
-            open = i
-            depth += 1
-        elif tokens[i] in parentheses["closed"]:
-            print(f'Token "{tokens[i]}" at {i} was closed')
-            close = i
-            while len(paren_pos_pairs) <= depth:
-                paren_pos_pairs.append([])
-            paren_pos_pairs[depth].append((open, close))
-            depth -= 1
-    print(paren_pos_pairs)
-
-def paren_depth_v2(tokens: str) -> list:
+# Går igenom tokens rekursivt och lägger till i stacken
+def paren_depth_v2(tokens: str, stack: deque) -> deque:
     depth = 0
-    #handles parenthesis splits
-    occurence = tokens.find("(")
+    # Breaks down parentheses
+    occurrence = tokens.find("(")
     while len(find_all(tokens, "(")) > 0:
         for i in range(len(tokens)):
             if tokens[i] == "(":
@@ -95,14 +61,15 @@ def paren_depth_v2(tokens: str) -> list:
             elif tokens[i] == ")":
                 depth -= 1
             if depth == 0 and tokens[i] == ")":
-                # occurence + 1 only takes the arguments inside the parentheses
-                # print(f"Split: {tokens[occurence + 1 : i]}")
-                paren_depth_v2(tokens[occurence + 1: i])
-                tokens = tokens.replace(tokens[occurence: i + 1], "")  # Removes parantheses from tokens
+                # occurrence + 1 only takes the arguments inside the parentheses
+                # print(f"Split: {tokens[occurrence + 1 : i]}") # Uncomment for more debug info
+                paren_depth_v2(tokens[occurrence + 1: i], stack)
+                tokens = tokens.replace(tokens[occurrence: i + 1], "")  # Removes parentheses from tokens
                 break
-        occurence = tokens.find("(")
+        occurrence = tokens.find("(")
     print(f"Result after split: {tokens}")
-    # Handle adding to stack
+    # TODO: Handle adding result to stack
+    return stack
     
 
 def find_all(a_str, sub):
@@ -172,6 +139,12 @@ def tokenize(expr: str):
 
 # TODO Possibly more methods
 
+
+def valid_parentheses(tokens):
+    if not find_all(tokens, "(") == find_all(tokens, ")"):
+        return ValueError(MISSING_OPERATOR)
+
+
 def test():
     tokens = ["2*((5-1)*(2+2))", "(5*(3-1)+2)", "(2+(3-1)*5)"]
     assert len(find_all(tokens[0], "(")) == 3
@@ -180,7 +153,8 @@ def test():
     # assert paren_depth(tokens) == [[(2, 14)], [(3, 7), (9, 13)]]
 
     for i in range(len(tokens)):
+        stack = deque()
         print(tokens[i])
-        paren_depth_v2(tokens[i])
+        paren_depth_v2(tokens[i], stack)
 
     print("Testing Completed")
