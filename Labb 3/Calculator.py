@@ -30,9 +30,10 @@ OPERATORS:        str = "+-*/^"
 # (5+4)*(7-3)
 # (5*(3-1)+2)
 # (5+10)*64^8+(8 + (4*(3+4))
+# 2*((5-1)*(2+2))
 
 def infix_to_postfix(tokens):
-    tokens = "".join(tokens)
+    tokens = "".join(tokens)  # To support both GUI and REPL
     ### Add in this order to stack
     stack = deque()
     # First check for parenthesis
@@ -51,9 +52,6 @@ def infix_to_postfix(tokens):
         print(f"Substr: {substring}")
         print(f"Input removed substr: {tokens}")
 
-        
-
-    
     # while subtoken.find("(") != -1:
     #     if tokens.rfind(")") == -1:
     #         return ValueError(MISSING_OPERATOR)
@@ -65,14 +63,19 @@ def infix_to_postfix(tokens):
     return []  # TODO
 
 
+# Rekursiv metod som appendar till en stack för paranteser
+
+
 def find_all(a_str, sub):
     start = 0
     result = []
     while True:
         start = a_str.find(sub, start)
-        if start == -1: return result
+        if start == -1:
+            return result
         result.append(start)
-        start += len(sub) # use start += 1 to find overlapping matches
+        start += len(sub)  # use start += 1 to find overlapping matches
+
 
 # -----  Evaluate RPN expression -------------------
 def eval_postfix(postfix_tokens):
