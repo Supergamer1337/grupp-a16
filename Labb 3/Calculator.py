@@ -45,9 +45,9 @@ def infix_to_postfix(tokens):
     print(f"Input: {tokens}")
     for i in range(len(positions), 0, -1):
         
-        first_paranthesis = positions[i-1]
-        second_paranthesis = tokens.rfind(")") + 1
-        substring = tokens[first_paranthesis: second_paranthesis]
+        first_parenthesis = positions[i-1]
+        second_parenthesis = tokens.rfind(")") + 1
+        substring = tokens[first_parenthesis: second_parenthesis]
         tokens = tokens.replace(substring, "")
         print(f"Substr: {substring}")
         print(f"Input removed substr: {tokens}")
