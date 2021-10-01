@@ -63,7 +63,7 @@ def infix_to_postfix(tokens):
     return []  # TODO
 
 
-# Rekursiv metod som appendar till en stack för paranteser
+# Rekursiv metod som appendar till en stack för paranteser?
 
 
 def find_all(a_str, sub):
