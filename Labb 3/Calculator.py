@@ -105,7 +105,6 @@ def paren_depth_v2(tokens: str) -> list:
     # Handle adding to stack
     
 
-
 def find_all(a_str, sub):
     start = 0
     result = []
