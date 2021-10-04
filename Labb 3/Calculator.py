@@ -32,7 +32,7 @@ OPERATORS:        str = "+-*/^"
 # (5+10)*64^8+(8 + (4*(3+4))
 
 
-# 2*((5-1)*(2+2)) = 16
+# 2*((5-1)*(2+2)) = 32
 # ((5-1)-(3-(2+3)))
 # 5 1 - 2 2 + * 2 *
 def infix_to_postfix(tokens):
@@ -67,9 +67,48 @@ def paren_depth_v2(tokens: str, stack: deque) -> deque:
                 tokens = tokens.replace(tokens[occurrence: i + 1], "")  # Removes parentheses from tokens
                 break
         occurrence = tokens.find("(")
-    print(f"Result after split: {tokens}")
+    #print(f"Result after split: {tokens}")
     # TODO: Handle adding result to stack
+    for operator in "^*/+-":
+        while operator in tokens:
+            if len(tokens) == 1:
+                stack.append(tokens)
+                tokens = tokens.replace(operator, "")
+            else:
+                left, right = get_adjacent(tokens, operator)
+                if left is not None:
+                    stack.append(left)
+                else:
+                    left = ""
+
+                if right is not None:
+                    stack.append(right)
+                else:
+                    right = ""
+                stack.append(operator)
+                string = f"{left}{operator}{right}"
+                #print(string)
+                tokens = tokens.replace(string, "")
+    print(stack)
     return stack
+
+
+def get_adjacent(tokens: str, operator: str):
+    right = convert_int(tokens, operator, 1)
+    left = convert_int(tokens, operator, -1)
+    return left, right
+
+
+def convert_int(tokens: str, operator: str, offset: int):
+    try:
+        pos = tokens.index(operator) + offset
+        if pos > -1 and pos < len(tokens):
+            num = int(tokens[pos])
+        else:
+            return None
+    except ValueError:
+        return None
+    return num
     
 
 def find_all(a_str, sub):
@@ -85,7 +124,7 @@ def find_all(a_str, sub):
 
 # -----  Evaluate RPN expression -------------------
 def eval_postfix(postfix_tokens):
-    return "inte dab"  # TODO
+    return "DAB"  # TODO
 
 
 # Method used in REPL
@@ -146,7 +185,12 @@ def valid_parentheses(tokens):
 
 
 def test():
-    tokens = ["2*((5-1)*(2+2))", "(5*(3-1)+2)", "(2+(3-1)*5)"]
+    tokens = [
+        "2*((5-1)*(2+2))", 
+        "(5*(3-1)+2)", 
+        "(2+(3-1)*5)", 
+        "(2+5*1)"
+        ]
     assert len(find_all(tokens[0], "(")) == 3
     assert find_all(tokens[0], "(") == [2, 3, 9]
     # paren_depth(tokens)
