@@ -42,7 +42,7 @@ def infix_to_postfix(tokens):
     stack = deque()
     valid_parentheses(tokens)
     print(f"Input was: {tokens}")
-
+    stack = paren_depth_v2(tokens, stack)
     # Second check power
     # Third check multiplication and division
     # Fourth check addition and subtraction
