@@ -49,52 +49,12 @@ def infix_to_postfix(tokens):
     return stack
 
 
-# Går igenom tokens rekursivt och lägger till i stacken
 def token_to_stack(tokens: str, stack: deque) -> deque:
     tokens = split_parenthesis(tokens, stack)
-    print(f"Result after split: {tokens}")
-    # TODO: Handle adding result to stack
+    # print(f"Result after split: {tokens}")
     fill_stack(tokens, stack)
-
     print(stack)
     return stack
-
-
-def fill_stack(tokens, stack):
-
-    for precedence in range(2, -1, -1):
-        operator_positions = get_operator_positions(tokens, precedence)
-        # print(f"Current precedence: {precedence}")
-        for operator_pos in operator_positions:
-            operator = tokens[operator_pos]
-            # print(f"Current op: {operator}")
-            add_to_stack(tokens, stack, operator)
-
-
-def add_to_stack(tokens, stack, operator):
-    left, right = get_adjacent(tokens, operator)
-    if left is not None:
-        stack.append(left)
-    else:
-        left = ""
-
-    if right is not None:
-        stack.append(right)
-    else:
-        right = ""
-    stack.append(operator)
-    string = f"{left}{operator}{right}"
-    print(string)
-    tokens = tokens.replace(string, "")
-
-
-def get_operator_positions(tokens, precedence):
-    operator_positions: list[int] = []
-    for pos, char in enumerate(tokens):
-        op_precedence = get_precedence(char)
-        if op_precedence == precedence:
-            operator_positions.append(pos)
-    return operator_positions
 
 
 def split_parenthesis(tokens, stack):
@@ -117,6 +77,38 @@ def split_parenthesis(tokens, stack):
     return tokens
 
 
+def fill_stack(tokens, stack):
+    for precedence in range(2, -1, -1):
+        # print(f"Current precedence: {precedence}")
+        operator_positions = get_operator_positions(tokens, precedence)
+        while len(operator_positions) != 0:
+            operator = tokens[operator_positions[0]]
+            # print(f"Current op: {operator}")
+            left, right = get_adjacent(tokens, operator)
+            if left is not None:
+                stack.append(left)
+            else:
+                left = ""
+            if right is not None:
+                stack.append(right)
+            else:
+                right = ""
+            stack.append(operator)
+            string = f"{left}{operator}{right}"
+            # print(string)
+            tokens = tokens.replace(string, "")
+            operator_positions = get_operator_positions(tokens, precedence)
+
+
+def get_operator_positions(tokens, precedence):
+    operator_positions: list[int] = []
+    for pos, char in enumerate(tokens):
+        op_precedence = get_precedence(char)
+        if op_precedence == precedence:
+            operator_positions.append(pos)
+    return operator_positions
+
+
 def get_adjacent(tokens: str, operator: str):
     right = convert_int(tokens, operator, 1)
     left = convert_int(tokens, operator, -1)
@@ -126,7 +118,7 @@ def get_adjacent(tokens: str, operator: str):
 def convert_int(tokens: str, operator: str, offset: int):
     try:
         pos = tokens.index(operator) + offset
-        if pos > -1 and pos < len(tokens):
+        if -1 < pos < len(tokens):
             num = int(tokens[pos])
         else:
             return None
