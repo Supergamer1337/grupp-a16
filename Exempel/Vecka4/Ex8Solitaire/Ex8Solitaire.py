@@ -84,10 +84,19 @@ class Deck:
             suite_cards.append(Card(suite, rank))
         return suite_cards
 
+    def print_cards(self):
+        print(f"Cards in draw pile: {len(self.card_pile)}")
+        for card in self.card_pile:
+            print(f"Suite: {card.suite.name}, Rank: {card.rank.name}")
+        print(f"Cards in discard pile: {len(self.drawn_cards)}")
+        for card in self.drawn_cards:
+            print(f"Suite: {card.suite.name}, Rank: {card.rank.name}")
+
 
 class Board:
     def __init__(self, deck: Deck):
         self.board = self.gen_board(deck)
+        self.move_pile = deque()
 
     # Moves a set of cards from one column to another
     def move_cards(self):
@@ -171,7 +180,7 @@ class Card:
 
 class GameView:
 
-    # Currently disgusting green TODO: Fix a better color
+    # Currently disgusting green
     color_background = (31, 125, 50)
 
     def __init__(self, game: Game):
@@ -191,6 +200,9 @@ class GameView:
         self.screen.fill(self.color_background)
         self.render_deck()
         self.render_board()
+        for i in range(10):
+            self.render_card(Card(Suite.Clubs, Rank.Seven), (20*i + 50, i*20 + 50))
+
         pygame.display.flip()
 
     # Renders the game board
