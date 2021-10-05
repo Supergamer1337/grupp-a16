@@ -42,7 +42,7 @@ def infix_to_postfix(tokens):
     stack = deque()
     valid_parentheses(tokens)
     print(f"Input was: {tokens}")
-    stack = paren_depth_v2(tokens, stack)
+    token_to_stack(tokens, stack)
     # Second check power
     # Third check multiplication and division
     # Fourth check addition and subtraction
@@ -50,7 +50,54 @@ def infix_to_postfix(tokens):
 
 
 # Går igenom tokens rekursivt och lägger till i stacken
-def paren_depth_v2(tokens: str, stack: deque) -> deque:
+def token_to_stack(tokens: str, stack: deque) -> deque:
+    tokens = split_parenthesis(tokens, stack)
+    print(f"Result after split: {tokens}")
+    # TODO: Handle adding result to stack
+    fill_stack(tokens, stack)
+
+    print(stack)
+    return stack
+
+
+def fill_stack(tokens, stack):
+
+    for precedence in range(2, -1, -1):
+        operator_positions = get_operator_positions(tokens, precedence)
+        # print(f"Current precedence: {precedence}")
+        for operator_pos in operator_positions:
+            operator = tokens[operator_pos]
+            # print(f"Current op: {operator}")
+            add_to_stack(tokens, stack, operator)
+
+
+def add_to_stack(tokens, stack, operator):
+    left, right = get_adjacent(tokens, operator)
+    if left is not None:
+        stack.append(left)
+    else:
+        left = ""
+
+    if right is not None:
+        stack.append(right)
+    else:
+        right = ""
+    stack.append(operator)
+    string = f"{left}{operator}{right}"
+    print(string)
+    tokens = tokens.replace(string, "")
+
+
+def get_operator_positions(tokens, precedence):
+    operator_positions: list[int] = []
+    for pos, char in enumerate(tokens):
+        op_precedence = get_precedence(char)
+        if op_precedence == precedence:
+            operator_positions.append(pos)
+    return operator_positions
+
+
+def split_parenthesis(tokens, stack):
     depth = 0
     # Breaks down parentheses
     occurrence = tokens.find("(")
@@ -62,35 +109,12 @@ def paren_depth_v2(tokens: str, stack: deque) -> deque:
                 depth -= 1
             if depth == 0 and tokens[i] == ")":
                 # occurrence + 1 only takes the arguments inside the parentheses
-                # print(f"Split: {tokens[occurrence + 1 : i]}") # Uncomment for more debug info
-                paren_depth_v2(tokens[occurrence + 1: i], stack)
+                # print(f"Split: {tokens[occurrence + 1: i]}")  # Uncomment for more debug info
+                token_to_stack(tokens[occurrence + 1: i], stack)
                 tokens = tokens.replace(tokens[occurrence: i + 1], "")  # Removes parentheses from tokens
                 break
         occurrence = tokens.find("(")
-    #print(f"Result after split: {tokens}")
-    # TODO: Handle adding result to stack
-    for operator in "^*/+-":
-        while operator in tokens:
-            if len(tokens) == 1:
-                stack.append(tokens)
-                tokens = tokens.replace(operator, "")
-            else:
-                left, right = get_adjacent(tokens, operator)
-                if left is not None:
-                    stack.append(left)
-                else:
-                    left = ""
-
-                if right is not None:
-                    stack.append(right)
-                else:
-                    right = ""
-                stack.append(operator)
-                string = f"{left}{operator}{right}"
-                #print(string)
-                tokens = tokens.replace(string, "")
-    print(stack)
-    return stack
+    return tokens
 
 
 def get_adjacent(tokens: str, operator: str):
@@ -149,13 +173,13 @@ def apply_operator(op: str, d1: float, d2: float):
 
 def get_precedence(op: str):
     op_switcher = {
-        "+": 2,
-        "-": 2,
-        "*": 3,
-        "/": 3,
-        "^": 4
+        "+": 0,
+        "-": 0,
+        "*": 1,
+        "/": 1,
+        "^": 2
     }
-    return op_switcher.get(op, ValueError(OP_NOT_FOUND))
+    return op_switcher.get(op, -1)
 
 
 class Assoc(Enum):
@@ -194,12 +218,10 @@ def test():
         ]
     assert len(find_all(tokens[0], "(")) == 3
     assert find_all(tokens[0], "(") == [2, 3, 9]
-    # paren_depth(tokens)
-    # assert paren_depth(tokens) == [[(2, 14)], [(3, 7), (9, 13)]]
 
     for i in range(len(tokens)):
         stack = deque()
         print(tokens[i])
-        paren_depth_v2(tokens[i], stack)
+        token_to_stack(tokens[i], stack)
 
     print("Testing Completed")
