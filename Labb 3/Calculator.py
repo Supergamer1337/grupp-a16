@@ -31,22 +31,18 @@ OPERATORS:        str = "+-*/^"
 # (5*(3-1)+2) = 
 # (5+10)*64^8+(8 + (4*(3+4))
 
+# RÄkna ut paranteser på samma djup och skicka in som ny hel string
 
 # 2*((5-1)*(2+2)) = 32
 # ((5-1)-(3-(2+3)))
 # 5 1 - 2 2 + * 2 *
 def infix_to_postfix(tokens):
     tokens = "".join(tokens)  # To support both GUI and REPL
-    test()
-    ### Add in this order to stack
-    stack = deque()
-    valid_parentheses(tokens)
-    print(f"Input was: {tokens}")
-    token_to_stack(tokens, stack)
-    # Second check power
-    # Third check multiplication and division
-    # Fourth check addition and subtraction
-    return stack
+    # stack = deque()
+    # valid_parentheses(tokens)
+    # print(f"Input was: {tokens}")
+    # token_to_stack(tokens, stack)
+    return calc_expression(tokens)
 
 
 def token_to_stack(tokens: str, stack: deque) -> deque:
@@ -57,11 +53,47 @@ def token_to_stack(tokens: str, stack: deque) -> deque:
     return stack
 
 
+
+def calc_expression(tokens: str):
+    # Expression inside parenthesis
+    depth = 0
+    occurrence = tokens.find("(")
+    while len(find_all(tokens, "(")):
+        for pos, char in enumerate(tokens):
+            if char == "(":
+                depth += 1
+            elif char == ")":
+                depth -= 1
+            if depth == 0 and char == ")":
+                content = tokens[occurrence + 1: pos]  # Content of parenthesis
+                content_parenthesis = tokens[occurrence: pos + 1] # used to removes parentheses from tokens
+                tokens = tokens.replace(content_parenthesis, calc_expression(tokens))
+    # TODO: Calc tokens
+    # Calculate what's left
+    for precedence in reversed(range(0, 2)):
+        # print(f"Current precedence: {precedence}")
+        operator_positions = get_operator_positions(tokens, precedence)
+        while len(operator_positions):
+            operator = tokens[operator_positions[0]]
+            # print(f"Current op: {operator}") 
+            # TODO: Add support for numbers larger than 9 and , or .
+            left, right = get_adjacent(tokens, operator)
+            string = f"{left}{operator}{right}"
+            # print(string)
+            left_nr = float(left)
+            right_nr = float(right)
+            result = apply_operator(operator, left_nr, right_nr)
+            tokens = tokens.replace(string, str(result))
+            operator_positions = get_operator_positions(tokens, precedence)
+    print(tokens)
+    return tokens # Return resulting number
+
+
 def split_parenthesis(tokens, stack):
     depth = 0
     # Breaks down parentheses
     occurrence = tokens.find("(")
-    while len(find_all(tokens, "(")) > 0:
+    while len(find_all(tokens, "(")):
         for i in range(len(tokens)):
             if tokens[i] == "(":
                 depth += 1
@@ -69,7 +101,7 @@ def split_parenthesis(tokens, stack):
                 depth -= 1
             if depth == 0 and tokens[i] == ")":
                 # occurrence + 1 only takes the arguments inside the parentheses
-                # print(f"Split: {tokens[occurrence + 1: i]}")  # Uncomment for more debug info
+                print(f"Split: {tokens[occurrence + 1: i]}")  # Uncomment for more debug info
                 token_to_stack(tokens[occurrence + 1: i], stack)
                 tokens = tokens.replace(tokens[occurrence: i + 1], "")  # Removes parentheses from tokens
                 break
@@ -78,7 +110,7 @@ def split_parenthesis(tokens, stack):
 
 
 def fill_stack(tokens, stack):
-    for precedence in range(2, -1, -1):
+    for precedence in reversed(range(0, 2)):
         # print(f"Current precedence: {precedence}")
         operator_positions = get_operator_positions(tokens, precedence)
         while len(operator_positions) != 0:
@@ -173,7 +205,6 @@ def get_precedence(op: str):
     }
     return op_switcher.get(op, -1)
 
-
 class Assoc(Enum):
     LEFT = 1
     RIGHT = 2
@@ -206,14 +237,35 @@ def test():
         "(5*(3-1)+2)", 
         "(2+(3-1)*5)", 
         "(2+5*1)",
-        "6/3*5"
+        "6/3*5",
+        "((6*(3/6))*3-9*(1/9))^2/(5-3)" # Multiplicerar tal utanför parantes i fel ordning. 
+        "3*(3+2)"
         ]
+    stack_answer = [
+        deque([5, 1, "-", 2, 2, "+", "*", 2, "*"]),
+        deque([3, 1, "-", 5, "*", 2, "+"]),
+        deque([3, 1, "-", 5, "*", 2, "+"]),
+        deque([5, 1, '*', 2, '+']),
+        deque([6, 3, "/", 5, "*"]),
+        deque([3, 6, "/", 6, "*", 3, "*", 1, 9, "/", 9, "*", "-", 2, "^", 5, 3, "-", "/"])
+        ]
+    number_answer = [
+        32,
+        12,
+        12,
+        7,
+        10,
+        32
+    ]
     assert len(find_all(tokens[0], "(")) == 3
     assert find_all(tokens[0], "(") == [2, 3, 9]
 
     for i in range(len(tokens)):
         stack = deque()
         print(tokens[i])
-        token_to_stack(tokens[i], stack)
-
+        # assert 
+        token_to_stack(tokens[i], stack)#  == stack_answer[i]
     print("Testing Completed")
+
+if __name__ == "__main__":
+    test()
