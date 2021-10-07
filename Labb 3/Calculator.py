@@ -31,7 +31,6 @@ OPERATORS:        str = "+-*/^"
 # (5*(3-1)+2) = 
 # (5+10)*64^8+(8 + (4*(3+4))
 
-# RÄkna ut paranteser på samma djup och skicka in som ny hel string
 
 # 2*((5-1)*(2+2)) = 32
 # ((5-1)-(3-(2+3)))
@@ -41,8 +40,10 @@ def infix_to_postfix(tokens):
     tokens = comma_to_dot(tokens)
     return tokens
 
+
 def comma_to_dot(tokens: str) -> str:
     return tokens.replace(",", ".")
+
 
 # Kanske bajs
 def int_to_float2(tokens:str):
@@ -60,6 +61,7 @@ def int_to_float2(tokens:str):
             end = start = end + 1
             print(f"Result: {result}")
     return "".join(result)
+
 
 def get_substring(tokens, start, end):
     temp = ""
@@ -202,10 +204,11 @@ def convert_float(tokens: str, operator: str, direction: int):
 def is_number(tokens: str, pos: int):
     in_string = -1 < pos < len(tokens)
     if in_string:
-        is_number = tokens[pos].isdigit()
+        is_a_number = tokens[pos].isdigit()
         is_separator = tokens[pos] == "," or "."
-        return in_string and (is_number or is_separator)
+        return in_string and (is_a_number or is_separator)
     return False
+
 
 def find_all(a_str, sub):
     start = 0
@@ -293,8 +296,8 @@ def test():
         stack = deque()
         print(tokens[i])
         # assert 
-        #token_to_stack(tokens[i], stack)#  == stack_answer[i]
-        #calc_expression(tokens[i])
+        # token_to_stack(tokens[i], stack)#  == stack_answer[i]
+        # calc_expression(tokens[i])
     print("Testing Completed")
     test = "2.5+7-40/1.67+1"
     print(test)
