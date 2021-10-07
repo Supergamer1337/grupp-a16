@@ -166,7 +166,7 @@ def calc_expression(tokens: str):
             tokens = tokens.replace(string, str(result))
             operator_positions = get_operator_positions(tokens, precedence)
     print(tokens)
-    return tokens # Return resulting number
+    return tokens  # Return resulting number
 
 
 def get_operator_positions(tokens, precedence):
@@ -179,28 +179,29 @@ def get_operator_positions(tokens, precedence):
 
 
 def get_adjacent_numbers(tokens: str, operator: str):
-    right = convert_float(tokens, operator, 1)
-    left = convert_float(tokens, operator, -1)
+    right = get_float(tokens, operator, 1)
+    left = get_float(tokens, operator, -1)
     return left, right
     
 
-def convert_float(tokens: str, operator: str, direction: int):
+def get_float(tokens: str, operator: str, direction: int):
     pos = tokens.find(operator) + direction
     num = ""
-    while is_number(tokens, pos):
-        print(pos)
+    print(f"Is part of number? {is_part_of_number(tokens, pos)}")
+    while is_part_of_number(tokens, pos):
         num += tokens[pos]
         pos += direction
     if direction < 0:
-        num = num[::-1] # Reverses string
+        num = num[::-1]  # Reverses string
+    print(f"Number {direction}: {num}")
     return float(num)
         
-    
-def is_number(tokens: str, pos: int):
+    # TODO: Fix this function
+def is_part_of_number(tokens: str, pos: int):
     in_string = -1 < pos < len(tokens)
     if in_string:
         is_a_number = tokens[pos].isdigit()
-        is_separator = tokens[pos] == "," or "."
+        is_separator = tokens[pos] == "."
         return in_string and (is_a_number or is_separator)
     return False
 
@@ -218,8 +219,7 @@ def find_all(a_str, sub):
 
 # -----  Evaluate RPN expression -------------------
 def eval_postfix(postfix_tokens):
-    # calc_expression(postfix_tokens)
-    return "inte dab"
+    return calc_expression(postfix_tokens)
 
 
 # Method used in REPL
@@ -265,7 +265,7 @@ def test():
         "(2+(3-1)*5)", 
         "(2+5*1)",
         "6/3*5",
-        "((6*(3/6))*3-9*(1/9))^2/(5-3)" # Multiplicerar tal utanför parantes i fel ordning. 
+        "((6*(3/6))*3-9*(1/9))^2/(5-3)"
         "3*(3+2)"
         ]
     stack_answer = [
@@ -290,13 +290,11 @@ def test():
     for i in range(len(tokens)):
         stack = deque()
         print(tokens[i])
-        # assert 
+        new_token = int_to_float(tokens[i])
+        print(new_token)
         # token_to_stack(tokens[i], stack)#  == stack_answer[i]
-        # calc_expression(tokens[i])
-    print("Testing Completed")
-    number = "2.5/(7+61)-3"
-    print(number)
-    print(int_to_float2(number))
+        # assert calc_expression(tokens[i]) == number_answer[i]
+        calc_expression(new_token)
     
 
 if __name__ == "__main__":
