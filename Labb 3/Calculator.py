@@ -38,20 +38,106 @@ OPERATORS:        str = "+-*/^"
 # 5 1 - 2 2 + * 2 *
 def infix_to_postfix(tokens):
     tokens = "".join(tokens)  # To support both GUI and REPL
-    # stack = deque()
-    # valid_parentheses(tokens)
-    # print(f"Input was: {tokens}")
-    # token_to_stack(tokens, stack)
-    return calc_expression(tokens)
+    tokens = comma_to_dot(tokens)
+    return tokens
+
+def comma_to_dot(tokens: str) -> str:
+    return tokens.replace(",", ".")
+
+# Kanske bajs
+def int_to_float2(tokens:str):
+    # 0123456789
+    # 2.5+7-40/1.67+1
+    start = end = 0
+    result = []
+    while end < len(tokens):
+        end += 1
+        if end == len(tokens) or not tokens[end].isdigit() and not tokens[end] == ".":
+            to_replace = tokens[start:end]
+            replace_with = str(float(to_replace))
+            print(f"Start, end: {start},{end}\nTo replace: {to_replace}\nReplace with: {replace_with}")
+            result.append(replace_with)
+            if end < len(tokens):
+                result.append(tokens[end])
+            end = start = end + 1
+            print(f"Result: {result}")
+    return "".join(result)
+
+def get_substring(tokens, start, end):
+    temp = ""
+    for start in end+1:
+        temp += tokens[start]
+    return temp
+                
+    
+# troligtvis inte bajs
+def int_to_float4(tokens: str):
+    tokens = list(tokens)
+    number = []
+    numbers = []
+    temp = []
+    i: int = 0
+    for elem in tokens:
+        if elem.isdigit() or elem == ".":
+            number.append(elem)
+        else:
+            for elem in number:
+                temp.append(number)
+            numbers.append(temp)
+            number.clear()
+    print(numbers)
 
 
-def token_to_stack(tokens: str, stack: deque) -> deque:
-    tokens = split_parenthesis(tokens, stack)
-    # print(f"Result after split: {tokens}")
-    fill_stack(tokens, stack)
-    print(stack)
-    return stack
-
+def int_to_float3(tokens: str):
+    temp = ""
+    temp1 = []
+    temp2 = []
+    signs = []
+    for pos, elem in enumerate(tokens):
+        if elem.isdigit() or elem == ".":
+            temp += elem
+        else:
+            signs.append(elem)
+            temp1.append(temp)
+            temp2.append(str(float(temp)))
+            temp = ""
+        if pos == len(tokens) - 1:
+            temp1.append(temp)
+            temp2.append(str(float(temp)))
+    print(temp1)
+    print(temp2)
+    print(len(temp1))
+    temp4 = ""
+    for i in range(len(temp1)):
+        print(f"Current number to replace: {temp1[i]}")
+        if not str(float(temp1[i])) == temp1[i]:
+            print(f"FABBO To replace: {temp1[i]}")
+            print(f"FABBO Replace with: {temp2[i]}")
+            print(f"Signs: {signs}")
+        temp4 += str(temp2[i])
+        temp4 += signs[i]
+        print(temp4)
+    print(temp4)
+        
+            # current_index = tokens.find(temp1[i])
+            # print(current_index)
+            # tokens = list(tokens)
+            # print(tokens)
+            # for j in range(len(temp1[i])):
+            #     tokens.pop(current_index)
+            #     print(tokens)
+            # for elem in reversed(temp2[i]):
+            #     tokens.insert(current_index, elem)
+            # print(f"Added {temp2[i]} to tokens")
+            # temp3 = ""
+            # for elem in tokens:
+            #     temp3 += elem
+            # tokens = temp3
+            # print(tokens)
+    
+    print(tokens)
+    print("Fabbo is done!")
+    return tokens
 
 
 def calc_expression(tokens: str):
@@ -67,7 +153,9 @@ def calc_expression(tokens: str):
             if depth == 0 and char == ")":
                 content = tokens[occurrence + 1: pos]  # Content of parenthesis
                 content_parenthesis = tokens[occurrence: pos + 1] # used to removes parentheses from tokens
-                tokens = tokens.replace(content_parenthesis, calc_expression(tokens))
+                tokens = tokens.replace(content_parenthesis, calc_expression(content))
+                break
+        occurrence = tokens.find("(")
     # TODO: Calc tokens
     # Calculate what's left
     for precedence in reversed(range(0, 2)):
@@ -76,60 +164,14 @@ def calc_expression(tokens: str):
         while len(operator_positions):
             operator = tokens[operator_positions[0]]
             # print(f"Current op: {operator}") 
-            # TODO: Add support for numbers larger than 9 and , or .
-            left, right = get_adjacent(tokens, operator)
+            left, right = get_adjacent_numbers(tokens, operator)
             string = f"{left}{operator}{right}"
-            # print(string)
-            left_nr = float(left)
-            right_nr = float(right)
-            result = apply_operator(operator, left_nr, right_nr)
+            print(string)
+            result = apply_operator(operator, left, right)
             tokens = tokens.replace(string, str(result))
             operator_positions = get_operator_positions(tokens, precedence)
     print(tokens)
     return tokens # Return resulting number
-
-
-def split_parenthesis(tokens, stack):
-    depth = 0
-    # Breaks down parentheses
-    occurrence = tokens.find("(")
-    while len(find_all(tokens, "(")):
-        for i in range(len(tokens)):
-            if tokens[i] == "(":
-                depth += 1
-            elif tokens[i] == ")":
-                depth -= 1
-            if depth == 0 and tokens[i] == ")":
-                # occurrence + 1 only takes the arguments inside the parentheses
-                print(f"Split: {tokens[occurrence + 1: i]}")  # Uncomment for more debug info
-                token_to_stack(tokens[occurrence + 1: i], stack)
-                tokens = tokens.replace(tokens[occurrence: i + 1], "")  # Removes parentheses from tokens
-                break
-        occurrence = tokens.find("(")
-    return tokens
-
-
-def fill_stack(tokens, stack):
-    for precedence in reversed(range(0, 2)):
-        # print(f"Current precedence: {precedence}")
-        operator_positions = get_operator_positions(tokens, precedence)
-        while len(operator_positions) != 0:
-            operator = tokens[operator_positions[0]]
-            # print(f"Current op: {operator}")
-            left, right = get_adjacent(tokens, operator)
-            if left is not None:
-                stack.append(left)
-            else:
-                left = ""
-            if right is not None:
-                stack.append(right)
-            else:
-                right = ""
-            stack.append(operator)
-            string = f"{left}{operator}{right}"
-            # print(string)
-            tokens = tokens.replace(string, "")
-            operator_positions = get_operator_positions(tokens, precedence)
 
 
 def get_operator_positions(tokens, precedence):
@@ -141,23 +183,31 @@ def get_operator_positions(tokens, precedence):
     return operator_positions
 
 
-def get_adjacent(tokens: str, operator: str):
-    right = convert_int(tokens, operator, 1)
-    left = convert_int(tokens, operator, -1)
+def get_adjacent_numbers(tokens: str, operator: str):
+    right = convert_float(tokens, operator, 1)
+    left = convert_float(tokens, operator, -1)
     return left, right
-
-
-def convert_int(tokens: str, operator: str, offset: int):
-    try:
-        pos = tokens.index(operator) + offset
-        if -1 < pos < len(tokens):
-            num = int(tokens[pos])
-        else:
-            return None
-    except ValueError:
-        return None
-    return num
     
+
+def convert_float(tokens: str, operator: str, direction: int):
+    pos = tokens.find(operator) + direction
+    num = ""
+    while is_number(tokens, pos):
+        print(pos)
+        num += tokens[pos]
+        pos += direction
+    if direction < 0:
+        num = num[::-1] # Reverses string
+    return float(num)
+        
+    
+def is_number(tokens: str, pos: int):
+    in_string = -1 < pos < len(tokens)
+    if in_string:
+        is_number = tokens[pos].isdigit()
+        is_separator = tokens[pos] == "," or "."
+        return in_string and (is_number or is_separator)
+    return False
 
 def find_all(a_str, sub):
     start = 0
@@ -172,7 +222,8 @@ def find_all(a_str, sub):
 
 # -----  Evaluate RPN expression -------------------
 def eval_postfix(postfix_tokens):
-    return "DAB"  # TODO
+    # calc_expression(postfix_tokens)
+    return "inte dab"
 
 
 # Method used in REPL
@@ -187,10 +238,10 @@ def eval_expr(expr: str):
 def apply_operator(op: str, d1: float, d2: float):
     op_switcher = {
         "+": d1 + d2,
-        "-": d2 - d1,
+        "-": d1 - d2,
         "*": d1 * d2,
-        "/": nan if d1 == 0 else d2 / d1,
-        "^": d2 ** d1
+        "/": nan if d2 == 0 else d1 / d2,
+        "^": d1 ** d2
     }
     return op_switcher.get(op, ValueError(OP_NOT_FOUND))
 
@@ -204,26 +255,6 @@ def get_precedence(op: str):
         "^": 2
     }
     return op_switcher.get(op, -1)
-
-class Assoc(Enum):
-    LEFT = 1
-    RIGHT = 2
-
-
-def get_associativity(op: str):
-    if op in "+-*/":
-        return Assoc.LEFT
-    elif op in "^":
-        return Assoc.RIGHT
-    else:
-        return ValueError(OP_NOT_FOUND)
-
-
-# ---------- Tokenize -----------------------
-def tokenize(expr: str):
-    return None   # TODO
-
-# TODO Possibly more methods
 
 
 def valid_parentheses(tokens):
@@ -264,8 +295,30 @@ def test():
         stack = deque()
         print(tokens[i])
         # assert 
-        token_to_stack(tokens[i], stack)#  == stack_answer[i]
+        #token_to_stack(tokens[i], stack)#  == stack_answer[i]
+        #calc_expression(tokens[i])
     print("Testing Completed")
+    test = "2.5+7-40/1.67+1"
+    print(test)
+    try:
+        test = int_to_float2(test)
+        print(f"Krysset changed to {test}")
+    except:
+        print("Krysset failed")
+    
+    print("\n")
+    print("----------------------------------------------------")
+    print("\n")
+
+    test = "2.5+7-40/1.67+1"
+    print(test)
+
+    try: 
+        test = int_to_float4(test)
+        print(f"Fabbo changed to {test}")
+    except:
+        print("Fabbo failed")  
+    
 
 if __name__ == "__main__":
     test()
