@@ -2,7 +2,6 @@
 
 from collections import deque
 from math import nan
-from enum import Enum
 
 # A calculator for rather simple arithmetic expressions.
 # Your task is to implement the missing functions so the
@@ -45,29 +44,25 @@ def comma_to_dot(tokens: str) -> str:
     return tokens.replace(",", ".")
 
 
-# Kanske bajs
-def int_to_float2(tokens:str):
+def int_to_float(tokens: str):
     start = end = 0
     result = []
     while end < len(tokens):
-        end += 1
-        if end == len(tokens) or not tokens[end].isdigit() and not tokens[end] == ".":
-            to_replace = tokens[start:end]
-            replace_with = str(float(to_replace))
-            print(f"Start, end: {start},{end}\nTo replace: {to_replace}\nReplace with: {replace_with}")
-            result.append(replace_with)
-            if end < len(tokens):
-                result.append(tokens[end])
-            end = start = end + 1
-            print(f"Result: {result}")
+        if not tokens[start].isdigit():
+            result.append(tokens[end])
+            start = end = start + 1
+        else:
+            end += 1
+            if end == len(tokens) or not tokens[end].isdigit() and not tokens[end] == ".":
+                to_replace = tokens[start:end]
+                replace_with = str(float(to_replace))
+                print(f"Start, end: {start},{end}\nTo replace: {to_replace}\nReplace with: {replace_with}")
+                result.append(replace_with)
+                if end < len(tokens):
+                    result.append(tokens[end])
+                end = start = end + 1
+                print(f"Result: {result}")
     return "".join(result)
-
-
-def get_substring(tokens, start, end):
-    temp = ""
-    for start in end+1:
-        temp += tokens[start]
-    return temp
                 
     
 # troligtvis inte bajs
@@ -299,26 +294,9 @@ def test():
         # token_to_stack(tokens[i], stack)#  == stack_answer[i]
         # calc_expression(tokens[i])
     print("Testing Completed")
-    test = "2.5+7-40/1.67+1"
-    print(test)
-    try:
-        test = int_to_float2(test)
-        print(f"Krysset changed to {test}")
-    except:
-        print("Krysset failed")
-    
-    print("\n")
-    print("----------------------------------------------------")
-    print("\n")
-
-    test = "2.5+7-40/1.67+1"
-    print(test)
-
-    try: 
-        test = int_to_float4(test)
-        print(f"Fabbo changed to {test}")
-    except:
-        print("Fabbo failed")  
+    number = "2.5/(7+61)-3"
+    print(number)
+    print(int_to_float2(number))
     
 
 if __name__ == "__main__":
