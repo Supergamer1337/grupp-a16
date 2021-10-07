@@ -46,8 +46,6 @@ def comma_to_dot(tokens: str) -> str:
 
 # Kanske bajs
 def int_to_float2(tokens:str):
-    # 0123456789
-    # 2.5+7-40/1.67+1
     start = end = 0
     result = []
     while end < len(tokens):
