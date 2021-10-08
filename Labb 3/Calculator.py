@@ -24,7 +24,11 @@ MISSING_OPERAND:  str = "Missing or bad operand"
 DIV_BY_ZERO:      str = "Division with 0"
 MISSING_OPERATOR: str = "Missing operator or parenthesis"
 OP_NOT_FOUND:     str = "Operator not found"
+NEGATIVE_NUMBER:  str = "Negative number found"  
+INCORRECT_COMMA:  str = "Comma found in incorrect location"
+
 OPERATORS:        str = "+-*/^"
+VALID_CHARS:      str = "()." + OPERATORS
 ### TEST NUMBERS ###
 # (5+4)*(7-3) = 36
 # (5*(3-1)+2) = 
@@ -37,12 +41,58 @@ OPERATORS:        str = "+-*/^"
 def infix_to_postfix(tokens):
     tokens = "".join(tokens)  # To support both GUI and REPL
     tokens = comma_to_dot(tokens)
+    error_check_string(tokens)
+    tokens = int_to_float(tokens)
     return tokens
 
 
+def error_check_string(tokens):
+    valid_parentheses(tokens)
+    contains_illegal_char(tokens)
+
+def valid_parentheses(tokens):
+    if not len(find_all(tokens, "(")) == len(find_all(tokens, ")")):
+        raise ValueError(MISSING_OPERATOR)
+
+def contains_illegal_char(tokens):
+    if tokens[0] == "-":
+        raise ValueError(MISSING_OPERAND)
+    i = 0
+    while i < len(tokens):
+        # Checks that require current char
+        if not tokens[i].isdigit() and not tokens[i] in VALID_CHARS:
+            raise ValueError(MISSING_OPERAND)
+        # Checks that require last char
+        if i > 0:
+            # Negative number
+            if negative_number(tokens, i):
+                raise ValueError(NEGATIVE_NUMBER)
+            # Double comma
+            if invalid_before_comma(tokens, i):
+                raise ValueError(INCORRECT_COMMA)
+        # Checks that require last and next char
+        if trailing_operator(tokens, i):
+            raise ValueError(MISSING_OPERAND)
+        i += 1
+
+def negative_number(tokens: str, pos: int) -> bool:
+    current_sign = tokens[pos] == "-"
+    invalid_neighbour = (tokens[pos - 1] in OPERATORS or tokens[pos - 1] == "(")
+    return current_sign and invalid_neighbour
+
+def invalid_before_comma(tokens: str, pos: int) -> bool:
+    is_comma = tokens[pos] == '.'
+    invalid_neighbour = (tokens[pos - 1] == '.' or not tokens[pos - 1].isdigit())
+    return is_comma and invalid_neighbour
+
+def trailing_operator(tokens: str, pos: int) -> bool:
+    is_operator = tokens[pos] in OPERATORS
+    out_of_string = pos + 1 == len(tokens) or pos  == 0
+    valid_neighbour = tokens[pos - 1].isdigit() or tokens[pos - 1] in ")"
+    return is_operator and (out_of_string or not valid_neighbour)
+    
 def comma_to_dot(tokens: str) -> str:
     return tokens.replace(",", ".")
-
 
 def int_to_float(tokens: str):
     start = end = 0
@@ -56,83 +106,12 @@ def int_to_float(tokens: str):
             if end == len(tokens) or not tokens[end].isdigit() and not tokens[end] == ".":
                 to_replace = tokens[start:end]
                 replace_with = str(float(to_replace))
-                print(f"Start, end: {start},{end}\nTo replace: {to_replace}\nReplace with: {replace_with}")
                 result.append(replace_with)
                 if end < len(tokens):
                     result.append(tokens[end])
                 end = start = end + 1
-                print(f"Result: {result}")
+                #print(f"Result: {result}")
     return "".join(result)
-                
-    
-# troligtvis inte bajs
-def int_to_float4(tokens: str):
-    tokens = list(tokens)
-    number = []
-    numbers = []
-    temp = []
-    i: int = 0
-    for elem in tokens:
-        if elem.isdigit() or elem == ".":
-            number.append(elem)
-        else:
-            for elem in number:
-                temp.append(number)
-            numbers.append(temp)
-            number.clear()
-    print(numbers)
-
-
-def int_to_float3(tokens: str):
-    temp = ""
-    temp1 = []
-    temp2 = []
-    signs = []
-    for pos, elem in enumerate(tokens):
-        if elem.isdigit() or elem == ".":
-            temp += elem
-        else:
-            signs.append(elem)
-            temp1.append(temp)
-            temp2.append(str(float(temp)))
-            temp = ""
-        if pos == len(tokens) - 1:
-            temp1.append(temp)
-            temp2.append(str(float(temp)))
-    print(temp1)
-    print(temp2)
-    print(len(temp1))
-    temp4 = ""
-    for i in range(len(temp1)):
-        print(f"Current number to replace: {temp1[i]}")
-        if not str(float(temp1[i])) == temp1[i]:
-            print(f"FABBO To replace: {temp1[i]}")
-            print(f"FABBO Replace with: {temp2[i]}")
-            print(f"Signs: {signs}")
-        temp4 += str(temp2[i])
-        temp4 += signs[i]
-        print(temp4)
-    print(temp4)
-        
-            # current_index = tokens.find(temp1[i])
-            # print(current_index)
-            # tokens = list(tokens)
-            # print(tokens)
-            # for j in range(len(temp1[i])):
-            #     tokens.pop(current_index)
-            #     print(tokens)
-            # for elem in reversed(temp2[i]):
-            #     tokens.insert(current_index, elem)
-            # print(f"Added {temp2[i]} to tokens")
-            # temp3 = ""
-            # for elem in tokens:
-            #     temp3 += elem
-            # tokens = temp3
-            # print(tokens)
-    
-    print(tokens)
-    print("Fabbo is done!")
-    return tokens
 
 
 def calc_expression(tokens: str):
@@ -151,9 +130,8 @@ def calc_expression(tokens: str):
                 tokens = tokens.replace(content_parenthesis, calc_expression(content))
                 break
         occurrence = tokens.find("(")
-    # TODO: Calc tokens
     # Calculate what's left
-    for precedence in reversed(range(0, 2)):
+    for precedence in reversed(range(0, 3)):
         # print(f"Current precedence: {precedence}")
         operator_positions = get_operator_positions(tokens, precedence)
         while len(operator_positions):
@@ -161,11 +139,13 @@ def calc_expression(tokens: str):
             # print(f"Current op: {operator}") 
             left, right = get_adjacent_numbers(tokens, operator)
             string = f"{left}{operator}{right}"
-            print(string)
+            #print(string)
             result = apply_operator(operator, left, right)
+            if result is nan:
+                raise ValueError(DIV_BY_ZERO)
             tokens = tokens.replace(string, str(result))
             operator_positions = get_operator_positions(tokens, precedence)
-    print(tokens)
+    # print(f"Result is: {tokens}")
     return tokens  # Return resulting number
 
 
@@ -184,16 +164,17 @@ def get_adjacent_numbers(tokens: str, operator: str):
     return left, right
     
 
+# TODO: Fix this shit
 def get_float(tokens: str, operator: str, direction: int):
     pos = tokens.find(operator) + direction
     num = ""
-    print(f"Is part of number? {is_part_of_number(tokens, pos)}")
+    #print(f"Is part of number? {is_part_of_number(tokens, pos)}")
     while is_part_of_number(tokens, pos):
         num += tokens[pos]
         pos += direction
     if direction < 0:
         num = num[::-1]  # Reverses string
-    print(f"Number {direction}: {num}")
+    #print(f"Number {direction}: {num}")
     return float(num)
         
     # TODO: Fix this function
@@ -224,11 +205,15 @@ def eval_postfix(postfix_tokens):
 
 # Method used in REPL
 def eval_expr(expr: str):
-    if len(expr) == 0:
-        return nan
-    tokens = expr.split()
-    postfix_tokens = infix_to_postfix(tokens)
-    return eval_postfix(postfix_tokens)
+    try:
+        if len(expr) == 0:
+            return nan
+        tokens = expr.split()
+        postfix_tokens = infix_to_postfix(tokens)
+        return eval_postfix(postfix_tokens)
+    except ValueError as err:
+        return f"ValueError: {err.args[0]}"
+        
 
 
 def apply_operator(op: str, d1: float, d2: float):
@@ -253,48 +238,55 @@ def get_precedence(op: str):
     return op_switcher.get(op, -1)
 
 
-def valid_parentheses(tokens):
-    if not find_all(tokens, "(") == find_all(tokens, ")"):
-        return ValueError(MISSING_OPERATOR)
-
-
 def test():
     tokens = [
-        "2*((5-1)*(2+2))", 
+        "2^3",
+        "2*((5-1)*(2+2))",
         "(5*(3-1)+2)", 
         "(2+(3-1)*5)", 
         "(2+5*1)",
         "6/3*5",
-        "((6*(3/6))*3-9*(1/9))^2/(5-3)"
-        "3*(3+2)"
-        ]
-    stack_answer = [
-        deque([5, 1, "-", 2, 2, "+", "*", 2, "*"]),
-        deque([3, 1, "-", 5, "*", 2, "+"]),
-        deque([3, 1, "-", 5, "*", 2, "+"]),
-        deque([5, 1, '*', 2, '+']),
-        deque([6, 3, "/", 5, "*"]),
-        deque([3, 6, "/", 6, "*", 3, "*", 1, 9, "/", 9, "*", "-", 2, "^", 5, 3, "-", "/"])
+        "((6*(3/6))*3-9*(1/9))^2/(5-3)",
+        "3*(3+2)",
+        "2^(2^(2^2))",
         ]
     number_answer = [
-        32,
-        12,
-        12,
-        7,
-        10,
-        32
+        "8.0",
+        "32.0",
+        "12.0",
+        "12.0",
+        "7.0",
+        "10.0",
+        "32.0",
+        "15.0",
+        "65536.0"
     ]
-    assert len(find_all(tokens[0], "(")) == 3
-    assert find_all(tokens[0], "(") == [2, 3, 9]
+    error_tokens = [
+        "3,.2",
+        "3+2+",
+        "3.2.+",
+        "3,2-.",
+        "3..2",
+        "3+(-2)",
+        "-2+3",
+        "1/(5-5)",
+        "0/0",
+        "abc*123"
+    ]
+    assert len(find_all(tokens[0], "(")) == 0
+    assert len(find_all(tokens[1], "(")) == 3
+    assert find_all(tokens[1], "(") == [2, 3, 9]
 
     for i in range(len(tokens)):
         stack = deque()
         print(tokens[i])
-        new_token = int_to_float(tokens[i])
+        new_token = infix_to_postfix(tokens[i])
         print(new_token)
-        # token_to_stack(tokens[i], stack)#  == stack_answer[i]
-        # assert calc_expression(tokens[i]) == number_answer[i]
-        calc_expression(new_token)
+        assert eval_expr(new_token) == number_answer[i]
+    
+    for i in range(len(error_tokens)):
+        print(error_tokens[i])
+        print(eval_expr(error_tokens[i]))
     
 
 if __name__ == "__main__":
