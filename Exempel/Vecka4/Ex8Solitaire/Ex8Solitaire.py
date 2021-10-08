@@ -42,14 +42,14 @@ class Rank(Enum):
 
 class Deck:
     def __init__(self):
-        self.card_pile = self.gen_new_deck()
+        self.card_pile = self.__gen_new_deck()
         self.drawn_cards = deque()
         self.draw_card()
 
     # Draws card and puts it in drawn pile
     def draw_card(self):
         # Conditional shuffle function
-        self.refill_draw_pile()
+        self.__refill_draw_pile()
         card = self.card_pile.pop()
         card.flip()
         self.drawn_cards.append(card)
@@ -58,37 +58,38 @@ class Deck:
     def deal_card(self):
         return self.card_pile.pop()
 
+    def get_top_card(self):
+        return self.drawn_cards[len(self.drawn_cards) - 1]
+
     # Shuffles back drawn cards into deck if deck is empty
-    def refill_draw_pile(self):
+    def __refill_draw_pile(self):
         if len(self.card_pile) < 1:
             for card in self.drawn_cards:
                 self.card_pile.append(card)
 
     # Returns a shuffled and full deck
-    def gen_new_deck(self):
-        new_deck = self.get_all_cards()
+    def __gen_new_deck(self):
+        new_deck = self.__get_all_cards()
         shuffle(new_deck)
         return new_deck
 
-    def get_top_card(self):
-        return self.drawn_cards[len(self.drawn_cards) - 1]
-
     # Returns all cards that are going to be in play
-    def get_all_cards(self):
+    def __get_all_cards(self):
         all_cards = deque()
         for suite in Suite:
-            all_cards += self.get_suite(suite)
+            all_cards += self.__get_suite(suite)
         return all_cards
 
     # Returns all the cards in a suite
     @staticmethod
-    def get_suite(suite: Suite):
+    def __get_suite(suite: Suite):
         suite_cards = deque()
         for rank in Rank:
             suite_cards.append(Card(suite, rank))
         return suite_cards
 
-    def print_cards(self):
+    # Prints cards in both piles to console for debugging
+    def __print_cards(self):
         print(f"Cards in draw pile: {len(self.card_pile)}")
         for card in self.card_pile:
             print(f"Suite: {card.suite.name}, Rank: {card.rank.name}")
@@ -112,8 +113,8 @@ class Foundation:
 
 class Board:
     def __init__(self, deck: Deck):
-        self.board = self.gen_board(deck)
-        self.flip_top_cards()
+        self.board = self.__gen_board(deck)
+        self.__flip_top_cards()
         self.move_pile = deque()
 
     # Moves a set of cards from one column to another
@@ -124,22 +125,16 @@ class Board:
     def get_board(self):
         return self.board
 
-    def flip_top_cards(self):
+    # Flips all cards at the top of each column
+    def __flip_top_cards(self):
         for column in self.board:
             card = column.pop()
             card.flip()
             column.append(card)
 
-    # Prints cards in board to console for debugging
-    def print_board(self):
-        for column in self.board:
-            print(f"Column {self.board.index(column)}")
-            for card in column:
-                print(f"{card.rank.name} {card.suite.name}")
-
     # Generates board by drawing cards from deck
     @staticmethod
-    def gen_board(deck):
+    def __gen_board(deck):
         temp_board = []
         for i in range(7):
             column = deque()
@@ -147,6 +142,13 @@ class Board:
                 column.append(deck.deal_card())
             temp_board.append(column)
         return temp_board
+
+    # Prints cards in board to console for debugging
+    def __print_board(self):
+        for column in self.board:
+            print(f"Column {self.board.index(column)}")
+            for card in column:
+                print(f"{card.rank.name} {card.suite.name}")
 
 
 class Game:
@@ -265,7 +267,6 @@ class GameView:
                     self.margin_foundation[0] + self.margin_card * j  # Y pos
                 )
                 self.render_card(card, pos)
-        pass
 
     # Renders the deck
     def render_deck(self):
