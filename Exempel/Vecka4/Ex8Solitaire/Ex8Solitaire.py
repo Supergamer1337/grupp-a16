@@ -92,6 +92,14 @@ class Deck:
             print(f"Suite: {card.suite.name}, Rank: {card.rank.name}")
 
 
+class Foundation:
+    def __init__(self):
+        self.foundation_clubs = deque()
+        self.foundation_spades = deque()
+        self.foundation_hearts = deque()
+        self.foundation_diamonds = deque()
+
+
 class Board:
     def __init__(self, deck: Deck):
         self.board = self.gen_board(deck)
@@ -102,7 +110,7 @@ class Board:
         # TODO: Move cards logic
         pass
 
-    # Prints  cards in board to console for debugging
+    # Prints cards in board to console for debugging
     def print_board(self):
         for column in self.board:
             print(f"Column {self.board.index(column)}")
@@ -130,6 +138,7 @@ class Game:
     SCREEN_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT
 
     def __init__(self):
+        self.foundation = Foundation()
         self.deck = Deck()
         self.board = Board(self.deck)
         self.clock = pygame.time.Clock()
@@ -181,6 +190,8 @@ class GameView:
 
     # Currently disgusting green
     color_background = (31, 125, 50)
+    card_margin = 20
+    game_window_margin = 50
 
     def __init__(self, game: Game):
         pygame.display.set_caption('Solitaire')
