@@ -201,11 +201,18 @@ class Card:
         self.suite = suite
         self.rank = rank
         self.hidden = hidden
+        self.is_selected = False
         self.size = self.img_card_back.get_size()
         self.img_card_front = pygame.transform.smoothscale(self.get_card_front(), self.get_card_size())
 
     def flip(self):
         self.hidden = not self.hidden
+
+    def set_selected(self, selected: bool):
+        self.is_selected = selected
+
+    def toggle_selected(self):
+        self.is_selected = not self.is_selected
 
     # Loads card front image for the specific card
     def get_card_front(self):
@@ -288,12 +295,13 @@ class GameView:
                 self.render_absent_card(pos)
 
     # Renders a card and takes into account if its hidden or not
-    def render_card(self, card: Card, position: (int, int), selected: bool = False):
+    def render_card(self, card: Card, position: (int, int)):
         if card.hidden:
             self.screen.blit(card.img_card_back, position)
         else:
             self.screen.blit(card.img_card_front, position)
-        if selected:
+        # TODO: Decide if this is best approach
+        if card.is_selected:
             self.screen.blit(self.img_card_highlight, position)
 
     def render_absent_card(self, position):
