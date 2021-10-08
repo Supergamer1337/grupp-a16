@@ -190,7 +190,7 @@ class Card:
         self.rank = rank
         self.hidden = hidden
         self.size = self.img_card_back.get_size()
-        self.img_card_front = pygame.transform.rotozoom(self.get_card_front(), 0, self.__transform_value)
+        self.img_card_front = pygame.transform.smoothscale(self.get_card_front(), self.get_card_size())
 
     def flip(self):
         self.hidden = not self.hidden
