@@ -48,7 +48,7 @@ class Deck:
     # Draws card and puts it in drawn pile
     def draw_card(self):
         # Conditional shuffle function
-        self.shuffle_discard_pile()
+        self.refill_draw_pile()
         card = self.card_pile.pop()
         self.drawn_cards.append(card)
 
@@ -56,9 +56,8 @@ class Deck:
     def deal_card(self):
         return self.card_pile.pop()
 
-    # TODO: Set a better name
     # Shuffles back drawn cards into deck if deck is empty
-    def shuffle_discard_pile(self):
+    def refill_draw_pile(self):
         if len(self.card_pile) < 1:
             for card in self.drawn_cards:
                 self.card_pile.append(card)
