@@ -204,9 +204,10 @@ class Card:
 
 
 class GameView:
-
     # Currently disgusting green
     color_background = (31, 125, 50)
+    # Currently yellow/gold-ish
+    color_card_highlight = (255, 221, 0)
     margin_card = 20
     margin_game_window = 50
 
@@ -223,6 +224,12 @@ class GameView:
                                     self.margin_game_window + self.margin_card + self.offset_card[0],
                                     self.margin_game_window + self.margin_card + self.offset_card[1]
                                  )
+        # Game images
+        self.img_card_absent = pygame.transform.smoothscale(
+            pygame.image.load("cards/no_card.png"),
+            Card.img_card_back.get_size())
+        self.img_card_highlight = self.img_card_absent.copy()
+        self.img_card_highlight.fill(self.color_card_highlight, None, special_flags=pygame.BLEND_ADD)
 
     # Called by observers when its time to render
     def notify(self):
@@ -240,6 +247,7 @@ class GameView:
     def render_board(self):
         # TODO: Render board logic
         curr_board = self.game.board.get_board()
+        selected_cards = 0  # TODO: Implement card selection visual
         for i, column in enumerate(curr_board):
             for j, card in enumerate(column):
                 pos = (
@@ -255,11 +263,13 @@ class GameView:
         pass
 
     # Renders a card and takes into account if its hidden or not
-    def render_card(self, card: Card, position: (int, int)):
+    def render_card(self, card: Card, position: (int, int), selected: bool = False):
         if card.hidden:
             self.screen.blit(card.img_card_back, position)
         else:
             self.screen.blit(card.img_card_front, position)
+        if selected:
+            self.screen.blit(self.img_card_highlight, position)
 
 
 def klondike_game():
