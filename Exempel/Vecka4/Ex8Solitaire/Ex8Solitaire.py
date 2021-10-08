@@ -103,12 +103,22 @@ class Foundation:
 class Board:
     def __init__(self, deck: Deck):
         self.board = self.gen_board(deck)
+        self.flip_top_cards()
         self.move_pile = deque()
 
     # Moves a set of cards from one column to another
     def move_cards(self):
         # TODO: Move cards logic
         pass
+
+    def get_board(self):
+        return self.board
+
+    def flip_top_cards(self):
+        for column in self.board:
+            card = column.pop()
+            card.flip()
+            column.append(card)
 
     # Prints cards in board to console for debugging
     def print_board(self):
@@ -172,26 +182,33 @@ class Game:
 
 class Card:
 
-    img_card_back = pygame.transform.rotozoom(pygame.image.load("cards/card_back.png"), 0, 0.2)
+    __transform_value = 0.2
+    img_card_back = pygame.transform.rotozoom(pygame.image.load("cards/card_back.png"), 0, __transform_value)
 
     def __init__(self, suite: Suite, rank: Rank, hidden: bool = True):
         self.suite = suite
         self.rank = rank
         self.hidden = hidden
         self.size = self.img_card_back.get_size()
-        self.img_card_front = self.get_card_front()
+        self.img_card_front = pygame.transform.rotozoom(self.get_card_front(), 0, self.__transform_value)
+
+    def flip(self):
+        self.hidden = not self.hidden
 
     # Loads card front image for the specific card
     def get_card_front(self):
         return pygame.image.load(f"cards/{self.suite.name}_{self.rank.name}.png")
+
+    def get_card_size(self):
+        return self.img_card_back.get_size()
 
 
 class GameView:
 
     # Currently disgusting green
     color_background = (31, 125, 50)
-    card_margin = 20
-    game_window_margin = 50
+    margin_card = 20
+    margin_game_window = 50
 
     def __init__(self, game: Game):
         pygame.display.set_caption('Solitaire')
@@ -200,6 +217,12 @@ class GameView:
         self.screen_height = Game.SCREEN_HEIGHT
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.game.add_observer(self)
+        # Init render variables
+        self.offset_card = Card.img_card_back.get_size()
+        self.margin_foundation = (
+                                    self.margin_game_window + self.margin_card + self.offset_card[0],
+                                    self.margin_game_window + self.margin_card + self.offset_card[1]
+                                 )
 
     # Called by observers when its time to render
     def notify(self):
@@ -210,14 +233,20 @@ class GameView:
         self.screen.fill(self.color_background)
         self.render_deck()
         self.render_board()
-        for i in range(10):
-            self.render_card(Card(Suite.Clubs, Rank.Seven), (20*i + 50, i*20 + 50))
 
         pygame.display.flip()
 
     # Renders the game board
     def render_board(self):
         # TODO: Render board logic
+        curr_board = self.game.board.get_board()
+        for i, column in enumerate(curr_board):
+            for j, card in enumerate(column):
+                pos = (
+                    self.margin_game_window + i * self.margin_card + i * self.offset_card[0],  # X pos
+                    self.margin_foundation[0] + self.margin_card * j  # Y pos
+                )
+                self.render_card(card, pos)
         pass
 
     # Renders the deck
