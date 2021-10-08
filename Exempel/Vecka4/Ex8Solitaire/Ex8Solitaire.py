@@ -245,7 +245,6 @@ class GameView:
 
     # Renders the game board
     def render_board(self):
-        # TODO: Render board logic
         curr_board = self.game.board.get_board()
         selected_cards = 0  # TODO: Implement card selection visual
         for i, column in enumerate(curr_board):
