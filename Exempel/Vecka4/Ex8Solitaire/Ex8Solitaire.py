@@ -94,10 +94,15 @@ class Deck:
 
 class Foundation:
     def __init__(self):
-        self.foundation_clubs = deque()
-        self.foundation_spades = deque()
-        self.foundation_hearts = deque()
-        self.foundation_diamonds = deque()
+        self.foundations = [
+            [],  # Hearts
+            [],  # Diamonds
+            [],  # Spades
+            []  # Clubs
+        ]
+
+    def get_foundations(self):
+        return self.foundations
 
 
 class Board:
@@ -209,7 +214,7 @@ class GameView:
     # Currently yellow/gold-ish
     color_card_highlight = (255, 221, 0)
     margin_card = 20
-    margin_game_window = 50
+    margin_game_window = 30
 
     def __init__(self, game: Game):
         pygame.display.set_caption('Solitaire')
@@ -221,7 +226,7 @@ class GameView:
         # Init render variables
         self.offset_card = Card.img_card_back.get_size()
         self.margin_foundation = (
-                                    self.margin_game_window + self.margin_card + self.offset_card[0],
+                                    self.margin_game_window + 2 * self.margin_card + self.offset_card[0],
                                     self.margin_game_window + self.margin_card + self.offset_card[1]
                                  )
         # Game images
@@ -238,6 +243,7 @@ class GameView:
     # Renders the screen
     def render(self):
         self.screen.fill(self.color_background)
+        self.render_foundations()
         self.render_deck()
         self.render_board()
 
@@ -261,6 +267,15 @@ class GameView:
         # TODO: Render Deck logic
         pass
 
+    def render_foundations(self):
+        curr_foundations = self.game.foundation.get_foundations()
+        for i, foundation in enumerate(curr_foundations):
+            pos = self.margin_game_window + i * self.margin_card + i * self.offset_card[0], self.margin_game_window
+            if len(foundation) > 0:
+                self.render_card(foundation[len(foundation) - 1], pos)
+            else:
+                self.render_absent_card(pos)
+
     # Renders a card and takes into account if its hidden or not
     def render_card(self, card: Card, position: (int, int), selected: bool = False):
         if card.hidden:
@@ -269,6 +284,9 @@ class GameView:
             self.screen.blit(card.img_card_front, position)
         if selected:
             self.screen.blit(self.img_card_highlight, position)
+
+    def render_absent_card(self, position):
+        self.screen.blit(self.img_card_absent, position)
 
 
 def klondike_game():
