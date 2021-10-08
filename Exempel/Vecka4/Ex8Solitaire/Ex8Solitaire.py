@@ -44,12 +44,14 @@ class Deck:
     def __init__(self):
         self.card_pile = self.gen_new_deck()
         self.drawn_cards = deque()
+        self.draw_card()
 
     # Draws card and puts it in drawn pile
     def draw_card(self):
         # Conditional shuffle function
         self.refill_draw_pile()
         card = self.card_pile.pop()
+        card.flip()
         self.drawn_cards.append(card)
 
     # Draws and removes card from deck
@@ -67,6 +69,9 @@ class Deck:
         new_deck = self.get_all_cards()
         shuffle(new_deck)
         return new_deck
+
+    def get_top_card(self):
+        return self.drawn_cards[len(self.drawn_cards) - 1]
 
     # Returns all cards that are going to be in play
     def get_all_cards(self):
@@ -264,8 +269,13 @@ class GameView:
 
     # Renders the deck
     def render_deck(self):
-        # TODO: Render Deck logic
-        pass
+        curr_deck = self.game.deck
+        base_pos_x = self.margin_game_window + self.margin_card * 5 + self.offset_card[0] * 4
+        self.render_card(curr_deck.get_top_card(), (base_pos_x, self.margin_game_window))
+        card_width, card_height = Card.img_card_back.get_size()
+        rotate_offset = (card_height - card_width) / 2
+        next_pos = base_pos_x + self.offset_card[0] + self.margin_card, self.margin_game_window + rotate_offset
+        self.screen.blit(pygame.transform.rotate(Card.img_card_back, 90), next_pos)
 
     def render_foundations(self):
         curr_foundations = self.game.foundation.get_foundations()
