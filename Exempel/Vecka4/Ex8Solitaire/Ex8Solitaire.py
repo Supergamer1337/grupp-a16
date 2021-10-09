@@ -312,7 +312,7 @@ class GameView:
                 card.set_position((pos_x, pos_y))
 
     def set_deck_position(self):
-        drawn_cards = (self.margin_game_window + self.margin_card * 5 + self.offset_card[0] * 4, self.margin_game_window)
+        drawn_cards = self.margin_game_window + self.margin_card * 5 + self.offset_card[0] * 4, self.margin_game_window
         rotate_offset = int((self.offset_card[1] - self.offset_card[0]) / 2)
         card_pile = (drawn_cards[0] + self.offset_card[0] + self.margin_card, drawn_cards[1] + rotate_offset)
         if self.use_second_layout:
