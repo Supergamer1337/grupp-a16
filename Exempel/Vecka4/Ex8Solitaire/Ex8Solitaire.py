@@ -43,6 +43,7 @@ class Rank(Enum):
 class Card:
     __transform_value = 0.3
     img_card_back = pygame.transform.rotozoom(pygame.image.load("cards/card_back.png"), 0, __transform_value)
+    size = img_card_back.get_size()
 
     def __init__(self, suite: Suite, rank: Rank, hidden: bool = True):
         self.suite = suite
@@ -53,9 +54,11 @@ class Card:
         self.size = self.img_card_back.get_size()
         self.img_card_front = pygame.transform.smoothscale(self.get_card_front(), self.get_card_size())
 
-    def flip(self):
-        self.hidden = not self.hidden
+    # Changes whether the card is hidden or not
+    def set_visibility(self, hidden: bool = False):
+        self.hidden = hidden
 
+    # If the card isn't hidden it toggles if its selected
     def toggle_selected(self):
         if not self.hidden:
             self.is_selected = not self.is_selected
@@ -86,7 +89,7 @@ class Deck:
         # Conditional shuffle function
         self.__refill_draw_pile()
         card = self.card_pile.pop()
-        card.flip()
+        card.set_visibility()
         self.drawn_cards.append(card)
 
     # Draws and removes card from deck
@@ -97,10 +100,12 @@ class Deck:
     def get_top_card(self):
         return self.drawn_cards[len(self.drawn_cards) - 1]
 
+    # Set position of drawn cards and card pile
     def set_position(self, position_drawn_cards: tuple[int, int], position_card_pile: tuple[int, int]):
         self.positions[0] = position_drawn_cards
         self.positions[1] = position_card_pile
 
+    # Returns a list of the position of drawn cards and card pile
     def get_positions(self):
         return self.positions
 
@@ -157,12 +162,29 @@ class Board:
         self.board = self.__gen_board(deck)
         self.__flip_top_cards()
         self.move_pile = deque()
+        self.column_start_positions: list[tuple[int, int]] = [
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0)
+        ]
 
     # Moves a set of cards from one column to another
     def move_cards(self):
         # TODO: Move cards logic
         pass
 
+    # Sets start position of indexed column
+    def set_column_position(self, index: int, position: tuple[int, int]):
+        if -1 < index < len(self.column_start_positions):
+            self.column_start_positions[index] = position
+        else:
+            print("Error: Faulty index given to column position")
+
+    # Returns board
     def get_board(self):
         return self.board
 
@@ -170,7 +192,7 @@ class Board:
     def __flip_top_cards(self):
         for column in self.board:
             card = column.pop()
-            card.flip()
+            card.set_visibility()
             column.append(card)
 
     # Generates board by drawing cards from deck
@@ -207,7 +229,12 @@ class Game:
         if self.get_left_mouse_click():
             # TODO: Check what got clicked on
             print("Registered click")
+            self.get_object_clicked()
         self.notify_observers()  # Update Render
+
+    def get_object_clicked(self):
+        # TODO: Implement function
+        pass
 
     # Returns True if left mouse button was clicked
     def get_left_mouse_click(self) -> bool:
@@ -258,7 +285,7 @@ class GameView:
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.game.add_observer(self)
         # Init render variables
-        self.offset_card = Card.img_card_back.get_size()
+        self.offset_card = Card.size
         self.margin_foundation = (
                                     self.margin_game_window + 2 * self.margin_card + self.offset_card[0],
                                     self.margin_game_window + self.margin_card + self.offset_card[1]
@@ -266,7 +293,7 @@ class GameView:
         # Game images
         self.img_card_absent = pygame.transform.smoothscale(
             pygame.image.load("cards/no_card.png"),
-            Card.img_card_back.get_size())
+            Card.size)
         self.img_card_highlight = self.img_card_absent.copy()
         self.img_card_highlight.fill(self.color_card_highlight, None, special_flags=pygame.BLEND_ADD)
         self.set_positions()
@@ -288,9 +315,10 @@ class GameView:
 
     # Renders the game board
     def render_board(self):
-        for column in self.game.board.get_board():
+        positions = self.game.board.column_start_positions
+        for i, column in enumerate(self.game.board.get_board()):
             if len(column) < 1:
-                self.render_absent_card((0, 0))  # TODO: Fix actual position
+                self.render_absent_card(positions[i])
             else:
                 for card in column:
                     self.render_card(card, card.position)
@@ -351,6 +379,8 @@ class GameView:
                 pos_y = self.margin_foundation[1] + self.margin_card * j
                 if self.use_second_layout:
                     pos_y = self.margin_game_window + self.margin_card * j
+                if j == 1:
+                    self.game.board.set_column_position(i, (pos_x, pos_y))
                 card.set_position((pos_x, pos_y))
 
     def set_deck_position(self):
