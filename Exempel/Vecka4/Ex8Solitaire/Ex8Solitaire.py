@@ -131,15 +131,6 @@ class Deck:
             suite_cards.append(Card(suite, rank))
         return suite_cards
 
-    # Prints cards in both piles to console for debugging
-    def __print_cards(self):
-        print(f"Cards in draw pile: {len(self.card_pile)}")
-        for card in self.card_pile:
-            print(f"Suite: {card.suite.name}, Rank: {card.rank.name}")
-        print(f"Cards in discard pile: {len(self.drawn_cards)}")
-        for card in self.drawn_cards:
-            print(f"Suite: {card.suite.name}, Rank: {card.rank.name}")
-
 
 class Foundation:
     def __init__(self):
@@ -192,13 +183,6 @@ class Board:
                 column.append(deck.deal_card())
             temp_board.append(column)
         return temp_board
-
-    # Prints cards in board to console for debugging
-    def __print_board(self):
-        for column in self.board:
-            print(f"Column {self.board.index(column)}")
-            for card in column:
-                print(f"{card.rank.name} {card.suite.name}")
 
 
 class Game:
