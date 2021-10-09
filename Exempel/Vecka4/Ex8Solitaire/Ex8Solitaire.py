@@ -223,7 +223,6 @@ class Game:
         if self.get_left_mouse_click():
             # TODO: Check what got clicked on
             print("Registered click")
-            pass
         self.notify_observers()  # Update Render
 
     # Returns True if left mouse button was clicked
@@ -259,7 +258,7 @@ class Game:
 
 
 class GameView:
-    use_second_layout = False
+    use_second_layout = True
     # Currently disgusting green
     color_background = (31, 125, 50)
     # Currently yellow/gold-ish
@@ -297,6 +296,51 @@ class GameView:
         self.screen.fill(self.color_background)
         self.render_layout()
         pygame.display.flip()
+
+    def render_layout(self):
+        self.render_foundations()
+        self.render_deck()
+        self.render_board()
+
+    # Renders the game board
+    def render_board(self):
+        for column in self.game.board.get_board():
+            if len(column) < 1:
+                self.render_absent_card((0, 0))  # TODO: Fix actual position
+            else:
+                for card in column:
+                    self.render_card(card, card.position)
+
+    # Renders the deck
+    def render_deck(self):
+        deck_positions = self.game.deck.get_positions()
+        self.render_card(self.game.deck.get_top_card(), deck_positions[0])
+        if not self.use_second_layout:
+            self.screen.blit(pygame.transform.rotate(Card.img_card_back, 90), deck_positions[1])
+        else:
+            self.screen.blit(Card.img_card_back, deck_positions[1])
+
+    def render_foundations(self):
+        for suite in Suite:
+            pos = self.game.foundation.get_foundation_position(suite)
+            foundation = self.game.foundation.get_foundation(suite)
+            if len(foundation) > 1:
+                self.render_card(foundation[len(foundation) - 1], pos)
+            else:
+                self.render_absent_card(pos)
+
+    # Renders a card and takes into account if its hidden or not
+    def render_card(self, card: Card, position: (int, int)):
+        if card.hidden:
+            self.screen.blit(card.img_card_back, position)
+        else:
+            self.screen.blit(card.img_card_front, position)
+        # TODO: Decide if this is best approach
+        if card.is_selected:
+            self.screen.blit(self.img_card_highlight, position)
+
+    def render_absent_card(self, position):
+        self.screen.blit(self.img_card_absent, position)
 
     def set_positions(self):
         self.set_foundations_position()
@@ -337,55 +381,12 @@ class GameView:
             drawn_cards = (card_pile[0] - self.margin_card - self.offset_card[0], card_pile[1])
         self.game.deck.set_position(drawn_cards, card_pile)
 
-    def render_layout(self):
-        self.render_foundations()
-        self.render_deck()
-        self.render_board()
-
-    # Renders the game board
-    def render_board(self):
-        for column in self.game.board.get_board():
-            for card in column:
-                self.render_card(card, card.position)
-
-    # Renders the deck
-    def render_deck(self):
-        deck_positions = self.game.deck.get_positions()
-        self.render_card(self.game.deck.get_top_card(), deck_positions[0])
-        if not self.use_second_layout:
-            self.screen.blit(pygame.transform.rotate(Card.img_card_back, 90), deck_positions[1])
-        else:
-            self.screen.blit(Card.img_card_back, deck_positions[1])
-
-    def render_foundations(self):
-        for suite in Suite:
-            pos = self.game.foundation.get_foundation_position(suite)
-            foundation = self.game.foundation.get_foundation(suite)
-            if len(foundation) > 1:
-                self.render_card(foundation[len(foundation) - 1], pos)
-            else:
-                self.render_absent_card(pos)
-
-    # Renders a card and takes into account if its hidden or not
-    def render_card(self, card: Card, position: (int, int)):
-        if card.hidden:
-            self.screen.blit(card.img_card_back, position)
-        else:
-            self.screen.blit(card.img_card_front, position)
-        # TODO: Decide if this is best approach
-        if card.is_selected:
-            self.screen.blit(self.img_card_highlight, position)
-
-    def render_absent_card(self, position):
-        self.screen.blit(self.img_card_absent, position)
-
 
 def klondike_game():
     pygame.init()
     game = Game()
     GameView(game)
     game.run()
-    pass
 
 
 if __name__ == "__main__":
