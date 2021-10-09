@@ -12,16 +12,16 @@
 # - UseString
 # - SwitchStatement
 from random import shuffle
-from enum import Enum, auto
+from enum import Enum
 from collections import deque
 import pygame
 
 
 class Suite(Enum):
-    Hearts = auto()
-    Spades = auto()
-    Clubs = auto()
-    Diamonds = auto()
+    Hearts = 0
+    Diamonds = 1
+    Spades = 2
+    Clubs = 3
 
 
 class Rank(Enum):
@@ -40,11 +40,48 @@ class Rank(Enum):
     King = 13
 
 
+class Card:
+    __transform_value = 0.3
+    img_card_back = pygame.transform.rotozoom(pygame.image.load("cards/card_back.png"), 0, __transform_value)
+
+    def __init__(self, suite: Suite, rank: Rank, hidden: bool = True):
+        self.suite = suite
+        self.rank = rank
+        self.hidden = hidden
+        self.position = (0, 0)
+        self.is_selected = False
+        self.size = self.img_card_back.get_size()
+        self.img_card_front = pygame.transform.smoothscale(self.get_card_front(), self.get_card_size())
+
+    def flip(self):
+        self.hidden = not self.hidden
+
+    def set_selected(self, selected: bool):
+        self.is_selected = selected
+
+    def toggle_selected(self):
+        self.is_selected = not self.is_selected
+
+    def set_position(self, position: tuple[int, int]):
+        self.position = position
+
+    # Loads card front image for the specific card
+    def get_card_front(self):
+        return pygame.image.load(f"cards/{self.suite.name}_{self.rank.name}.png")
+
+    def get_card_size(self):
+        return self.img_card_back.get_size()
+
+
 class Deck:
     def __init__(self):
         self.card_pile = self.__gen_new_deck()
         self.drawn_cards = deque()
         self.draw_card()
+        self.positions = [
+            (0, 0),  # drawn cards pos
+            (0, 0)  # card pile pos
+        ]
 
     # Draws card and puts it in drawn pile
     def draw_card(self):
@@ -58,8 +95,16 @@ class Deck:
     def deal_card(self):
         return self.card_pile.pop()
 
+    # Returns card at the top of the drawn pile
     def get_top_card(self):
         return self.drawn_cards[len(self.drawn_cards) - 1]
+
+    def set_position(self, position_drawn_cards: tuple[int, int], position_card_pile: tuple[int, int]):
+        self.positions[0] = position_drawn_cards
+        self.positions[1] = position_card_pile
+
+    def get_positions(self):
+        return self.positions
 
     # Shuffles back drawn cards into deck if deck is empty
     def __refill_draw_pile(self):
@@ -106,9 +151,16 @@ class Foundation:
             [],  # Spades
             []  # Clubs
         ]
+        self.f_positions: list[tuple[int, int]] = [(0, 0), (0, 0), (0, 0), (0, 0)]
 
-    def get_foundations(self):
-        return self.foundations
+    def get_foundation(self, suite) -> list[Card]:
+        return self.foundations[suite.value]
+
+    def get_foundation_position(self, suite):
+        return self.f_positions[suite.value]
+
+    def set_foundation_position(self, suite: Suite, position: tuple[int, int]):
+        self.f_positions[suite.value] = position
 
 
 class Board:
@@ -192,37 +244,8 @@ class Game:
             observer.notify()
 
 
-class Card:
-
-    __transform_value = 0.2
-    img_card_back = pygame.transform.rotozoom(pygame.image.load("cards/card_back.png"), 0, __transform_value)
-
-    def __init__(self, suite: Suite, rank: Rank, hidden: bool = True):
-        self.suite = suite
-        self.rank = rank
-        self.hidden = hidden
-        self.is_selected = False
-        self.size = self.img_card_back.get_size()
-        self.img_card_front = pygame.transform.smoothscale(self.get_card_front(), self.get_card_size())
-
-    def flip(self):
-        self.hidden = not self.hidden
-
-    def set_selected(self, selected: bool):
-        self.is_selected = selected
-
-    def toggle_selected(self):
-        self.is_selected = not self.is_selected
-
-    # Loads card front image for the specific card
-    def get_card_front(self):
-        return pygame.image.load(f"cards/{self.suite.name}_{self.rank.name}.png")
-
-    def get_card_size(self):
-        return self.img_card_back.get_size()
-
-
 class GameView:
+    use_second_layout = False
     # Currently disgusting green
     color_background = (31, 125, 50)
     # Currently yellow/gold-ish
@@ -249,6 +272,7 @@ class GameView:
             Card.img_card_back.get_size())
         self.img_card_highlight = self.img_card_absent.copy()
         self.img_card_highlight.fill(self.color_card_highlight, None, special_flags=pygame.BLEND_ADD)
+        self.set_positions()
 
     # Called by observers when its time to render
     def notify(self):
@@ -257,39 +281,73 @@ class GameView:
     # Renders the screen
     def render(self):
         self.screen.fill(self.color_background)
+        self.render_layout()
+        pygame.display.flip()
+
+    def set_positions(self):
+        self.set_foundations_position()
+        self.set_board_position()
+        self.set_deck_position()
+
+    def set_foundations_position(self):
+        for i, suite in enumerate(Suite):
+            pos = self.margin_game_window + i * self.margin_card + i * self.offset_card[0], self.margin_game_window
+            if self.use_second_layout:
+                base_x = self.screen_width - self.margin_game_window - self.offset_card[0]
+                base_y = self.margin_game_window
+                pos = base_x - i * self.margin_card - i * self.offset_card[0], base_y
+                if i > 1:
+                    pos = base_x - (i - 2) * self.margin_card - (i - 2) * self.offset_card[0], base_y + \
+                          self.offset_card[1] + self.margin_card
+            self.game.foundation.set_foundation_position(suite, pos)
+
+    def set_board_position(self):
+        curr_board = self.game.board.get_board()
+        for i, column in enumerate(curr_board):
+            for j, card in enumerate(column):
+                pos_x = self.margin_game_window + i * self.margin_card + i * self.offset_card[0]
+                pos_y = self.margin_foundation[1] + self.margin_card * j
+                if self.use_second_layout:
+                    pos_y = self.margin_game_window + self.margin_card * j
+                card.set_position((pos_x, pos_y))
+
+    def set_deck_position(self):
+        drawn_cards = (self.margin_game_window + self.margin_card * 5 + self.offset_card[0] * 4, self.margin_game_window)
+        rotate_offset = int((self.offset_card[1] - self.offset_card[0]) / 2)
+        card_pile = (drawn_cards[0] + self.offset_card[0] + self.margin_card, drawn_cards[1] + rotate_offset)
+        if self.use_second_layout:
+            card_pile = (
+                self.screen_width - self.margin_game_window - self.offset_card[0],
+                self.screen_height * 0.75 - self.offset_card[1] / 2
+            )
+            drawn_cards = (card_pile[0] - self.margin_card - self.offset_card[0], card_pile[1])
+        self.game.deck.set_position(drawn_cards, card_pile)
+
+    def render_layout(self):
         self.render_foundations()
         self.render_deck()
         self.render_board()
 
-        pygame.display.flip()
-
     # Renders the game board
     def render_board(self):
-        curr_board = self.game.board.get_board()
-        selected_cards = 0  # TODO: Implement card selection visual
-        for i, column in enumerate(curr_board):
-            for j, card in enumerate(column):
-                pos = (
-                    self.margin_game_window + i * self.margin_card + i * self.offset_card[0],  # X pos
-                    self.margin_foundation[0] + self.margin_card * j  # Y pos
-                )
-                self.render_card(card, pos)
+        for column in self.game.board.get_board():
+            for card in column:
+                self.render_card(card, card.position)
 
     # Renders the deck
     def render_deck(self):
-        curr_deck = self.game.deck
-        base_pos_x = self.margin_game_window + self.margin_card * 5 + self.offset_card[0] * 4
-        self.render_card(curr_deck.get_top_card(), (base_pos_x, self.margin_game_window))
-        card_width, card_height = Card.img_card_back.get_size()
-        rotate_offset = (card_height - card_width) / 2
-        next_pos = base_pos_x + self.offset_card[0] + self.margin_card, self.margin_game_window + rotate_offset
-        self.screen.blit(pygame.transform.rotate(Card.img_card_back, 90), next_pos)
+        deck_positions = self.game.deck.get_positions()
+        self.render_card(self.game.deck.get_top_card(), deck_positions[0])
+        if not self.use_second_layout:
+            self.screen.blit(pygame.transform.rotate(Card.img_card_back, 90), deck_positions[1])
+        else:
+            self.screen.blit(Card.img_card_back, deck_positions[1])
 
     def render_foundations(self):
-        curr_foundations = self.game.foundation.get_foundations()
-        for i, foundation in enumerate(curr_foundations):
-            pos = self.margin_game_window + i * self.margin_card + i * self.offset_card[0], self.margin_game_window
-            if len(foundation) > 0:
+        for suite in Suite:
+            pos = self.game.foundation.get_foundation_position(suite)
+            foundation = self.game.foundation.get_foundation(suite)
+            if len(foundation) > 1:
                 self.render_card(foundation[len(foundation) - 1], pos)
             else:
                 self.render_absent_card(pos)
