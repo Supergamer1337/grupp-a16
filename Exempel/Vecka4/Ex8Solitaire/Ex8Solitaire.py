@@ -56,11 +56,9 @@ class Card:
     def flip(self):
         self.hidden = not self.hidden
 
-    def set_selected(self, selected: bool):
-        self.is_selected = selected
-
     def toggle_selected(self):
-        self.is_selected = not self.is_selected
+        if not self.hidden:
+            self.is_selected = not self.is_selected
 
     def set_position(self, position: tuple[int, int]):
         self.position = position
@@ -216,11 +214,26 @@ class Game:
         self.deck = Deck()
         self.board = Board(self.deck)
         self.clock = pygame.time.Clock()
+        # Mouse click variables
+        self.click_last_tick = False
 
     # Game update (tick)
     def update(self):
         # TODO: Update board, take input, etc
+        if self.get_left_mouse_click():
+            # TODO: Check what got clicked on
+            print("Registered click")
+            pass
         self.notify_observers()  # Update Render
+
+    # Returns True if left mouse button was clicked
+    def get_left_mouse_click(self) -> bool:
+        did_click = False
+        press_curr_tick = pygame.mouse.get_pressed(num_buttons=3)[0]
+        if press_curr_tick is False and self.click_last_tick is True:
+            did_click = True
+        self.click_last_tick = press_curr_tick
+        return did_click
 
     # Executed at game start, main game loop
     def run(self):
@@ -235,6 +248,7 @@ class Game:
                 # Did the user hit a key?
                 if event.type == pygame.QUIT:
                     run = False
+            pygame.event.pump()
 
     def add_observer(self, observer):
         self.observers.append(observer)
