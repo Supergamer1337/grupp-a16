@@ -226,15 +226,41 @@ class Game:
     # Game update (tick)
     def update(self):
         # TODO: Update board, take input, etc
-        if self.get_left_mouse_click():
-            # TODO: Check what got clicked on
-            print("Registered click")
-            self.get_object_clicked()
+        self.handle_mouse_click()
         self.notify_observers()  # Update Render
+
+    def handle_mouse_click(self):
+        if self.get_left_mouse_click():
+            print("Registered click")
+            clicked_object, index = self.get_object_clicked()
+            print(f"Clicked object was {clicked_object} with index {index}")
+            # TODO: Update selected
 
     def get_object_clicked(self):
         # TODO: Implement function
         mouse_pos = pygame.mouse.get_pos()
+        clicked_object = None
+        index = (-1, -1)
+        for pos in self.deck.get_positions():
+            if self.mouse_in_object(mouse_pos, pos, Card.size):
+                clicked_object = self.deck
+                index = (self.deck.get_positions().index(pos), 0)
+                break
+        if clicked_object is None:
+            for column in self.board.get_board():
+                for card in reversed(column):
+                    if self.mouse_in_object(mouse_pos, card.position, Card.size):
+                        clicked_object = self.board
+                        index = (self.board.get_board().index(column), column.index(card))
+                        break
+        if clicked_object is None:
+            for suite in Suite:
+                pos = self.foundation.get_foundation_position(suite)
+                if self.mouse_in_object(mouse_pos, pos, Card.size):
+                    clicked_object = self.foundation
+                    index = (suite.value, 0)
+                    break
+        return clicked_object, index
 
     # Returns True if left mouse button was clicked
     def get_left_mouse_click(self) -> bool:
@@ -254,6 +280,7 @@ class Game:
         if object_pos < mouse_pos < object_pos + object_dim:
             print("This works too!")
         if in_y and in_x:
+            print("An object was clicked!")
             return True
         return False
 
