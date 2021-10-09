@@ -234,7 +234,7 @@ class Game:
 
     def get_object_clicked(self):
         # TODO: Implement function
-        pass
+        mouse_pos = pygame.mouse.get_pos()
 
     # Returns True if left mouse button was clicked
     def get_left_mouse_click(self) -> bool:
@@ -244,6 +244,18 @@ class Game:
             did_click = True
         self.click_last_tick = press_curr_tick
         return did_click
+
+    @staticmethod
+    def mouse_in_object(mouse_pos, object_pos, object_dim) -> bool:
+        # Check X
+        in_x = object_pos[0] < mouse_pos[0] < object_pos[0] + object_dim[0]
+        # Check Y
+        in_y = object_pos[1] < mouse_pos[1] < object_pos[1] + object_dim[1]
+        if object_pos < mouse_pos < object_pos + object_dim:
+            print("This works too!")
+        if in_y and in_x:
+            return True
+        return False
 
     # Executed at game start, main game loop
     def run(self):
