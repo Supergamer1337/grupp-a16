@@ -93,7 +93,6 @@ def eval_postfix(postfix: list) -> str:
         else:
             index += 1
     result = postfix[0]
-    print(result)
     return str(result)
 
 
@@ -130,19 +129,6 @@ def get_precedence(op: str):
     }
     return op_switcher.get(op, -1)
 
-class Assoc(Enum):
-    LEFT = 1
-    RIGHT = 2
-
-
-def get_associativity(op: str):
-    if op in "+-*/":
-        return Assoc.LEFT
-    elif op in "^":
-        return Assoc.RIGHT
-    else:
-        return ValueError(OP_NOT_FOUND)
-
 
 # ---------- Tokenize -----------------------
 def tokenize(expr: str) -> list[str]:
@@ -168,7 +154,7 @@ def contains_illegal_char(tokens):
     i = 0
     while i < len(tokens):
         # Checks that require current char
-        if not tokens[i].isdigit() and not tokens[i] in VALID_CHARS:
+        if illegal_char(tokens, i):
             raise ValueError(ILLEGAL_CHAR)
         # Checks that require last char
         if i > 0:
@@ -181,7 +167,13 @@ def contains_illegal_char(tokens):
         # Checks that require last and next char
         if trailing_operator(tokens, i):
             raise ValueError(MISSING_OPERAND)
+        if adjacent_to_paren(tokens, i):
+            raise ValueError(MISSING_OPERATOR)
         i += 1
+
+
+def illegal_char(tokens: str, pos: int) -> bool:
+    return not tokens[pos].isdigit() and not tokens[pos] in VALID_CHARS
 
 
 def negative_number(tokens: str, pos: int) -> bool:
@@ -199,8 +191,17 @@ def invalid_before_comma(tokens: str, pos: int) -> bool:
 def trailing_operator(tokens: str, pos: int) -> bool:
     is_operator = tokens[pos] in OPERATORS
     out_of_string = pos + 1 == len(tokens) or pos  == 0
-    valid_neighbour = tokens[pos - 1].isdigit() or tokens[pos - 1] in ")"
+    valid_neighbour = tokens[pos - 1].isdigit() or tokens[pos - 1] == ")"
     return is_operator and (out_of_string or not valid_neighbour)
+
+
+def adjacent_to_paren(tokens: str, pos: int) -> bool:
+    valid_ops = OPERATORS + "()"
+    if tokens[pos] == "(" and pos > 0:
+        return not tokens[pos - 1] in valid_ops
+    elif tokens[pos] == ")" and pos + 1 < len(tokens):
+        return not tokens[pos + 1] in valid_ops
+    return False
 
 
 def string_to_list(tokens: str):
@@ -224,11 +225,6 @@ def comma_to_dot(tokens: str) -> str:
     return tokens.replace(",", ".")
 
 
-def valid_parentheses(tokens):
-    if not find_all(tokens, "(") == find_all(tokens, ")"):
-        return ValueError(MISSING_OPERATOR)
-
-
 def get_operator_positions(tokens, precedence):
     operator_positions: list[int] = []
     for pos, char in enumerate(tokens):
@@ -237,11 +233,6 @@ def get_operator_positions(tokens, precedence):
             operator_positions.append(pos)
     return operator_positions
 
-
-def get_adjacent(tokens: str, operator: str):
-    right = convert_int(tokens, operator, 1)
-    left = convert_int(tokens, operator, -1)
-    return left, right
 
 def test():
     tokens = [
@@ -278,7 +269,9 @@ def test():
         "-2+3",
         "1/(5-5)",
         "0/0",
-        "abc*123"
+        "abc*123",
+        "((3-2)+2",
+        "2.(5+5)"
     ]
 
     assert len(find_all(tokens[0], "(")) == 0
@@ -296,6 +289,7 @@ def test():
 
 
     print("Testing Completed")
+
 
 if __name__ == "__main__":
     test()
