@@ -38,8 +38,13 @@ VALID_CHARS:      str = "()." + OPERATORS
 # 2*((5-1)*(2+2)) = 32
 # ((5-1)-(3-(2+3)))
 # 5 1 - 2 2 + * 2 *
-def infix_to_postfix(tokens) -> list:
-    tokens: list[str] = tokenize(tokens)
+def infix_to_postfix(infix_expr) -> list:
+    """
+    Uses RPN
+    :param infix_expr: input from calculator
+    :return: A RPN expression ready for eval
+    """
+    tokens: list[str] = tokenize(infix_expr)
     temp = []
     postfix_expr = []
     for index, elem in enumerate(tokens):
@@ -66,6 +71,12 @@ def infix_to_postfix(tokens) -> list:
 
 
 def find_all(a_str, sub):
+    """
+    Goes through
+    :param a_str:
+    :param sub:
+    :return:
+    """
     start = 0
     result = []
     while True:
