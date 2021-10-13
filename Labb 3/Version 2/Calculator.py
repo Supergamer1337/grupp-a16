@@ -281,7 +281,7 @@ def comma_to_dot(tokens: str) -> str:
 
 def test():
     """
-    This function tests the code. Only runs on main file execution.
+    This function tests the code. Only runs on main file execution. You will have to run Calculator.py to test.
     """
     tokens = [
         "2^3",
