@@ -1,8 +1,6 @@
 # package calculator
 
-from collections import deque
 from math import nan
-from enum import Enum
 
 # A calculator for rather simple arithmetic expressions.
 # Your task is to implement the missing functions so the
@@ -49,6 +47,8 @@ def infix_to_postfix(tokens) -> list:
             postfix_expr.append(elem)
         elif elem == "(":
             temp.append(elem)
+        elif elem == "^":
+            temp.append(elem)
         elif elem == ")":
             while len(temp) != 0 and not temp[-1] == "(":
                 postfix_expr.append(temp.pop())
@@ -63,6 +63,7 @@ def infix_to_postfix(tokens) -> list:
     while len(temp) != 0:
         postfix_expr.append(temp.pop())
     return postfix_expr
+
 
 def find_all(a_str, sub):
     start = 0
@@ -190,7 +191,7 @@ def invalid_before_comma(tokens: str, pos: int) -> bool:
 
 def trailing_operator(tokens: str, pos: int) -> bool:
     is_operator = tokens[pos] in OPERATORS
-    out_of_string = pos + 1 == len(tokens) or pos  == 0
+    out_of_string = pos + 1 == len(tokens) or pos == 0
     valid_neighbour = tokens[pos - 1].isdigit() or tokens[pos - 1] == ")"
     return is_operator and (out_of_string or not valid_neighbour)
 
@@ -245,7 +246,8 @@ def test():
         "((6*(3/6))*3-9*(1/9))^2/(5-3)",
         "3*(3+2)",
         "2^(2^(2^2))",
-        "40/2*10+5.1"
+        "40/2*10+5.1",
+        "2^2^3"
         ]
     number_answer = [
         "8.0",
@@ -257,7 +259,8 @@ def test():
         "32.0",
         "15.0",
         "65536.0",
-        "205.1"
+        "205.1",
+        "256.0"
     ]
     error_tokens = [
         "3,.2",
@@ -286,7 +289,6 @@ def test():
     for i in range(len(error_tokens)):
         print(error_tokens[i])
         print(eval_expr(error_tokens[i]))
-
 
     print("Testing Completed")
 
