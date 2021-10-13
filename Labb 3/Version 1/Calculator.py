@@ -164,7 +164,6 @@ def get_adjacent_numbers(tokens: str, operator: str):
     return left, right
     
 
-# TODO: Fix this shit
 def get_float(tokens: str, operator: str, direction: int):
     pos = tokens.find(operator) + direction
     num = ""
@@ -177,7 +176,7 @@ def get_float(tokens: str, operator: str, direction: int):
     #print(f"Number {direction}: {num}")
     return float(num)
         
-    # TODO: Fix this function
+
 def is_part_of_number(tokens: str, pos: int):
     in_string = -1 < pos < len(tokens)
     if in_string:
