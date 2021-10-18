@@ -1,15 +1,14 @@
 # package pong.view
 import pygame
+from labb4.model import *
+from labb4.event.ModelEvent import ModelEvent
+from labb4.event.EventBus import EventBus
+from labb4.event.EventHandler import EventHandler
+from labb4.view.theme.Cool import Cool
+from labb4.view.theme.Duckie import Duckie
 
-from pong.model import *
-from pong.event.ModelEvent import ModelEvent
-from pong.event.EventBus import EventBus
-from pong.event.EventHandler import EventHandler
-from pong.view.theme.Cool import Cool
-from pong.view.theme.Duckie import Duckie
-
-from pong.model.Paddle import PADDLE_SPEED
-from pong.model.Config import *
+from labb4.model.Paddle import PADDLE_SPEED
+from labb4.model.Config import *
 
 
 class PongGUI:
