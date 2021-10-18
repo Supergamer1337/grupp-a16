@@ -1,4 +1,4 @@
-# package pong.model
+# package labb4.model
 
 from abc import abstractmethod, ABC
 

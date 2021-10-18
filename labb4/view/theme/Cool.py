@@ -1,7 +1,7 @@
-# package pong.view.theme
+# package labb4.view.theme
 
-from pong.model.Ball import Ball
-from pong.view.Assets import Assets
+from labb4.model.Ball import Ball
+from labb4.view.Assets import Assets
 
 """
    Specific theme

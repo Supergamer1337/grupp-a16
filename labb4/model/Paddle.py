@@ -1,4 +1,4 @@
-# package pong.model
+# package labb4.model
 
 from Config import GAME_HEIGHT
 

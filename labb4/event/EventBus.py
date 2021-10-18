@@ -1,4 +1,4 @@
-# package pong.event
+# package labb4.event
 
 from EventHandler import EventHandler
 from ModelEvent import ModelEvent

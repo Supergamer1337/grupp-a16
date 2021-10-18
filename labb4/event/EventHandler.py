@@ -1,4 +1,4 @@
-# package pong.event
+# package labb4.event
 
 from ModelEvent import ModelEvent
 from abc import ABC, abstractmethod
