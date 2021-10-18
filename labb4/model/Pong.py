@@ -11,7 +11,7 @@ class Pong:
      * Nothing visual here
     """
     # TODO More attributes
-    points_left  = 0
+    points_left = 0
     points_right = 0
 
     # TODO Initialization
