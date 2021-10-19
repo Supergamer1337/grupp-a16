@@ -6,7 +6,7 @@ from labb4.version2.view.pongGUI import PongGUI
 class Game:
     def __init__(self):
         pygame.init()
-        # pygame.mixer.init()
+        # pygame.mixer.init()  # Should not be needed
         pong_game = Pong()
         game_view = PongGUI(pong_game)
         pong_game.run()

@@ -6,7 +6,7 @@ class PongGUI:
     ASSET_PATH = "assets/img/"
     
     def __init__(self, game: Pong):
-        self.pygame.set_caption("Pong")
+        pygame.display.set_caption("Pong")
         self.screen = pygame.display.set_mode(WINDOW_SIZE)
         self.game = game
         self.game_components = [
