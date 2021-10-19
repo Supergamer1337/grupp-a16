@@ -9,10 +9,10 @@ class Pong:
         self.clock = pygame.time.Clock()
         self.player_points = [0 for i in range(2)]
         self.board = Board()
-        self.__init_positions__()
 
     def run(self):
         running = True
+        self.board.init_positions()
         while running:
             # Ensure program maintains a rate of 60 frames per second
             self.clock.tick(60)
@@ -23,18 +23,16 @@ class Pong:
             # Update Render
             self.notify_observers()
 
-    def __init_positions__(self):
-        #TODO: set starting positions for all game components
-        pass
-
     def update(self):
         # TODO: Update game
         self.board.update()
         x_pos_ball = self.board.ball.get_pos()[0]
         if x_pos_ball < 0:
             self.player_points[0] += 1
+            self.board.new_round()
         elif x_pos_ball > WINDOW_SIZE[0]:
             self.player_points[1] += 1
+            self.board.new_round()
 
     def add_observer(self, observer):
         self.observers.append(observer)

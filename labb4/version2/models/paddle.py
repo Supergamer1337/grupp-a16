@@ -5,7 +5,7 @@ from labb4.version2.models.gameobject import GameObject
 
 
 class Paddle(GameObject):
-    def __init__(self, pos, up_key: pygame.key, down_key: pygame.key):
+    def __init__(self, up_key: pygame.key, down_key: pygame.key, pos: (int, int) = (0, 0)):
         super().__init__(*pos)
         self.up_key = up_key
         self.down_key = down_key
@@ -30,3 +30,4 @@ class Paddle(GameObject):
     def load_image(self, path):
         super(Paddle, self).load_image(path)
         self.image = pygame.transform.smoothscale(self.image, (int(WINDOW_SIZE[0] * 0.01), int(WINDOW_SIZE[1] * 0.2)))
+        print("Loaded paddle image")

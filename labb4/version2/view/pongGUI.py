@@ -12,14 +12,13 @@ class PongGUI:
         self.game.add_observer(self)
         self.game_components = [
             self.game.board,
-            self.game.board.ball,
             self.game.board.paddles[0],
-            self.game.board.paddles[1]
+            self.game.board.paddles[1],
+            self.game.board.ball
         ]
         self.__init_textures__()
 
     def render(self):
-        board = self.game.board
         for component in self.game_components:
             self.__render_image__(component.get_image(), component.get_pos())
         pygame.display.flip()

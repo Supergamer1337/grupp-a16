@@ -3,6 +3,7 @@ from models.board import Board
 
 def test():
     print("Testing started!")
+    # TODO: Add tests
     print("Testing ended!")
 
 

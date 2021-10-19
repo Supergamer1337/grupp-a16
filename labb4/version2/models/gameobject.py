@@ -20,6 +20,10 @@ class GameObject(ABC):
         if self.image is not None:
             return self.image.get_size()
 
+    def set_pos(self, pos: (int, int)):
+        self.pos_x = pos[0]
+        self.pos_y = pos[1]
+
     @abstractmethod
     def load_image(self, path):
         self.image = pygame.image.load(path)

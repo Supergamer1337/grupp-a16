@@ -9,12 +9,13 @@ from labb4.version2.config import WINDOW_SIZE
 class Board(GameObject):
     def __init__(self):
         super().__init__()
-        paddleoffset: int = int(WINDOW_SIZE[0] * 0.05)
         self.paddles = [
-            Paddle((paddleoffset, 0), pygame.K_q, pygame.K_a),  # Left Paddle
-            Paddle((WINDOW_SIZE[0]-paddleoffset, 0), pygame.K_UP, pygame.K_DOWN)  # Right Paddle
+            Paddle(pygame.K_q, pygame.K_a),  # Left Paddle
+            Paddle(pygame.K_UP, pygame.K_DOWN)  # Right Paddle
         ]
         self.ball = Ball()
+
+
 
     def update(self):
         key_list = pygame.key.get_pressed()
@@ -25,10 +26,22 @@ class Board(GameObject):
             for paddle in self.paddles:
                 if self.__is_colliding__(self.ball, paddle):
                     # TODO: Handle the collision
+                    self.ball
                     print("Paddle collision!")
 
-    def create_new_ball(self):
-        pass
+    def new_round(self):
+        self.init_positions()
+        self.ball.new_direction()
+        # TODO: Set new direction for ball
+
+    def init_positions(self):
+        paddleoffset_x: int = int(WINDOW_SIZE[0] * 0.05)
+        paddle_y: int = int(WINDOW_SIZE[1] / 2 - self.paddles[0].get_size()[1] / 2)
+        self.paddles[0].set_pos((paddleoffset_x, paddle_y))
+        self.paddles[1].set_pos((WINDOW_SIZE[0]-paddleoffset_x, paddle_y))
+        ball_offset = int(self.ball.get_size()[0] / 2), int(self.ball.get_size()[1] / 2)
+        ball_pos = int(WINDOW_SIZE[0] / 2) - ball_offset[0], int(WINDOW_SIZE[1] / 2) - ball_offset[1]
+        self.ball.set_pos(ball_pos)
 
     # Does not work if the ball is too fast, should make a new based on previous position, 
     # new position and the collision objects position to see if it goes through the object
@@ -47,6 +60,7 @@ class Board(GameObject):
     def load_image(self, path):
         super(Board, self).load_image(path)
         self.image = pygame.transform.smoothscale(self.image, WINDOW_SIZE)
+        print("Loaded Board image")
 
     def destroy(self):
         self.image = None
