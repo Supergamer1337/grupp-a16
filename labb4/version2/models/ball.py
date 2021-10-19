@@ -40,6 +40,6 @@ class Ball(GameObject):
         self.direction = self.direction[0] * -1, self.direction[1] * -1
 
     def destroy(self):
-        # TODO: Remove all image assets
-        pass
+        self.image = None
+        self.sound_paddle_hit = None
 

@@ -37,3 +37,6 @@ class Board(GameObject):
         if x_coll and y_coll:
             return True
         return False
+
+    def destroy(self):
+        self.image = None
