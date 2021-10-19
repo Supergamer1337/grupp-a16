@@ -14,7 +14,7 @@ class GameObject(ABC):
         raise NotImplementedError
 
     def get_pos(self):
-        return self.pos
+        return self.pos_x, self.pos_y
 
     def get_size(self):
         if self.image is not None:

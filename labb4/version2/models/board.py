@@ -5,7 +5,7 @@ from labb4.version2.models.paddle import Paddle
 from labb4.version2.models.gameobject import GameObject
 
 
-class Board:
+class Board(GameObject):
     def __init__(self):
         self.paddles = [
             Paddle(pygame.K_q, pygame.K_a),  # Left Paddle

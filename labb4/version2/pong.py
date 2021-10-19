@@ -9,6 +9,7 @@ class Pong:
         self.clock = pygame.time.Clock()
         self.player_points = [0 for i in range(2)]
         self.board = Board()
+        self.__init_positions__()
 
     def run(self):
         running = True
@@ -21,6 +22,10 @@ class Pong:
             pygame.event.pump()
             # Update Render
             self.notify_observers()
+
+    def __init_positions__(self):
+        #TODO: set starting positions for all game components
+        pass
 
     def update(self):
         # TODO: Update game
