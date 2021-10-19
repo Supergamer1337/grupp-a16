@@ -1,6 +1,6 @@
 # package labb4.model
 
-from Config import GAME_WIDTH, GAME_HEIGHT
+from labb4.model.Config import GAME_WIDTH, GAME_HEIGHT
 
 """
  * A Ball for the Pong game
