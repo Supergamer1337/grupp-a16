@@ -4,9 +4,9 @@ from pygame.surface import Surface
 
 
 class GameObject(ABC):
-    def __init__(self, pos: (int, int) = (0, 0), image: Surface = None):
-        # TODO: Kanske byta till två variabler istället för en tuple?
-        self.pos: (int, int) = pos
+    def __init__(self, pos_x: int = 0, pos_y: int = 0, image: Surface = None):
+        self.pos_x: int = pos_x
+        self.pos_y: int = pos_y
         self.image: Surface = image
 
     @abstractmethod

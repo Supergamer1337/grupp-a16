@@ -1,15 +1,15 @@
 # package pong.view
 import pygame
 from math import math
-from labb4.model import *
-from labb4.event.ModelEvent import ModelEvent
-from labb4.event.EventBus import EventBus
-from labb4.event.EventHandler import EventHandler
-from labb4.view.theme.Cool import Cool
-from labb4.view.theme.Duckie import Duckie
+from labb4.version1.model import *
+from labb4.version1.event.ModelEvent import ModelEvent
+from labb4.version1.event.EventBus import EventBus
+from labb4.version1.event.EventHandler import EventHandler
+from labb4.version1.view.theme.Cool import Cool
+from labb4.version1.view.theme.Duckie import Duckie
 
-from labb4.model.Paddle import PADDLE_SPEED
-from labb4.model.Config import *
+from labb4.version1.model.Paddle import PADDLE_SPEED
+from labb4.version1.model.Config import *
 
 
 class PongGUI:

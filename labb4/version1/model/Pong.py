@@ -1,7 +1,7 @@
 # package labb4.model
 
-import labb4.event.ModelEvent
-import labb4.event.EventBus
+import labb4.version1.event.ModelEvent
+import labb4.version1.event.EventBus
 
 
 class Pong:

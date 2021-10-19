@@ -1,6 +1,6 @@
 # package pong
 
-import labb4.model.Ball as Ball
+import labb4.version1.model.Ball as Ball
 
 
 class Test:

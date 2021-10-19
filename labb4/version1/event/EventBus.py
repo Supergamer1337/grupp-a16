@@ -1,7 +1,7 @@
 # package labb4.event
 
-from labb4.event.EventHandler import EventHandler
-from labb4.event.ModelEvent import ModelEvent
+from labb4.version1.event.EventHandler import EventHandler
+from labb4.version1.event.ModelEvent import ModelEvent
 
 
 # Service to send events **from model** to GUI
