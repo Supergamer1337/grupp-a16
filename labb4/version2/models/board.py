@@ -9,7 +9,7 @@ class Board:
     def __init__(self):
         self.paddles = [
             Paddle(pygame.K_q, pygame.K_a),
-            Paddle(pygame.K_UP, pygame.K_down)
+            Paddle(pygame.K_UP, pygame.K_DOWN)
         ]
         self.ball = Ball()
 
@@ -24,7 +24,7 @@ class Board:
                     # TODO: Handle the collision
                     print("Paddle collision!")
 
-    # Does not work if the ball is too fast
+    # Does not work if the ball is too fast, should make o
     @staticmethod
     def __is_colliding__(object1: GameObject, object2: GameObject) -> bool:
         pos1 = object1.get_pos()
