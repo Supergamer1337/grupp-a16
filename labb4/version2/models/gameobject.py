@@ -20,6 +20,7 @@ class GameObject(ABC):
         if self.image is not None:
             return self.image.get_size()
 
+    @abstractmethod
     def load_image(self, path):
         self.image = pygame.image.load(path)
 

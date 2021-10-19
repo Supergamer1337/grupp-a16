@@ -45,3 +45,6 @@ class Ball(GameObject):
         self.image = None
         self.sound_paddle_hit = None
 
+    def load_image(self, path):
+        super(Ball, self).load_image(path)
+

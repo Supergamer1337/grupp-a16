@@ -3,14 +3,16 @@ import pygame
 from labb4.version2.models.ball import Ball
 from labb4.version2.models.paddle import Paddle
 from labb4.version2.models.gameobject import GameObject
+from labb4.version2.config import WINDOW_SIZE
 
 
 class Board(GameObject):
     def __init__(self):
         super().__init__()
+        paddleoffset: int = int(WINDOW_SIZE[0] * 0.05)
         self.paddles = [
-            Paddle(pygame.K_q, pygame.K_a),  # Left Paddle
-            Paddle(pygame.K_UP, pygame.K_DOWN)  # Right Paddle
+            Paddle((paddleoffset, 0), pygame.K_q, pygame.K_a),  # Left Paddle
+            Paddle((WINDOW_SIZE[0]-paddleoffset, 0), pygame.K_UP, pygame.K_DOWN)  # Right Paddle
         ]
         self.ball = Ball()
 
@@ -41,6 +43,10 @@ class Board(GameObject):
         if x_coll and y_coll:
             return True
         return False
+
+    def load_image(self, path):
+        super(Board, self).load_image(path)
+        self.image = pygame.transform.smoothscale(self.image, WINDOW_SIZE)
 
     def destroy(self):
         self.image = None
