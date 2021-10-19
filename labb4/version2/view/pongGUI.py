@@ -1,12 +1,9 @@
-from pong import Pong
+from labb4.version2.pong import Pong
 
 
 class PongGUI:
     def __init__(self, game: Pong):
         self.game = game
-
-
-
 
     def render(self):
         pass

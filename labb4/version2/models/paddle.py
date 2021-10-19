@@ -1,6 +1,6 @@
 import pygame.event
 
-from models.gameobject import GameObject
+from labb4.version2.models.gameobject import GameObject
 
 
 class Paddle(GameObject):
@@ -11,10 +11,9 @@ class Paddle(GameObject):
         self.base_speed: float = 0.5
         self.direction: int = 0
 
-
     def update(self, key_list):
-        self.direction = take_input(key_list)
-        pos = pos[0], pos[1] + self.direction * self.base_speed
+        self.direction = self.take_input(key_list)
+        pos = self.pos[0], self.pos[1] + self.direction * self.base_speed
 
     def take_input(self, key_list):
         new_direction = 0

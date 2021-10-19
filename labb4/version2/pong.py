@@ -4,8 +4,6 @@ from config import WINDOW_SIZE
 
 
 class Pong:
-
-
     def __init__(self):
         self.observers = []
         self.clock = pygame.time.Clock()

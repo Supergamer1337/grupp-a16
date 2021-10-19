@@ -1,8 +1,8 @@
 import pygame.event
 import pygame
-from models.ball import Ball
-from models.paddle import Paddle
-from models.gameobject import GameObject
+from labb4.version2.models.ball import Ball
+from labb4.version2.models.paddle import Paddle
+from labb4.version2.models.gameobject import GameObject
 
 
 class Board:

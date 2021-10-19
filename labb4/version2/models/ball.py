@@ -1,6 +1,6 @@
 from random import random
-from config import WINDOW_SIZE
-from models.gameobject import GameObject
+from labb4.version2.config import WINDOW_SIZE
+from labb4.version2.models.gameobject import GameObject
 
 
 class Ball(GameObject):
