@@ -3,6 +3,7 @@ from labb4.version2.config import WINDOW_SIZE
 from labb4.version2.models.gameobject import GameObject
 import pygame.mixer
 
+
 class Ball(GameObject):
     def __init__(self):
         super().__init__()

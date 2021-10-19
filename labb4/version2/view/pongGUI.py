@@ -9,6 +9,7 @@ class PongGUI:
         pygame.display.set_caption("Pong")
         self.screen = pygame.display.set_mode(WINDOW_SIZE)
         self.game = game
+        self.game.add_observer(self)
         self.game_components = [
             self.game.board,
             self.game.board.ball,
@@ -20,7 +21,8 @@ class PongGUI:
     def render(self):
         board = self.game.board
         for component in self.game_components:
-            self.__render_image__(component.get_img(), component.get_pos())
+            self.__render_image__(component.get_image(), component.get_pos())
+        pygame.display.flip()
 
     def __render_image__(self, image: pygame.Surface, pos: (int, int)):
         self.screen.blit(image, pos)

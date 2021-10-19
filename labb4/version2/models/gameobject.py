@@ -22,3 +22,6 @@ class GameObject(ABC):
 
     def load_image(self, path):
         self.image = pygame.image.load(path)
+
+    def get_image(self):
+        return self.image

@@ -7,6 +7,7 @@ from labb4.version2.models.gameobject import GameObject
 
 class Board(GameObject):
     def __init__(self):
+        super().__init__()
         self.paddles = [
             Paddle(pygame.K_q, pygame.K_a),  # Left Paddle
             Paddle(pygame.K_UP, pygame.K_DOWN)  # Right Paddle
@@ -23,6 +24,9 @@ class Board(GameObject):
                 if self.__is_colliding__(self.ball, paddle):
                     # TODO: Handle the collision
                     print("Paddle collision!")
+
+    def create_new_ball(self):
+        pass
 
     # Does not work if the ball is too fast, should make a new based on previous position, 
     # new position and the collision objects position to see if it goes through the object
