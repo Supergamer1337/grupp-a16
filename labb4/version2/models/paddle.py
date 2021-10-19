@@ -10,11 +10,17 @@ class Paddle(GameObject):
         self.up_key = up_key
         self.down_key = down_key
         self.base_speed: float = 5
-        self.direction: int = 0
 
     def update(self, key_list):
-        self.direction = self.take_input(key_list)
-        self.pos_y = self.pos_y + self.direction * self.base_speed
+        direction = self.take_input(key_list)
+        self.update_position(direction)
+
+    def update_position(self, direction):
+        self.pos_y = self.pos_y + direction * self.base_speed
+        if self.pos_y + self.get_size()[1] > WINDOW_SIZE[1]:
+            self.pos_y = WINDOW_SIZE[1] - self.get_size()[1]
+        elif self.pos_y < 0:
+            self.pos_y = 0
 
     def take_input(self, key_list):
         new_direction = 0
@@ -30,4 +36,3 @@ class Paddle(GameObject):
     def load_image(self, path):
         super(Paddle, self).load_image(path)
         self.image = pygame.transform.smoothscale(self.image, (int(WINDOW_SIZE[0] * 0.01), int(WINDOW_SIZE[1] * 0.2)))
-        print("Loaded paddle image")

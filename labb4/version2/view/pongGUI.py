@@ -2,6 +2,7 @@ import pygame
 from labb4.version2.pong import Pong
 from labb4.version2.config import *
 
+
 class PongGUI:
     ASSET_PATH = "assets/img/"
     
@@ -17,11 +18,26 @@ class PongGUI:
             self.game.board.ball
         ]
         self.__init_textures__()
+        self.font = pygame.font.Font("assets/ARCADE.TTF", 128)
 
     def render(self):
         for component in self.game_components:
             self.__render_image__(component.get_image(), component.get_pos())
+        self.render_text()
+        self.render_fps_counter()
         pygame.display.flip()
+
+    def render_fps_counter(self):
+        text = self.font.render(f"{round(self.game.clock.get_fps())}", True, (255, 0, 0))
+        textRect = text.get_rect()
+        self.screen.blit(text, textRect)
+
+    def render_text(self):
+        text = self.font.render(f"{self.game.player_points[0]} - {self.game.player_points[1]}", True, (255, 255, 255))
+        textRect = text.get_rect()
+        textRect.x = WINDOW_SIZE[0] / 2 - textRect.width / 2
+        textRect.y = WINDOW_SIZE[1] * 0.05
+        self.screen.blit(text, textRect)
 
     def __render_image__(self, image: pygame.Surface, pos: (int, int)):
         self.screen.blit(image, pos)

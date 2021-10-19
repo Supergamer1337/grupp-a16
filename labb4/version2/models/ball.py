@@ -1,5 +1,4 @@
 from random import uniform, randint
-
 from labb4.version2.models.paddle import Paddle
 from labb4.version2.config import WINDOW_SIZE
 from labb4.version2.models.gameobject import GameObject
@@ -10,9 +9,8 @@ import pygame.mixer
 class Ball(GameObject):
     def __init__(self):
         super().__init__()
-        self.new_direction()
-        self.base_speed = 5
-        self.speed = self.base_speed
+        self.direction: (float, float) = self.new_direction()
+        self.speed = 5
         self.speed_multiplier = 1.05
         self.last_collision_target: Paddle = None
         self.sound_paddle_hit = pygame.mixer.Sound("assets/sound/ballhitpaddle.wav")
@@ -25,12 +23,11 @@ class Ball(GameObject):
         self.direction = self.collision_bounce(paddle)
 
     def collision_bounce(self, paddle: Paddle):
-        lower_bound = paddle.get_pos()[1] - self.get_size()[1]
-        upper_bound = paddle.get_pos()[1] + paddle.get_size()[1]
-        anka_hit = self.pos_y
+        lower_bound = paddle.get_pos()[1] - self.get_size()[1]  # Lower bound of the paddle:s surface
+        upper_bound = paddle.get_pos()[1] + paddle.get_size()[1]  # Upper bound of the paddle:s surface
+        ball_pos = self.pos_y
 
-        percentage = (anka_hit - lower_bound) / (upper_bound - lower_bound)
-
+        percentage = (ball_pos - lower_bound) / (upper_bound - lower_bound)
         offset_angle = percentage * self.max_angle * 2 - self.max_angle
 
         if self.direction[0] > 0:
@@ -68,18 +65,17 @@ class Ball(GameObject):
         super(Ball, self).load_image(path)
         new_size = int(WINDOW_SIZE[1] * 0.05)
         self.image = pygame.transform.smoothscale(self.image, (new_size, new_size))
-        print("Loaded ball image")
 
     def new_direction(self) -> (float, float):
         angle = uniform(-pi/6, pi/6)  # Angle
         if randint(0, 1):
             angle += pi
         vector = self.angle_to_2dvector(angle)
-        self.direction = self.normalize_vector(vector)
+        return self.normalize_vector(vector)
 
     def new_ball(self):
-        self.new_direction()
-        self.speed = self.base_speed
+        self.direction = self.new_direction()
+        self.speed = uniform(3, 10)
         self.last_collision_target = None
 
     @staticmethod
@@ -88,7 +84,6 @@ class Ball(GameObject):
         y = sin(angle)
         # sin(v) = sin(180 - v)
         return x, y
-
 
     @staticmethod
     def normalize_vector(vector: (float, float)) -> (float, float):

@@ -2,6 +2,7 @@ from labb4.version2.models.ball import Ball
 from math import *
 from random import *
 
+
 def test():
     print("Testing started!")
     # TODO: Add tests
