@@ -15,7 +15,7 @@ class Pong:
         self.board.init_positions()
         while running:
             # Ensure program maintains a rate of 60 frames per second
-            self.clock.tick(60)
+            self.clock.tick(144)  # Base 60
             # Update Game components
             self.update()
             # Pump unused events
@@ -27,6 +27,7 @@ class Pong:
         # TODO: Update game
         self.board.update()
         x_pos_ball = self.board.ball.get_pos()[0]
+        # Checks if ball out of board
         if x_pos_ball < 0:
             self.player_points[0] += 1
             self.board.new_round()

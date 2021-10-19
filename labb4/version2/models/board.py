@@ -4,6 +4,7 @@ from labb4.version2.models.ball import Ball
 from labb4.version2.models.paddle import Paddle
 from labb4.version2.models.gameobject import GameObject
 from labb4.version2.config import WINDOW_SIZE
+from math import sqrt
 
 
 class Board(GameObject):
@@ -15,23 +16,19 @@ class Board(GameObject):
         ]
         self.ball = Ball()
 
-
-
     def update(self):
         key_list = pygame.key.get_pressed()
         for paddle in self.paddles:
             paddle.update(key_list)
         self.ball.update()
-        if not self.ball.in_collision:
-            for paddle in self.paddles:
-                if self.__is_colliding__(self.ball, paddle):
-                    # TODO: Handle the collision
-                    self.ball
-                    print("Paddle collision!")
+        for paddle in self.paddles:
+            if self.__is_colliding__(self.ball, paddle) and self.ball.last_collision_target is not paddle:
+                self.ball.paddle_collision(paddle)
+
 
     def new_round(self):
         self.init_positions()
-        self.ball.new_direction()
+        self.ball.new_ball()
         # TODO: Set new direction for ball
 
     def init_positions(self):
@@ -51,11 +48,19 @@ class Board(GameObject):
         pos2 = object2.get_pos()
         size1 = object1.get_size()
         size2 = object2.get_size()
-        x_coll = pos1[0] + size1[0] < pos2[0] and pos1[0] < size2[0] + pos2[0]
-        y_coll = pos1[1] + size1[1] < pos2[1] and pos1[1] < size2[1] + pos2[0]
+        x_coll = pos1[0] < size2[0] + pos2[0] and pos1[0] + size1[0] > pos2[0]
+        y_coll = pos1[1] < pos2[1] + size2[1] and pos1[1] + size1[1] > pos2[1]
         if x_coll and y_coll:
             return True
         return False
+
+    @staticmethod
+    def __is_colliding__2(object1, object2):
+        pos1 = object1.get_pos()
+        pos2 = object2.get_pos()
+        pos_result = pos1[0] - pos2[0], pos1[1] - pos2[1]
+        length = sqrt(pos_result[0] ** 2 + pos_result[1] ** 2)
+
 
     def load_image(self, path):
         super(Board, self).load_image(path)
@@ -64,3 +69,7 @@ class Board(GameObject):
 
     def destroy(self):
         self.image = None
+        self.ball.destroy()
+        for paddle in self.paddles:
+            paddle.destroy()
+
