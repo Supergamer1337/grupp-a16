@@ -25,5 +25,4 @@ class Paddle(GameObject):
         return new_direction
 
     def destroy(self):
-        #TODO: Destroy image assets
-        pass
+        self.image = None
