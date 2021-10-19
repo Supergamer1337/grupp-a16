@@ -21,7 +21,8 @@ class Ball(GameObject):
             self.sound_paddle_hit.play()
 
     def __update_movement__(self):
-        self.pos = self.pos[0] + self.direction[0] * self.speed, self.pos[1] + self.direction[1] * self.speed
+        self.pos_x = self.pos_x + self.direction[0] * self.speed
+        self.pos_y = self.pos_y + self.direction[1] * self.speed
 
     def update(self):
 
@@ -29,12 +30,12 @@ class Ball(GameObject):
         self.__collide_wall__()
 
     def __collide_wall__(self):
-        if self.pos[1] < 0:
+        if self.pos_y < 0:
             self.__wall_collision__()
-            self.pos = self.pos[0], 0
-        elif self.pos[1] < WINDOW_SIZE[1]:
+            self.pos_y = 0
+        elif self.pos_y < WINDOW_SIZE[1]:
             self.__wall_collision__()
-            self.pos = self.pos[0], WINDOW_SIZE[1]
+            self.pos_y = WINDOW_SIZE[1]
 
     def __wall_collision__(self):
         self.direction = self.direction[0] * -1, self.direction[1] * -1

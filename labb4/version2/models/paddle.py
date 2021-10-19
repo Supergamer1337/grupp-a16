@@ -13,7 +13,7 @@ class Paddle(GameObject):
 
     def update(self, key_list):
         self.direction = self.take_input(key_list)
-        pos = self.pos[0], self.pos[1] + self.direction * self.base_speed
+        self.pos_y = self.pos_y + self.direction * self.base_speed
 
     def take_input(self, key_list):
         new_direction = 0
