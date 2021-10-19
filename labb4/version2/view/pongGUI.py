@@ -3,7 +3,7 @@ from labb4.version2.pong import Pong
 from labb4.version2.config import *
 
 class PongGUI:
-    ASSET_PATH = "labb4/version2/assets/"
+    ASSET_PATH = "assets/"
     
     def __init__(self, game: Pong):
         self.pygame.set_caption("Pong")
@@ -27,10 +27,10 @@ class PongGUI:
 
     def __init_textures__(self):
         board = self.game.board
-        board.load_image(f"{self.ASSET_PATH}/{THEME}Bg.png")
-        board.ball.load_image(f"{self.ASSET_PATH}/{THEME}Ball.png")
-        board.paddles[0].load_image(f"{self.ASSET_PATH}/coolredpaddle.png")
-        board.paddles[1].load_image(f"{self.ASSET_PATH}/coolbluepaddle.png")
+        board.load_image(f"{self.ASSET_PATH}/img/{THEME}Bg.png")
+        board.ball.load_image(f"{self.ASSET_PATH}/img/{THEME}Ball.png")
+        board.paddles[0].load_image(f"{self.ASSET_PATH}/img/coolredpaddle.png")
+        board.paddles[1].load_image(f"{self.ASSET_PATH}/img/coolbluepaddle.png")
 
     # Called by observers when its time to render
     def notify(self):

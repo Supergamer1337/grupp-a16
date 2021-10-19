@@ -11,7 +11,7 @@ class Ball(GameObject):
         self.speed_multiplier = 1.05
         self.in_collision = False
         self.collision_timer_value: float = 0.1
-        self.sound_paddle_hit = pygame.mixer.Sound("labb4/version2/assets/sound/ballhitpaddle.wav")
+        self.sound_paddle_hit = pygame.mixer.Sound("assets/sound/ballhitpaddle.wav")
 
     def paddle_collision(self):
         if not self.in_collision:
