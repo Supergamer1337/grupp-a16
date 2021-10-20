@@ -3,6 +3,7 @@ import time
 import pygame
 from models.board import Board
 from config import WINDOW_SIZE
+from config import WIN_POINTS
 
 
 class Pong:
@@ -14,33 +15,45 @@ class Pong:
         self.board = Board()
 
     def run(self):
+        """
+        Runs as long as no one wins or quits the game
+        """
         self.board.init_positions()
         while not self.player_has_won:
-            # Ensure program maintains a rate of 60 frames per second
-            self.clock.tick(60)  # Base 60
-            # Update Game components
-            self.update()
-            for event in pygame.event.get():
+            self.clock.tick(60)  # Ensure program maintains a rate of 60 frames per second
+            self.update()  # Update Game components
+            for event in pygame.event.get():  # Check if quit pygame
                 if event.type == pygame.QUIT:
                     self.quit_game()
-            # Pump unused events
-            pygame.event.pump()
-            # Update Render
-            if self.player_points[0] == 5 or self.player_points[1] == 5:
-                self.player_has_won = True
+            pygame.event.pump()  # Pump unused events
+            if WIN_POINTS > 0:
+                if self.player_points[0] == WIN_POINTS or self.player_points[1] == WIN_POINTS:
+                    self.player_has_won = True
             self.notify_observers()
-        time.sleep(5)
+        time.sleep(5)  # If player has won, wait 5 seconds to quit game
         self.quit_game()
 
     def quit_game(self):
+        """
+        Quits the game
+        """
         self.board.destroy()
         pygame.quit()
         quit()
 
     def update(self):
+        """
+        Updates current game state
+        """
         self.board.update()
+        self.update_round()
+
+    def update_round(self):
+        """
+        Checks if player has WON THE ROUND
+        """
         x_pos_ball = self.board.ball.get_pos()[0]
-        # Checks if ball out of board
+        # Checks if ball went past a paddle
         if x_pos_ball < 0:
             self.player_points[1] += 1
             self.board.new_round()

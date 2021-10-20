@@ -1,6 +1,5 @@
 import pygame.event
 from labb4.version2.config import WINDOW_SIZE
-
 from labb4.version2.models.gameobject import GameObject
 
 
@@ -12,17 +11,28 @@ class Paddle(GameObject):
         self.base_speed: float = 7
 
     def update(self, key_list):
+        """
+        Updates the position the paddle will move to, based on keyboard interaction.
+        """
         direction = self.take_input(key_list)
         self.update_position(direction)
 
     def update_position(self, direction):
+        """
+        Moves the paddle on the screen.
+        """
         self.pos_y = self.pos_y + direction * self.base_speed
+
+        # If out of bounds, move back inside bounds.
         if self.pos_y + self.get_size()[1] > WINDOW_SIZE[1]:
             self.pos_y = WINDOW_SIZE[1] - self.get_size()[1]
         elif self.pos_y < 0:
             self.pos_y = 0
 
     def take_input(self, key_list):
+        """
+        Gets direction based on current keyboard input
+        """
         new_direction = 0
         if key_list[self.up_key]:
             new_direction -= 1
