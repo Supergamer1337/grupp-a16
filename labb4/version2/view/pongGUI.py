@@ -61,10 +61,12 @@ class PongGUI:
         winner = self.game.player_points.index(WIN_POINTS)
         if winner == 0:
             player = "Red"
+            colour = (255, 0, 0)
         else:
             player = "Blue"
+            colour = (0, 0, 255)
 
-        text = self.win_font.render(f"{player} won!", True, (255, 255, 255))
+        text = self.win_font.render(f"{player} won!", True, colour)
         textRect = text.get_rect()
         textRect.x = WINDOW_SIZE[0] / 2 - textRect.width / 2
         textRect.y = WINDOW_SIZE[1] / 3
