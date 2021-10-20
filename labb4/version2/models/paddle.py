@@ -9,7 +9,7 @@ class Paddle(GameObject):
         super().__init__(*pos)
         self.up_key = up_key
         self.down_key = down_key
-        self.base_speed: float = 5
+        self.base_speed: float = 7
 
     def update(self, key_list):
         direction = self.take_input(key_list)

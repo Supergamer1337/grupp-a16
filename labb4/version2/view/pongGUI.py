@@ -19,12 +19,15 @@ class PongGUI:
         ]
         self.__init_textures__()
         self.font = pygame.font.Font("assets/ARCADE.TTF", 128)
+        self.win_font = pygame.font.Font("assets/ARCADE.TTF", 256)
 
     def render(self):
         for component in self.game_components:
             self.__render_image__(component.get_image(), component.get_pos())
         self.render_text()
         self.render_fps_counter()
+        if self.game.player_has_won:
+            self.player_won()
         pygame.display.flip()
 
     def render_fps_counter(self):
@@ -37,6 +40,19 @@ class PongGUI:
         textRect = text.get_rect()
         textRect.x = WINDOW_SIZE[0] / 2 - textRect.width / 2
         textRect.y = WINDOW_SIZE[1] * 0.05
+        self.screen.blit(text, textRect)
+
+    def player_won(self):
+        winner = self.game.player_points.index(5)
+        if winner == 0:
+            player = "Red"
+        else:
+            player = "Blue"
+
+        text = self.win_font.render(f"{player} won!", True, (255, 255, 255))
+        textRect = text.get_rect()
+        textRect.x = WINDOW_SIZE[0] / 2 - textRect.width / 2
+        textRect.y = WINDOW_SIZE[1] / 3
         self.screen.blit(text, textRect)
 
     def __render_image__(self, image: pygame.Surface, pos: (int, int)):

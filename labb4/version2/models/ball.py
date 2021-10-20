@@ -10,7 +10,7 @@ class Ball(GameObject):
     def __init__(self):
         super().__init__()
         self.direction: (float, float) = self.new_direction()
-        self.speed = 5
+        self.speed = 7
         self.speed_multiplier = 1.05
         self.last_collision_target: Paddle = None
         self.sound_paddle_hit = pygame.mixer.Sound("assets/sound/ballhitpaddle.wav")
@@ -75,7 +75,7 @@ class Ball(GameObject):
 
     def new_ball(self):
         self.direction = self.new_direction()
-        self.speed = uniform(3, 10)
+        self.speed = uniform(6, 10)
         self.last_collision_target = None
 
     @staticmethod
