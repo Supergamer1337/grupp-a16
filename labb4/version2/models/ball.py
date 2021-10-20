@@ -40,7 +40,7 @@ class Ball(GameObject):
         # New angle that the ball will bounce away in
         offset_angle = percentage * self.max_angle * 2 - self.max_angle
 
-        if self.direction[0] > 0:  # Swaps direction of angle if ball is moving left to right
+        if self.direction[0] > 0:  # Mirrors angle if ball is moving left to right
             offset_angle += pi
             new_direction = self.normalize_vector(self.angle_to_2Dvector(offset_angle))
             new_direction = new_direction[0], -new_direction[1]
