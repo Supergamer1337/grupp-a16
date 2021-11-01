@@ -5,20 +5,17 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CarTest {
-
-
-
     @Test
     public void myTest() {
+        // Saab95 Tests
         Saab95 saab = new Saab95();
-        // Tests Constants
         testNrDoors(saab, 2);
         testColor(saab, Color.RED);
         testEnginePower(saab, 125.0);
         testSpeed(saab);
 
+        // Volvo240 Tests
         Volvo240 volvo = new Volvo240();
-        // Tests Constants
         testNrDoors(volvo, 4);
         testColor(volvo, Color.BLACK);
         testEnginePower(volvo, 100.0);
