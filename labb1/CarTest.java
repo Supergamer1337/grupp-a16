@@ -82,4 +82,13 @@ public class CarTest {
         car.setColor(Color.CYAN);
         assertEquals(car.getColor(), Color.CYAN);
     }
+
+    private void testDirection(Car car) {
+        car.turnRight();
+        assertEquals(Car.Direction.RIGHT, car.getCurrentDirection());
+        car.turnLeft();
+        car.turnLeft();
+        car.turnLeft();
+        assertEquals(Car.Direction.DOWN, car.getCurrentDirection());
+    }
 }
