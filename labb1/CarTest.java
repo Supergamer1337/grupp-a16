@@ -14,6 +14,7 @@ public class CarTest {
         testEnginePower(saab, 125.0);
         testSpeed(saab);
         testTurbo(saab);
+        engineTest(saab);
 
         // Volvo240 Tests
         Volvo240 volvo = new Volvo240();
@@ -21,6 +22,7 @@ public class CarTest {
         testColor(volvo, Color.BLACK);
         testEnginePower(volvo, 100.0);
         testSpeed(volvo);
+        engineTest(volvo);
     }
 
     private void testNrDoors(Car car, int nrDoors) {
@@ -65,5 +67,12 @@ public class CarTest {
         car.gas(1);
         assertTrue(car.getCurrentSpeed() > oldSpeedFactor);
         car.setTurboOff();
+    }
+
+    private void engineTest(Car car) {
+        car.startEngine();
+        assertEquals(0.1, car.getCurrentSpeed());
+        car.stopEngine();
+        assertEquals(0, car.getCurrentSpeed());
     }
 }
