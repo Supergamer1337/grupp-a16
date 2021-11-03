@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public abstract class Car implements Movable {
-    enum Direction {
+    public enum Direction {
             UP,
             RIGHT,
             DOWN,
@@ -70,21 +70,19 @@ public abstract class Car implements Movable {
 
     @Override
     public void turnLeft() {
-        switch (currentDirection) {
-            case UP -> currentDirection = Direction.LEFT;
-            case RIGHT -> currentDirection = Direction.UP;
-            case DOWN -> currentDirection = Direction.RIGHT;
-            case LEFT -> currentDirection = Direction.DOWN;
+        int val = getCurrentDirection().ordinal() - 1;
+        if (val < 0) {
+            val = Direction.values().length;
         }
+        currentDirection = Direction.values()[val];
     }
 
     @Override
     public void turnRight() {
-        switch (currentDirection) {
-            case UP -> currentDirection = Direction.RIGHT;
-            case RIGHT -> currentDirection = Direction.DOWN;
-            case DOWN -> currentDirection = Direction.LEFT;
-            case LEFT -> currentDirection = Direction.UP;
+        int val = getCurrentDirection().ordinal() + 1;
+        if (val >= Direction.values().length) {
+            val = 0;
         }
+        currentDirection = Direction.values()[val];
     }
 }
