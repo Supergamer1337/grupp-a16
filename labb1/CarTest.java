@@ -45,6 +45,8 @@ public class CarTest {
             car.gas(1);
         }
         assertEquals(car.getEnginePower(), car.getCurrentSpeed());
+
+
     }
 
     private void testTurbo(Saab95 car) {
