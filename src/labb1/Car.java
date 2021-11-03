@@ -63,10 +63,10 @@ public abstract class Car implements Movable {
     @Override
     public void move() {
         switch (currentDirection) {
-            case UP -> posY += currentSpeed;
+            case UP -> posY -= currentSpeed;
             case RIGHT -> posX += currentSpeed;
             case LEFT -> posX -= currentSpeed;
-            case DOWN -> posY -= currentSpeed;
+            case DOWN -> posY += currentSpeed;
         }
     }
 
@@ -74,17 +74,17 @@ public abstract class Car implements Movable {
     public void turnLeft() {
         int val = getCurrentDirection().ordinal() - 1;
         if (val < 0) {
-            val = Direction.values().length;
+            val = Direction.values().length - 1;
         }
         currentDirection = Direction.values()[val];
     }
 
     @Override
     public void turnRight() {
-        int val = getCurrentDirection().ordinal() + 1;
-        if (val >= Direction.values().length) {
-            val = 0;
+        int index = getCurrentDirection().ordinal() + 1;
+        if (index >= Direction.values().length) {
+            index = 0;
         }
-        currentDirection = Direction.values()[val];
+        currentDirection = Direction.values()[index];
     }
 }

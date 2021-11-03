@@ -9,23 +9,23 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CarTest {
     @Test
     public void myTest() {
+        testCars();
+        testSaab95();
+        testVolvo240();
+    }
+
+    private void testCars() {
         Car[] cars = {
                 new Saab95(),
                 new Volvo240()
         };
-        testCars(cars);
-    }
-
-    private void testCars(Car[] cars) {
         for (Car car : cars) {
-            testSpeed(car);
-            testEngine(car);
             testSetColor(car);
+            testEngine(car);
+            testSpeed(car);
             testDirection(car);
             testMove(car);
         }
-        testSaab95();
-        testVolvo240();
     }
 
     private void testSaab95() {
@@ -104,28 +104,25 @@ public class CarTest {
             car.turnRight();
         }
 
-        for (Car.Direction dirValue : dirValues) {
-            assertEquals(dirValue, car.getCurrentDirection());
+        for (int i = dirValues.length - 1; i > -1; i--) {
             car.turnLeft();
+            assertEquals(dirValues[i], car.getCurrentDirection());
         }
     }
 
-    private void testTurn() {
-        // TODO: Implement testTurn
-    }
-
     private void testMove(Car car) {
-        car.move();
-        assertEquals(car.posX, 0);
-        assertEquals(car.posY, 0);
+        Car.Direction[] dirValues = Car.Direction.values();
         car.gas(1);
-        car.move();
-        assertEquals(car.posX, 0);
-        assertEquals(car.posY, (int)(car.getCurrentSpeed()));
-        car.turnRight();
-        car.move();
-        assertEquals(car.posX, (int)(car.getCurrentSpeed()));
-        assertEquals(car.posY, (int)(car.getCurrentSpeed()));
-
+        int[][] pos = {
+                {0, -(int)car.speedFactor()},
+                {(int)car.speedFactor(), -(int)car.speedFactor()},
+                {(int)car.speedFactor(), 0},
+                {0, 0}
+        };
+        for (int i = 0; i < dirValues.length; i++) {
+            car.move();
+            car.turnRight();
+            assertTrue(pos[i][0] == car.posX && pos[i][1] == car.posY);
+        }
     }
 }
