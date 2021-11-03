@@ -36,6 +36,14 @@ public class CarTest {
 
     private void testSpeed(Car car) {
         // TODO: Add more testing
+        System.out.println("Now Testing: " + car.getClass());
         assertEquals(car.getCurrentSpeed(), 0);
+        System.out.println(car.getCurrentSpeed());
+        car.gas(1);
+        System.out.println(car.getCurrentSpeed());
+    }
+
+    private void testTurbo(Saab95 car) {
+
     }
 }

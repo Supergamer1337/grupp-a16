@@ -38,7 +38,6 @@ public abstract class Car implements Movable {
 
     public abstract void incrementSpeed(double amount);
     public abstract void decrementSpeed(double amount);
-    public abstract double speedFactor();
 
     public void gas(double amount) {
         if (0 <= amount && amount <= 1) {
