@@ -13,6 +13,10 @@ public class CarTest {
         testColor(saab, Color.RED);
         testEnginePower(saab, 125.0);
         testSpeed(saab);
+        testTurbo(saab);
+        testEngine(saab);
+        testSetColor(saab);
+        testDirection(saab);
 
         // Volvo240 Tests
         Volvo240 volvo = new Volvo240();
@@ -20,6 +24,9 @@ public class CarTest {
         testColor(volvo, Color.BLACK);
         testEnginePower(volvo, 100.0);
         testSpeed(volvo);
+        testEngine(volvo);
+        testSetColor(volvo);
+        testDirection(volvo);
     }
 
     private void testNrDoors(Car car, int nrDoors) {
@@ -36,14 +43,54 @@ public class CarTest {
 
     private void testSpeed(Car car) {
         // TODO: Add more testing
-        System.out.println("Now Testing: " + car.getClass());
         assertEquals(car.getCurrentSpeed(), 0);
-        System.out.println(car.getCurrentSpeed());
+        car.gas(0.5);
+        assertEquals(car.speedFactor() / 2, car.getCurrentSpeed());
+        car.gas(0.5);
+        assertEquals(car.speedFactor(), car.getCurrentSpeed());
+        for (int i = 0; i < 101; i++)  {
+            car.gas(1);
+        }
+        assertEquals(car.getEnginePower(), car.getCurrentSpeed());
+
+        for (int i = 0; i < 100; i++) {
+            car.brake(1);
+        }
+        assertEquals(0, car.getCurrentSpeed());
+
         car.gas(1);
-        System.out.println(car.getCurrentSpeed());
+        car.brake(0.5);
+        assertEquals(car.speedFactor()/2, car.getCurrentSpeed());
+        car.brake(1);
+        assertEquals(0, car.getCurrentSpeed());
     }
 
     private void testTurbo(Saab95 car) {
+        double oldSpeedFactor = car.speedFactor();
+        car.setTurboOn();
+        car.gas(1);
+        assertTrue(car.getCurrentSpeed() > oldSpeedFactor);
+        car.setTurboOff();
+    }
 
+    private void testEngine(Car car) {
+        car.startEngine();
+        assertEquals(0.1, car.getCurrentSpeed());
+        car.stopEngine();
+        assertEquals(0, car.getCurrentSpeed());
+    }
+
+    private void testSetColor(Car car) {
+        car.setColor(Color.CYAN);
+        assertEquals(car.getColor(), Color.CYAN);
+    }
+
+    private void testDirection(Car car) {
+        car.turnRight();
+        assertEquals(Car.Direction.RIGHT, car.getCurrentDirection());
+        car.turnLeft();
+        car.turnLeft();
+        car.turnLeft();
+        assertEquals(Car.Direction.DOWN, car.getCurrentDirection());
     }
 }
