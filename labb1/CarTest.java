@@ -46,7 +46,16 @@ public class CarTest {
         }
         assertEquals(car.getEnginePower(), car.getCurrentSpeed());
 
+        for (int i = 0; i < 100; i++) {
+            car.brake(1);
+        }
+        assertEquals(0, car.getCurrentSpeed());
 
+        car.gas(1);
+        car.brake(0.5);
+        assertEquals(car.speedFactor()/2, car.getCurrentSpeed());
+        car.brake(1);
+        assertEquals(0, car.getCurrentSpeed());
     }
 
     private void testTurbo(Saab95 car) {
