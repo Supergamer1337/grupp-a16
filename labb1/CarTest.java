@@ -88,9 +88,19 @@ public class CarTest {
     private void testDirection(Car car) {
         car.turnRight();
         assertEquals(Car.Direction.RIGHT, car.getCurrentDirection());
+        car.turnRight();
+        assertEquals(Car.Direction.DOWN, car.getCurrentDirection());
+        car.turnRight();
+        assertEquals(Car.Direction.LEFT, car.getCurrentDirection());
+        car.turnRight();
+        assertEquals(Car.Direction.UP, car.getCurrentDirection());
         car.turnLeft();
-        car.turnLeft();
+        assertEquals(Car.Direction.LEFT, car.getCurrentDirection());
         car.turnLeft();
         assertEquals(Car.Direction.DOWN, car.getCurrentDirection());
+        car.turnLeft();
+        assertEquals(Car.Direction.RIGHT, car.getCurrentDirection());
+        car.turnLeft();
+        assertEquals(Car.Direction.UP, car.getCurrentDirection());
     }
 }
