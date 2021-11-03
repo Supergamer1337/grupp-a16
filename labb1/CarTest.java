@@ -16,6 +16,7 @@ public class CarTest {
         testTurbo(saab);
         testEngine(saab);
         testSetColor(saab);
+        testDirection(saab);
 
         // Volvo240 Tests
         Volvo240 volvo = new Volvo240();
@@ -25,6 +26,7 @@ public class CarTest {
         testSpeed(volvo);
         testEngine(volvo);
         testSetColor(volvo);
+        testDirection(volvo);
     }
 
     private void testNrDoors(Car car, int nrDoors) {
