@@ -1,6 +1,5 @@
 package exempel.rps;
 
-import java.util.Random;
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -27,25 +26,53 @@ public class RPS {
         new RPS().program();
     }
 
-    final Random rand = new Random();
-    final Scanner sc = new Scanner(in);
+    // final Random rand = new Random(); // From given code
+    final Scanner input = new Scanner(in);
 
     void program() {
-
+        enum InData {
+            None,
+            Rock,
+            Paper,
+            Scissor
+        }
         int maxRounds = 5;
-        int human;          // Outcome for player
-        int computer;       // Outcome for computer
+        InData human;          // Outcome for player
+        InData computer;       // Outcome for computer
         int result;         // Result for this round
         int round = 0;      // Number of rounds
         int total = 0;      // Final result after all rounds
 
         // All code here ... (no method calls)
-
         out.println("Welcome to Rock, Paper and Scissors");
-
-        // TODO Write the game here. Use smallest step then surround with loop!!!!
-
-
+        while (round < maxRounds) {
+            round++;
+            out.printf("Now round %d\n", round);
+            // Player input
+            out.println("What do you pick:\n1. Rock\n2. Paper\n3. Scissors");
+            human = InData.None;
+            while (human == InData.None) {
+                try {
+                    int in_player = input.nextInt();
+                    human = InData.values()[in_player];
+                } catch (Exception e) {
+                    out.println("Faulty input, please input 1-3 for Rock, Paper or Scissors");
+                }
+            }
+            // Computer "input"
+            computer = InData.values()[(int) (Math.random() * 3) + 1]; // Gives a number of 1 to 3
+            // Output turn info and update total
+            out.println("You picked: " + human.name() +"\nComputer picked: " + computer.name());
+            if (human.ordinal() - 1 == computer.ordinal() || (human.ordinal() == 1 && computer.ordinal() == 3)) {
+                out.printf("Human won round %d!\n", round);
+                total++;
+            } else if (computer.ordinal() - 1 == human.ordinal() || (computer.ordinal() == 1 && human.ordinal() == 3)) {
+                out.printf("Computer won round %d!\n", round);
+                total--;
+            } else {
+                out.println("It was a tie!");
+            }
+        }
         out.println("Game over! ");
         if (total == 0) {
             out.println("Draw");
