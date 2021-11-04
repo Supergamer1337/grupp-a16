@@ -10,5 +10,5 @@ public abstract class Polygon {
 
     }
 
-    public abstract void Draw(Graphics g);
+    public abstract void draw(Graphics g);
 }

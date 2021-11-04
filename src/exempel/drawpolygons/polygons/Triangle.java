@@ -11,7 +11,7 @@ public class Triangle extends Polygon {
     }
 
     @Override
-    public void Draw(Graphics g) {
+    public void draw(Graphics g) {
         g.drawLine(pos.x, pos.y-radius, pos.x-radius,pos.y+radius);
         g.drawLine(pos.x-radius, pos.y+radius, pos.x+radius, pos.y+radius);
         g.drawLine(pos.x+radius, pos.y+radius, pos.x,pos.y-radius);

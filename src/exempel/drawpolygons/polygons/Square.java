@@ -10,7 +10,7 @@ public class Square extends Polygon {
     }
 
     @Override
-    public void Draw(Graphics g) {
+    public void draw(Graphics g) {
         g.drawRect(pos.x - width, pos.y - width, width * 2, width * 2);
     }
 }

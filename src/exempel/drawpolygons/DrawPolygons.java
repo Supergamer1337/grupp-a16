@@ -10,11 +10,10 @@ import java.util.*;
 
 public class DrawPolygons extends Component {
 
-    private ArrayList<exempel.drawpolygons.polygons.Polygon> polygons;
+    private ArrayList<Polygon> polygons;
 
     public DrawPolygons() {
-        // New
-        polygons = new ArrayList<Polygon>();
+        polygons = new ArrayList<>();
         polygons.add(new Square(new Point(100, 100)));
         polygons.add(new Triangle(new Point(150, 150)));
         polygons.add(new Rectangle(new Point(100, 200)));
@@ -23,11 +22,11 @@ public class DrawPolygons extends Component {
     @Override
     public void paint(Graphics g) {
         for (Polygon polygon : polygons) {
-            polygon.Draw(g);
+            polygon.draw(g);
         }
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         JFrame frame = new JFrame();
         DrawPolygons polygons = new DrawPolygons();
 
