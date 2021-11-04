@@ -1,0 +1,100 @@
+Almost all of the Python exercises that you did in TDA548 also have a Java version, which is available on the TDA548 Canvas page here:
+
+https://chalmers.instructure.com/courses/15183/pages/ovningar
+
+This is a selection of some of the exercises, which I think is enough for two exercise sessions and will get you ready to start building your own Java code. Feel free to try the others in your own time.
+
+There is lots of example Java code in the samples directory to help you. See also the Java resources page on the TDA552 Canvas site.
+
+1.  See Ex1RPS. Implement a program for the game Rock, Paper and Scissor.
+    NOTE: The main task here is to use smallest step programming.
+    You don't need any methods for this, put all code in program().
+
+    The game should run as (just 5 rounds):
+
+    Welcome to Rock, Paper and Scissors
+    Select 1, 2 or 3 (for R, P or S) > 1
+    Computer choose: 2
+    You won
+    Result 1                                (use an int for over all result, +1 for human, total = 1)
+    Select 1, 2 or 3 (for R, P or S) > 2
+    Computer choose: 2
+    A draw
+    Result 1
+    Select 1, 2 or 3 (for R, P or S) > 3
+    Computer choose: 1
+    You won
+    Result 2                                (result, +1 for human, total = 2)
+    Select 1, 2 or 3 (for R, P or S) > 1
+    Computer choose: 1
+    A draw
+    Result 2
+    Select 1, 2 or 3 (for R, P or S) > 2
+    Computer choose: 1
+    Computer won
+    Result 1                        (total = 1 -> i.e. total positive -> human won)
+    Game over!
+    Human won.
+
+2. See Ex2LoopPuzzlers. For a) use loops, arithmetic and " " to print a multiplication table.
+    For b) and c) write loops that print out the "patterns" (just start of patterns shown,
+    they are in principle infinite). You may only use loops, out.println(), out.print(),
+    with no args or with arguments "X" or " " (space).
+
+
+     a)  1  2  3  4  5  6  7  8  9 10
+         2  4  6  8 10 12 14 16 18 20
+         3  6  9 12 15 18 21 24 27 30
+         4  8 12 16 20 24 28 32 36 40
+         5 10 15 20 25 30 35 40 45 50
+         6 12 18 24 30 36 42 48 54 60
+         7 14 21 28 35 42 49 56 63 70
+         8 16 24 32 40 48 56 64 72 80
+         9 18 27 36 45 54 63 72 81 90
+        10 20 30 40 50 60 70 80 90 100
+
+    b)  X
+        XX
+        XXX
+        XXXX
+        XXXXX
+        XXXXXX
+        XXXXXXX
+        ...
+
+    c) XXXXXXXXXX
+        XXXXXXXXXX
+         XXXXXXXXXX
+          XXXXXXXXXX
+           ....
+
+3. See Ex3WordCount. Implement a method that calculates the number of word in a text.
+
+4. See ex4usemoreclasses. Implement classes Point and Triangle so that all test
+    in Ex4TestPointTriangle passes. Triangle should use Point and should use Herons
+    formula to calculate the area, See https://en.wikipedia.org/wiki/Heron%27s_formula
+
+5. See ex5inheritance. Implement classes Vehicle, Car and Van to make program TestCarVan print the below.
+    Let Car anv Van inherit from Vehicle and override the toString()-method. All data should be set in constructors.
+    All data should be private. There should be NO redundant code.
+
+    Description of classes:
+    - A Car has an id, a top speed and an owner (a Person).
+    - A Van has an owner (a Person), a max cargo and an id.
+
+    A run of the program should look like:
+
+    Car{topSpeed=160.0{owner=Person{id='123', name='olle'}, id='abc'}}
+    Van{maxCargo=400.0{owner=Person{id='456', name='fia'}, id='def'}}
+    Car{topSpeed=210.0{owner=Person{id='456', name='fia'}, id='ghi'}}
+    Van{maxCargo=800.0{owner=Person{id='123', name='olle'}, id='jkl'}}
+
+    TIP: Possible for IntelliJ to generate constructors and toString()
+
+6.  See ex6asteroids. A sketch of the Asteroids game,
+    see https://en.wikipedia.org/wiki/Asteroids_(video_game). This is a JavaFX program.
+
+    The application is functioning, you should just refactor. Run class AsteroidsGUI!
+    Use arrow keys! Refactor the classes to remove redundancy. Create common abstract base classes.
+    Each base class should reflect one "kind" of objects (not everything i one base class).
+    All data should be private so need setter/getters.
