@@ -24,9 +24,7 @@ public class Triangle {
     public double area() {
         double a = points[0].distance(points[1]), b = points[1].distance(points[2]), c = points[2].distance(points[0]);
         double s = (a + b + c) / 2;
-        double area = sqrt(s * (s - a) * (s - b) * (s - c));
-        System.out.println("Area is " + area);
-        return area;
+        return sqrt(s * (s - a) * (s - b) * (s - c));
     }
 
     @Override
