@@ -1,4 +1,4 @@
-package exempel.rps;
+package exempel.lv1.rps;
 
 import java.util.Scanner;
 

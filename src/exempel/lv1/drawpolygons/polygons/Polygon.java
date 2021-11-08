@@ -1,4 +1,4 @@
-package exempel.drawpolygons.polygons;
+package exempel.lv1.drawpolygons.polygons;
 
 import java.awt.*;
 

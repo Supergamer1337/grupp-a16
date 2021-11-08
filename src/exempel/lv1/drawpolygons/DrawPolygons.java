@@ -1,8 +1,8 @@
-package exempel.drawpolygons;
+package exempel.lv1.drawpolygons;
 
-import exempel.drawpolygons.polygons.*;
-import exempel.drawpolygons.polygons.Polygon;
-import exempel.drawpolygons.polygons.Rectangle;
+import exempel.lv1.drawpolygons.polygons.*;
+import exempel.lv1.drawpolygons.polygons.Polygon;
+import exempel.lv1.drawpolygons.polygons.Rectangle;
 
 import javax.swing.*;
 import java.awt.*;
