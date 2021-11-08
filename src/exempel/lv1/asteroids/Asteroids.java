@@ -46,6 +46,7 @@ public class Asteroids {
             if (oid.getX() < 0 || GAME_WIDTH < oid.getX() ||
                     oid.getY() < 0 || GAME_HEIGHT < oid.getY()) {
                 oid = null;
+                points++;
             }
         }
     }
