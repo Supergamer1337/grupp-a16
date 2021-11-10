@@ -122,7 +122,7 @@ public class CarTest {
         for (int i = 0; i < dirValues.length; i++) {
             car.move();
             car.turnRight();
-            assertTrue(pos[i][0] == car.posX && pos[i][1] == car.posY);
+            assertTrue(pos[i][0] == car.getPosX() && pos[i][1] == car.getPosY());
         }
     }
 }

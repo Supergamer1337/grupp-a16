@@ -9,13 +9,15 @@ public abstract class Car implements Movable {
             DOWN,
             LEFT
     }
-    protected Direction currentDirection;
-    protected int posX, posY, nrDoors;
-    protected double enginePower, currentSpeed;
-    protected Color color;
-    protected String modelName;
+    private Direction currentDirection;
+    private int posX, posY;
+    private final int nrDoors;
+    private final double enginePower;
+    private double currentSpeed;
+    private Color color;
+    private final String modelName;
 
-    protected Car(int nrDoors, Color color, double enginePower, String modelName) {
+    Car(int nrDoors, Color color, double enginePower, String modelName) {
         this.nrDoors = nrDoors;
         this.color = color;
         this.enginePower = enginePower;
@@ -29,6 +31,8 @@ public abstract class Car implements Movable {
     public double getCurrentSpeed() { return currentSpeed; }
     public Color getColor() { return color; }
     public Direction getCurrentDirection() { return currentDirection; }
+    public int getPosX() { return posX; }
+    public int getPosY() { return posY; }
 
     public void setColor(Color clr) { color = clr; }
     public void startEngine(){
