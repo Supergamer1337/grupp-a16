@@ -22,7 +22,7 @@ public class DrawPolygons extends Component {
     @Override
     public void paint(Graphics g) {
         for (Polygon polygon : polygons) {
-            polygon.draw(g);
+            polygon.paint(g);
         }
     }
 

@@ -11,7 +11,7 @@ public class Rectangle extends Polygon {
     }
 
     @Override
-    public void draw(Graphics g) {
-        g.drawRect(pos.x - dimensions.x / 2, pos.y - dimensions.y / 2, dimensions.x, dimensions.y);
+    public void paint(Graphics g) {
+        g.drawRect(getPos().x - dimensions.x / 2, getPos().y - dimensions.y / 2, dimensions.x, dimensions.y);
     }
 }
