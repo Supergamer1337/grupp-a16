@@ -10,7 +10,7 @@ public class Volvo240 extends Car {
         super(4, Color.BLACK, 100.0, "Volvo240");
     }
 
-    public double speedFactor(){
+    public double speedFactor() {
         return getEnginePower() * 0.01 * trimFactor;
     }
 }

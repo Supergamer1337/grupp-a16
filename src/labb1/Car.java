@@ -35,6 +35,7 @@ public abstract class Car implements Movable {
     public int getPosY() { return posY; }
 
     public void setColor(Color clr) { color = clr; }
+
     public void startEngine(){
         currentSpeed = 0.1;
     }
