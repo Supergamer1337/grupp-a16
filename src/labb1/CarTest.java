@@ -14,7 +14,8 @@ public class CarTest {
         testVolvo240();
     }
 
-    private void testCars() {
+    @Test
+    public void testCars() {
         Car[] cars = {
                 new Saab95(),
                 new Volvo240()
