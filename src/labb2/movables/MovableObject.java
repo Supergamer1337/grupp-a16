@@ -17,9 +17,10 @@ public abstract class MovableObject implements Movable {
     }
 
     public double getTurnSpeed() { return turnSpeed; }
-    double getSpeed() {
+    public double getSpeed() {
         return speed;
     }
+    public Vector2D getPos() { return pos; }
 
     public void setSpeed(double speed) {
         this.speed = speed;

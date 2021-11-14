@@ -1,9 +1,12 @@
 package labb2.movables;
 
+import javafx.scene.image.Image;
+
 import java.awt.*;
 
 public class Saab95 extends Car {
 
+    private Image imgCar;
     private boolean turboOn;
 
     public Saab95() {
