@@ -1,4 +1,4 @@
-package labb2;
+package labb1del2;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -6,13 +6,12 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import labb2.movables.Car;
+import labb1del2.movables.cars.Car;
 
-import static labb2.CarGame.*;
+import static labb1del2.CarGame.*;
 
 public class CarGUI extends Application {
 

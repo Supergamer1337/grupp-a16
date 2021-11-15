@@ -1,24 +1,21 @@
-package labb2.movables;
+package labb1del2.movables.cars;
 
-import labb2.helpers.Vector2D;
+import javafx.scene.paint.Color;
+import labb1del2.helpers.Vector2D;
+import labb1del2.movables.Vehicle;
 
-import java.awt.*;
-
-public abstract class Car extends Vehicle{
+public abstract class Car extends Vehicle {
+    private static final int BASE_TURN_SPEED = 5;
     private final int nrOfDoors;
 
-    Car(Vector2D pos, Vector2D direction, double speed, double enginePower, Color color, String modelName, int nrOfDoors) {
-        super(pos, direction, speed, enginePower, color, modelName);
+    protected Car(Vector2D pos, double turnSpeed, double enginePower, Color color, String modelName, int weight, int nrOfDoors) {
+        super(pos, turnSpeed, enginePower, color, modelName, weight);
         this.nrOfDoors = nrOfDoors;
         stopEngine();
     }
 
-    Car(Vector2D pos, double enginePower, Color color, String modelName, int nrOfDoors) {
-        this(pos, Vector2D.zero(), 0, enginePower, color, modelName, nrOfDoors);
-    }
-
-    Car(double enginePower, Color color, String modelName, int nrOfDoors) {
-        this(Vector2D.zero(), enginePower, color, modelName, nrOfDoors);
+    protected Car(double turnSpeed, double enginePower, Color color, String modelName, int weight, int nrOfDoors) {
+        this(Vector2D.zero(), turnSpeed, enginePower, color, modelName, weight, nrOfDoors);
     }
 
     public int getNrOfDoors() { return nrOfDoors; }
@@ -54,16 +51,16 @@ public abstract class Car extends Vehicle{
 
     @Override
     public void move() {
-        // TODO: Implement this
+
     }
 
     @Override
     public void turnLeft() {
-        // TODO: Implement this
+        rotate(-getTurnSpeed());
     }
 
     @Override
     public void turnRight() {
-        // TODO: Implement this
+        rotate(getTurnSpeed());
     }
 }

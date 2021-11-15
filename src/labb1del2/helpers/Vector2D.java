@@ -1,4 +1,4 @@
-package labb2.helpers;
+package labb1del2.helpers;
 
 public class Vector2D {
     private double x,y;
@@ -11,13 +11,12 @@ public class Vector2D {
     public double getX() { return x; }
     public double getY() { return y; }
 
-    public void add(Vector2D vector) {
-        x += vector.x;
-        y += vector.y;
+    public Vector2D add(Vector2D vector) {
+        return new Vector2D(x + vector.getX(), y + vector.getY());
     }
 
-    public void add(double x, double y) {
-        add(new Vector2D(x, y));
+    public Vector2D add(double x, double y) {
+        return add(new Vector2D(x, y));
     }
 
     public Vector2D copy() {

@@ -1,17 +1,19 @@
-package labb2.movables;
+package labb1del2.movables.cars;
 
-import javafx.scene.image.Image;
-
-import java.awt.*;
+import javafx.scene.paint.Color;
+import labb1del2.helpers.Vector2D;
 
 public class Saab95 extends Car {
 
-    private Image imgCar;
     private boolean turboOn;
 
+    public Saab95(Vector2D pos) {
+        super(pos, 5,125.0, Color.RED, "Saab95", 1569, 2);
+        turboOn = false;
+    }
+
     public Saab95() {
-        super(125.0, Color.RED, "Saab95", 2);
-	    turboOn = false;
+        this(Vector2D.zero());
     }
 
     public void setTurboOn(){
