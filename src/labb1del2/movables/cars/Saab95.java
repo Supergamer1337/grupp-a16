@@ -1,14 +1,17 @@
 package labb1del2.movables.cars;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import labb1del2.helpers.Vector2D;
+
+import java.awt.*;
 
 public class Saab95 extends Car {
 
     private boolean turboOn;
 
     public Saab95(Vector2D pos) {
-        super(pos, 5,125.0, Color.RED, "Saab95", 1569, 2);
+        super(pos, new Point(100, 50),125.0, Color.RED, "Saab95", 1569, 2);
         turboOn = false;
     }
 

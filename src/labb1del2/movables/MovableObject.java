@@ -2,30 +2,28 @@ package labb1del2.movables;
 
 import labb1del2.helpers.Vector2D;
 
-public abstract class MovableObject implements Movable {
-    private final static double BASE_SPEED = 0, BASE_TURN_SPEED = 5;
+public abstract class MovableObject {
+    private Vector2D pos;
+    private double rotation;
+    private double speed, rotationSpeed;
 
-    private Vector2D pos, direction;
-    private double speed, turnSpeed;
-
-    public MovableObject(Vector2D pos, double speed, double turnSpeed) {
+    public MovableObject(Vector2D pos, double speed, double rotationSpeed) {
         this.pos = pos;
-        this.direction = Vector2D.zero();
+        this.rotation = 0;
         this.speed = speed;
-        this.turnSpeed = turnSpeed;
+        this.rotationSpeed = rotationSpeed;
     }
 
-    public MovableObject() {
-        this(Vector2D.zero(), BASE_SPEED, BASE_TURN_SPEED);
-    }
-
-    public double getTurnSpeed() { return turnSpeed; }
+    public double getRotationSpeed() { return rotationSpeed; }
     public Vector2D getPos() { return pos; }
 
-    public Vector2D getDirection() { return direction; }
-    public void setDirection(Vector2D direction) { this.direction = direction; }
+    public double getRotation() { return rotation; }
+    public void setRotation(double rotation) { this.rotation = rotation; }
     public void rotate(double angle) {
-        direction = Vector2D.angleToVector2D(angle).add(direction);
+        rotation += angle;
+        while(rotation > 360) {
+            rotation -= 360;
+        }
     }
 
     public double getSpeed() {
@@ -33,5 +31,9 @@ public abstract class MovableObject implements Movable {
     }
     public void setSpeed(double speed) {
         this.speed = speed;
+    }
+
+    public void move(Vector2D amount) {
+        pos = pos.add(amount);
     }
 }
