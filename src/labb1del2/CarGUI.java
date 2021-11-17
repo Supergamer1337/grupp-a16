@@ -20,7 +20,7 @@ public class CarGUI extends Application {
     private static long lastTime;
 
     private CarGame game;
-    Group map;
+    private Group map;
     private GraphicsContext gc;
 
     @Override
