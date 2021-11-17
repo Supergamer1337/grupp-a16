@@ -79,7 +79,7 @@ public class CarGUI extends Application {
         Rotate rotate = new Rotate();
         rotate.setPivotX(car.getDimensions().getX() / 2 + car.getPos().getX());
         rotate.setPivotY(car.getDimensions().getY() / 2 + car.getPos().getY());
-        rotate.setAngle(car.getRotation());
+        rotate.setAngle(car.getRotation() * 180 / Math.PI);
         rect.getTransforms().addAll(rotate);
         map.getChildren().add(rect);
     }

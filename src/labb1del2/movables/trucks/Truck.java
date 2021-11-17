@@ -8,7 +8,7 @@ import labb1del2.movables.parts.Flatbed;
 import java.awt.*;
 
 public abstract class Truck extends Car {
-    private static final double BASE_TURN_SPEED = 25;
+    private static final double BASE_TURN_SPEED = Math.PI / 4;
     private static final int BASE_NR_OF_DOORS = 2;
     private Flatbed flatbed;
 

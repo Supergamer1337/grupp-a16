@@ -10,7 +10,7 @@ import javafx.scene.shape.Rectangle;
 import java.awt.*;
 
 public abstract class Car extends Vehicle {
-    private static final int BASE_TURN_SPEED = 40;
+    private static final double BASE_TURN_SPEED = Math.PI / 3;
     private final int nrOfDoors;
 
     protected Car(Vector2D pos, Point dimensions, double turnSpeed, double enginePower, Color color, String modelName, int weight, int nrOfDoors) {
