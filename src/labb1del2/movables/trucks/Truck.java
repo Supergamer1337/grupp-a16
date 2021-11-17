@@ -30,9 +30,4 @@ public abstract class Truck extends Car {
     public Flatbed getFlatbed() {
         return flatbed;
     }
-
-    @Override
-    public double speedFactor() {
-        return 0;
-    }
 }

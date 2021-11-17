@@ -12,6 +12,12 @@ import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import labb1del2.movables.cars.Car;
+import labb1del2.movables.cars.Saab95;
+import labb1del2.movables.trucks.Scania;
+import labb1del2.movables.trucks.TowTruck;
+import labb1del2.movables.trucks.Truck;
+
+import java.util.ArrayList;
 
 import static labb1del2.CarGame.*;
 
@@ -69,7 +75,31 @@ public class CarGUI extends Application {
         // Write text
         gc.setFont(new Font(20));
         gc.setFill(Color.BLACK);
-        gc.fillText("Current Speed: " + car.getSpeed() + "km/h", 10, 20);
+        ArrayList<String> hudText = new ArrayList<>();
+        hudText.add("Current car: " + car.getModelName());
+        hudText.add("Current Speed: " + car.getSpeed() + "km/h");
+        hudAddSpecialText(hudText);
+        drawHudText(hudText);
+    }
+
+    private void hudAddSpecialText(ArrayList<String> allText) {
+
+        // TODO: Make a function to get hud values in cars...
+        Car car = game.getControlledCar();
+        if (car instanceof Saab95) {
+                allText.add("Turbo on: " + ((Saab95) car).isTurboOn());
+        } else if (car instanceof Truck) {
+            allText.add("Flatbed angle: " + ((Truck) car).getFlatbed().getCurrentFlatbedAngle());
+            if (car instanceof TowTruck) {
+                // allText.add("Loaded cars: " + ((TowTruck) car).getLoadedCars()); // TODO: Make this a thing
+            }
+        }
+    }
+
+    private void drawHudText(ArrayList<String> allText) {
+        for (int i = 0; i < allText.size(); i++) {
+            gc.fillText(allText.get(i), 10, 20 + i * 20);
+        }
     }
 
     private void renderCar(Car car) {

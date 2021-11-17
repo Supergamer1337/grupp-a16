@@ -7,7 +7,7 @@ public abstract class MovableObject {
     private double rotation;
     private double speed, rotationSpeed;
 
-    public MovableObject(Vector2D pos, double speed, double rotationSpeed) {
+    protected MovableObject(Vector2D pos, double speed, double rotationSpeed) {
         this.pos = pos;
         this.rotation = 0;
         this.speed = speed;

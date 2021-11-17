@@ -14,4 +14,9 @@ public class Scania extends Truck {
     public Scania() {
         this(Vector2D.zero());
     }
+
+    @Override
+    public double speedFactor() {
+        return 0.01 * getEnginePower();
+    }
 }

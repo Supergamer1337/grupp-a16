@@ -19,6 +19,9 @@ public class Saab95 extends Car {
         this(Vector2D.zero());
     }
 
+    public boolean isTurboOn() {
+        return turboOn;
+    }
     public void setTurboOn(){
 	    turboOn = true;
     }

@@ -35,10 +35,34 @@ public class CarGame {
             case DIGIT2 -> controlledCar = new Volvo240(controlledCar.getPos());
             case DIGIT3 -> controlledCar = new Scania(controlledCar.getPos());
         }
+        if(controlledCar instanceof Scania) {
+            Scania scania = (Scania) controlledCar;
+            switch (key) {
+                case R -> scania.getFlatbed().raiseFlatbed(1);
+                case F -> scania.getFlatbed().lowerFlatbed(1);
+            }
+        }
     }
 
     public void keyReleased(KeyEvent keyEvent) {
+        KeyCode key = keyEvent.getCode();
+        switch(key) {
+            case Q -> controlledCar.stopEngine();
+            case E -> controlledCar.startEngine();
+        }
 
+        if (controlledCar instanceof Saab95) {
+            Saab95 saab95 = (Saab95) controlledCar;
+            switch (key) {
+                case T -> {
+                    if (saab95.isTurboOn()) {
+                        saab95.setTurboOff();
+                    } else {
+                        saab95.setTurboOn();
+                    }
+                }
+            }
+        }
     }
 
     public Car getControlledCar() { return controlledCar; }
