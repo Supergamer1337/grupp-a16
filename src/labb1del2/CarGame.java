@@ -14,7 +14,7 @@ public class CarGame {
     private Car controlledCar;
 
     public CarGame() {
-        controlledCar = new Saab95(new Vector2D(GAME_WIDTH/2, GAME_HEIGHT/2));
+        controlledCar = new Saab95(new Vector2D(GAME_WIDTH / 2.0, GAME_HEIGHT / 2.0));
     }
 
     public void update(double now) {
@@ -35,8 +35,7 @@ public class CarGame {
             case DIGIT2 -> controlledCar = new Volvo240(controlledCar.getPos());
             case DIGIT3 -> controlledCar = new Scania(controlledCar.getPos());
         }
-        if(controlledCar instanceof Scania) {
-            Scania scania = (Scania) controlledCar;
+        if(controlledCar instanceof Scania scania) {
             switch (key) {
                 case R -> scania.getFlatbed().raiseFlatbed(1);
                 case F -> scania.getFlatbed().lowerFlatbed(1);
@@ -51,15 +50,12 @@ public class CarGame {
             case E -> controlledCar.startEngine();
         }
 
-        if (controlledCar instanceof Saab95) {
-            Saab95 saab95 = (Saab95) controlledCar;
-            switch (key) {
-                case T -> {
-                    if (saab95.isTurboOn()) {
-                        saab95.setTurboOff();
-                    } else {
-                        saab95.setTurboOn();
-                    }
+        if (controlledCar instanceof Saab95 saab95) {
+            if (key == KeyCode.T) {
+                if (saab95.isTurboOn()) {
+                    saab95.setTurboOff();
+                } else {
+                    saab95.setTurboOn();
                 }
             }
         }
