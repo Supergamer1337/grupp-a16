@@ -1,4 +1,4 @@
-package exempel.lv3;
+package exempel.lv3.usingCIS;
 
 import java.awt.*;
 
