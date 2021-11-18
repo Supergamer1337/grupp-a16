@@ -1,0 +1,15 @@
+Instructions
+Design the following three scenarios, either using subclassing or using composition and delegation:
+
+A printer can either print using either laser or ink. Design a type Printer containing a method print(). Design a type LaserPrinter with a method changeToner(), and a type InkPrinter with a method changeInk().
+A square is just a special kind of rectangle. Design a type Rectangle (independent of previous assignments) with height and width attributes, with setters and getters for both, and a combined setSize(int h, int w).
+Design a type Square with the extra (overloaded) method setSize(int w).
+A platform for playing RPGs has a concept of a User. In different games the user can be either a Player or a GameMaster. There is shared code (userMethod()), and code that is specific to each role (playerMethod() and gameMasterMethod()).
+For each scenario discuss benefits and drawbacks to subclassing vs delegation. Should subclassing be used?
+
+Draw UML-diagrams (class diagram, as well as object diagrams if they add important information) for each case.
+Try to come up with general principles for when subclassing is (in)appropriate.
+Are there alternative ways of designing the respective scenarios that would be even better?
+You may implement the scenarios above in code – but the design, and the discussion, is the central purpose.
+For extra challenge: I’m not being completely honest when I claim that subclassing is just syntactic sugar, and that we can achieve precisely the same behavior through delegation that we get implicitly when we use subclassing.
+Can you see where the two alternatives differ? Can you come up with a way of achieving the exact behavior of subclassing, without using subclassing?
