@@ -20,7 +20,13 @@ public class Flatbed {
         }
     }
 
-    public double getCurrentFlatbedAngle() {
+    public double getFlatbedAngle() {
         return currentFlatbedAngle;
+    }
+    public boolean isLowered() {
+        if (currentFlatbedAngle == minFlatbedAngle) {
+            return true;
+        }
+        return false;
     }
 }

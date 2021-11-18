@@ -2,6 +2,7 @@ package labb1.del2.gameobjects;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
+import labb1.del2.helpers.Vector2D;
 
 public abstract class GameObject {
     private static double BASE_ROTATION = Math.PI / 2;
@@ -20,6 +21,9 @@ public abstract class GameObject {
 
     public final Rectangle getRect() {
         return objectRect;
+    }
+    public final Vector2D getPosV() {
+        return new Vector2D(getPosX(), getPosY());
     }
     public final double getPosX() {
         return objectRect.getX();

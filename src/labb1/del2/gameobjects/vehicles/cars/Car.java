@@ -17,7 +17,9 @@ public abstract class Car extends Vehicle {
 
     @Override
     public void incrementSpeed(double amount){
-        setSpeed(Math.min(getSpeed() + speedFactor() * amount, engine.getPower()));
+        if(engine.isTurnedOn()) {
+            setSpeed(Math.min(getSpeed() + speedFactor() * amount, engine.getPower()));
+        }
     }
 
     @Override

@@ -46,10 +46,14 @@ public abstract class Vehicle extends MovableObject {
     public abstract void decrementSpeed(double amount);
 
     public final void turnRight(double dTime) {
-        setRotation(getRotation() + turnSpeed * dTime);
+        if(getSpeed() != 0) {
+            setRotation(getRotation() + turnSpeed * dTime);
+        }
     }
     public final void turnLeft(double dTime) {
-        setRotation(getRotation() - turnSpeed * dTime);
+        if(getSpeed() != 0) {
+            setRotation(getRotation() - turnSpeed * dTime);
+        }
     }
 
     public final Color getColor() {

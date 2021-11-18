@@ -11,7 +11,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import labb1.del2.gameobjects.vehicles.Vehicle;
+import labb1.del2.gameobjects.vehicles.cars.Car;
 import labb1.del2.gameobjects.vehicles.cars.Saab95;
+import labb1.del2.gameobjects.vehicles.cars.Scania;
+import labb1.del2.gameobjects.vehicles.cars.Volvo240;
 import labb1.del2.helpers.Vector2D;
 
 public class View extends Application {
@@ -21,6 +24,7 @@ public class View extends Application {
     private long timeSinceLastTick;
     private static double dTime;
     private GraphicsContext gc;
+    private Group map;
     private Vehicle vehicle;
 
     @Override
@@ -51,7 +55,7 @@ public class View extends Application {
         scene.setOnKeyPressed(this::handleKeyPressed);
         scene.setOnKeyReleased(this::handleKeyReleased);
 
-        Group map = new Group();
+        map = new Group();
         initRender(map);
         root.getChildren().add(map);
 
@@ -79,7 +83,17 @@ public class View extends Application {
 
     private void update(long now) {
         updateDeltaTime(now);
+        updateVehicleMovement(dTime);
+    }
+
+    private void updateVehicleMovement(double dTime) {
         vehicle.move(dTime);
+        if (vehicle instanceof Car) {
+            Car car = (Car) vehicle;
+            if (!car.getEngine().isTurnedOn()) {
+                car.decelerate(0.15);
+            }
+        }
     }
 
     private void updateDeltaTime(long now) {
@@ -98,7 +112,20 @@ public class View extends Application {
     }
 
     public void handleKeyReleased(KeyEvent keyEvent) {
+        KeyCode key = keyEvent.getCode();
+        switch (key) {
+            case Q -> { if (vehicle instanceof Car) ((Car) vehicle).getEngine().toggleEngineOn(); }
+            case DIGIT1 -> switchVehicle(new Saab95(vehicle.getPosV()));
+            case DIGIT2 -> switchVehicle(new Volvo240(vehicle.getPosV()));
+            case DIGIT3 -> switchVehicle(new Scania(vehicle.getPosV()));
+        }
+    }
 
+    private void switchVehicle(Vehicle nv) {
+        nv.setRotation(vehicle.getRotation());
+        vehicle = nv;
+        map.getChildren().remove(0);
+        map.getChildren().add(0, vehicle.getRect());
     }
 
     public static void main(String[] args) {

@@ -21,6 +21,7 @@ public final class Saab95 extends Car {
     public String[] getHudInfo() {
         return new String[] {
                 "Model: " + getModelName(),
+                "Engine On: " + getEngine().isTurnedOn(),
                 "Current speed: " + getSpeed() + "km/h",
                 "Turbo active: " + turboOn,
                 "Nr of doors: " + getNrOfDoors()
