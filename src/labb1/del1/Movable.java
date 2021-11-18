@@ -1,4 +1,4 @@
-package labb1;
+package labb1.del1;
 
 interface Movable {
     void move();
