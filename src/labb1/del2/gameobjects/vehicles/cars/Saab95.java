@@ -1,7 +1,6 @@
 package labb1.del2.gameobjects.vehicles.cars;
 
 import javafx.scene.paint.Color;
-import labb1.del2.gameobjects.vehicles.Vehicle;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
 import labb1.del2.helpers.Vector2D;
 

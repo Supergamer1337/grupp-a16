@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 import labb1.del2.gameobjects.MovableObject;
 
 public abstract class Vehicle extends MovableObject {
-    private static final double TURN_SPEED_CONSTANT = 50;
+    private static final double TURN_SPEED_CONSTANT = 100;
 
     private double turnSpeed;
     private String modelName;
@@ -20,7 +20,7 @@ public abstract class Vehicle extends MovableObject {
 
     protected Vehicle(double x, double y, double width, double height, Color color, String modelName) {
         this(x, y, width, height, 0, color, modelName);
-        turnSpeed = TURN_SPEED_CONSTANT * Math.PI / getHeight();
+        turnSpeed = TURN_SPEED_CONSTANT * Math.PI / getWidth();
     }
 
     public abstract String[] getHudInfo();

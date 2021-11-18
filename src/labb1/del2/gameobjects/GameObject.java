@@ -4,7 +4,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 
 public abstract class GameObject {
-    private static double BASE_ROTATION = 0;
+    private static double BASE_ROTATION = Math.PI / 2;
     private Rectangle objectRect;
     private double rotation;
 
@@ -15,7 +15,7 @@ public abstract class GameObject {
     }
 
     protected GameObject(double x, double y, double width, double height) {
-        this(x, y, width, height, 0);
+        this(x, y, width, height, BASE_ROTATION);
     }
 
     public final Rectangle getRect() {
