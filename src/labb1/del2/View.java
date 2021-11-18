@@ -19,7 +19,7 @@ import labb1.del2.helpers.Vector2D;
 
 public class View extends Application {
 
-    private static int GAME_WIDTH = 1600, GAME_HEIGHT = 900;
+    private final static int GAME_WIDTH = 1600, GAME_HEIGHT = 900;
 
     private long timeSinceLastTick;
     private static double dTime;
@@ -29,7 +29,7 @@ public class View extends Application {
 
     @Override
     public void init() throws Exception {
-        vehicle = new Saab95(new Vector2D(GAME_WIDTH / 2, GAME_HEIGHT / 2));
+        vehicle = new Saab95(new Vector2D(GAME_WIDTH / 2.0, GAME_HEIGHT / 2.0));
         timeSinceLastTick = 0;
     }
 
@@ -88,8 +88,7 @@ public class View extends Application {
 
     private void updateVehicleMovement(double dTime) {
         vehicle.move(dTime);
-        if (vehicle instanceof Car) {
-            Car car = (Car) vehicle;
+        if (vehicle instanceof Car car) {
             if (!car.getEngine().isTurnedOn()) {
                 car.decelerate(0.15);
             }
