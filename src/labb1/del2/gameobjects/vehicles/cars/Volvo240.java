@@ -4,12 +4,12 @@ import javafx.scene.paint.Color;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
 import labb1.del2.helpers.Vector2D;
 
-public class Volvo240 extends Car {
+public final class Volvo240 extends Car {
 
     private static double trimFactor = 1.25;
 
     public Volvo240(Vector2D pos) {
-        super(pos.getX(), pos.getY(), 95.6, 50.0, Color.RED, "Volvo240", 4, new Engine(100));
+        super(pos.getX(), pos.getY(), 95.6, 50.0, Color.BLACK, "Volvo240", 4, new Engine(100));
     }
 
     public Volvo240() {
@@ -21,7 +21,7 @@ public class Volvo240 extends Car {
         return new String[] {
                 "Model: " + getModelName(),
                 "Engine On: " + getEngine().isTurnedOn(),
-                "Current speed: " + getSpeed() + "km/h",
+                "Speed: " + getSpeed() + "km/h",
                 "Trim Factor: " + trimFactor,
                 "Nr of doors: " + getNrOfDoors()
         };

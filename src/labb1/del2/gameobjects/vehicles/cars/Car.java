@@ -1,5 +1,6 @@
 package labb1.del2.gameobjects.vehicles.cars;
 
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import labb1.del2.gameobjects.vehicles.Vehicle;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
@@ -19,6 +20,13 @@ public abstract class Car extends Vehicle {
     public void incrementSpeed(double amount){
         if(engine.isTurnedOn()) {
             setSpeed(Math.min(getSpeed() + speedFactor() * amount, engine.getPower()));
+        }
+    }
+
+    @Override
+    public void handleReleasedSpecialKeys(KeyCode key) {
+        if (key == KeyCode.Q) {
+            getEngine().toggleEngineOn();
         }
     }
 

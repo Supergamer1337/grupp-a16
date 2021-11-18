@@ -1,11 +1,10 @@
 package labb1.del2.gameobjects;
 
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 import labb1.del2.helpers.Vector2D;
 
 public abstract class GameObject {
-    private static double BASE_ROTATION = Math.PI / 2;
+    private static final double BASE_ROTATION = 0;
     private Rectangle objectRect;
     private double rotation;
 

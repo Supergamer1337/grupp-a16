@@ -1,13 +1,15 @@
 package labb1.del2.gameobjects.vehicles;
 
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import labb1.del2.View;
 import labb1.del2.gameobjects.MovableObject;
 
 public abstract class Vehicle extends MovableObject {
     private static final double TURN_SPEED_CONSTANT = 100;
 
     private double turnSpeed;
-    private String modelName;
+    private final String modelName;
     private Color color;
 
     protected Vehicle(double x, double y, double width, double height, double turnSpeed, Color color, String modelName) {
@@ -53,6 +55,16 @@ public abstract class Vehicle extends MovableObject {
     public final void turnLeft(double dTime) {
         if(getSpeed() != 0) {
             setRotation(getRotation() - turnSpeed * dTime);
+        }
+    }
+
+    public void handleReleasedSpecialKeys(KeyCode key) {}
+    public void handlePressedSpecialKeys(KeyCode key) {
+        switch(key) {
+            case W -> accelerate(1);
+            case S -> decelerate(1);
+            case A -> turnLeft(View.getdTime());
+            case D -> turnRight(View.getdTime());
         }
     }
 

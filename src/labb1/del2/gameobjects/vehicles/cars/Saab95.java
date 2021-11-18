@@ -1,5 +1,6 @@
 package labb1.del2.gameobjects.vehicles.cars;
 
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
 import labb1.del2.helpers.Vector2D;
@@ -22,10 +23,18 @@ public final class Saab95 extends Car {
         return new String[] {
                 "Model: " + getModelName(),
                 "Engine On: " + getEngine().isTurnedOn(),
-                "Current speed: " + getSpeed() + "km/h",
+                "Speed: " + getSpeed() + "km/h",
                 "Turbo active: " + turboOn,
                 "Nr of doors: " + getNrOfDoors()
         };
+    }
+
+    @Override
+    public void handleReleasedSpecialKeys(KeyCode key) {
+        super.handleReleasedSpecialKeys(key);
+        if (key == KeyCode.E) {
+            toggleTurbo();
+        }
     }
 
     public double speedFactor() {
