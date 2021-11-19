@@ -1,5 +1,6 @@
 package labb1.del2.gameobjects.vehicles.cars;
 
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import labb1.del2.gameobjects.vehicles.vehicleparts.CarTransporter;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
@@ -36,6 +37,15 @@ public final class TowingTruck extends Car {
                 "Loaded cars: " + Arrays.toString(ct.getCarNames())
         };
         return concatenateStrArr(super.getHudInfo(), specHud);
+    }
+
+    @Override
+    public void handleReleasedSpecialKeys(KeyCode key) {
+        super.handleReleasedSpecialKeys(key);
+        switch (key) {
+            case R -> raiseRamp();
+            case F -> lowerRamp();
+        }
     }
 
     public boolean loadCar(Car car) {
