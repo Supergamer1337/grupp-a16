@@ -25,8 +25,8 @@ public final class Scania extends Car {
     }
 
     @Override
-    public void handleReleasedSpecialKeys(KeyCode key) {
-        super.handleReleasedSpecialKeys(key);
+    public void handlePressedSpecialKeys(KeyCode key) {
+        super.handlePressedSpecialKeys(key);
         if (key == KeyCode.R && getSpeed() == 0) {
             flatbed.raiseFlatbed();
         } else if (key == KeyCode.F) {
