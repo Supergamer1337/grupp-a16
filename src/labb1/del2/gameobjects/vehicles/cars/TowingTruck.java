@@ -48,6 +48,7 @@ public final class TowingTruck extends Car {
         }
     }
 
+    // TODO: Implement fully
     public boolean loadCar(Car car) {
         if (flatbed.isLowered() && isWithinRange(car.getPosV())) {
             ct.loadCar(car);
