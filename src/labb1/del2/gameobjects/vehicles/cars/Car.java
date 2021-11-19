@@ -31,6 +31,15 @@ public abstract class Car extends Vehicle {
     }
 
     @Override
+    public String[] getHudInfo() {
+        return new String[] {
+                "Model: " + getModelName(),
+                "Engine On: " + getEngine().isTurnedOn(),
+                String.format("Speed: %.0fkm/h", getSpeed())
+        };
+    }
+
+    @Override
     public void decrementSpeed(double amount) {
         setSpeed(Math.max(getSpeed() - speedFactor() * amount, 0));
     }
