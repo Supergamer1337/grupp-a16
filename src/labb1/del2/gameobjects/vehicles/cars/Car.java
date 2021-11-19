@@ -35,7 +35,8 @@ public abstract class Car extends Vehicle {
         return new String[] {
                 "Model: " + getModelName(),
                 "Engine On: " + getEngine().isTurnedOn(),
-                String.format("Speed: %.0fkm/h", getSpeed())
+                String.format("Speed: %.0fkm/h", getSpeed()),
+                "Nr of doors: " + getNrOfDoors()
         };
     }
 
