@@ -1,6 +1,5 @@
 package labb1.del2.gameobjects.vehicles.cars;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import labb1.del2.gameobjects.vehicles.vehicleparts.CarTransporter;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
@@ -11,9 +10,9 @@ import java.util.Arrays;
 
 public final class TowingTruck extends Car {
     private static final int BASE_CAR_LOAD_LIMIT = 2;
-    private CarTransporter ct;
-    private SimpleFlatbed flatbed;
-    private double pickupRadius;
+    private final CarTransporter ct;
+    private final SimpleFlatbed flatbed;
+    private final double pickupRadius;
 
     public TowingTruck(Vector2D pos) {
         super(pos.getX(), pos.getY(), 323, 75, Color.TURQUOISE, "Towing Truck", 2, new Engine(80));
@@ -48,10 +47,7 @@ public final class TowingTruck extends Car {
     }
 
     private boolean isWithinRange(Vector2D pos) {
-        if (pos.getX() - getPosX() < pickupRadius && pos.getY() - getPosY() < pickupRadius) {
-            return true;
-        }
-        return false;
+        return pos.getX() - getPosX() < pickupRadius && pos.getY() - getPosY() < pickupRadius;
     }
 
     public void raiseRamp() {
