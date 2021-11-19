@@ -9,7 +9,7 @@ import labb1.del2.helpers.Vector2D;
 
 public final class Scania extends Car {
 
-    private AngledFlatbed flatbed;
+    private final AngledFlatbed flatbed;
 
     public Scania(Vector2D pos) {
         super(pos.getX(), pos.getY(), 118.66, 75, Color.BLUE, "Scania", 2, new Engine(90));
@@ -36,13 +36,11 @@ public final class Scania extends Car {
 
     @Override
     public String[] getHudInfo() {
-        return new String[] {
-                "Model: " + getModelName(),
-                "Engine On: " + getEngine().isTurnedOn(),
-                "Speed: " + getSpeed() + "km/h",
-                "Flatbed angle: " + flatbed.getFlatbedAngle(),
+        String[] specHud = new String[] {
+                String.format("Flatbed angle: %.2f", flatbed.getFlatbedAngle()),
                 "Nr of doors: " + getNrOfDoors()
         };
+        return concatenateStrArr(super.getHudInfo(), specHud);
     }
 
 

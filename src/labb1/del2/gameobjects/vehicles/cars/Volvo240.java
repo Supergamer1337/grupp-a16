@@ -18,13 +18,11 @@ public final class Volvo240 extends Car {
 
     @Override
     public String[] getHudInfo() {
-        return new String[] {
-                "Model: " + getModelName(),
-                "Engine On: " + getEngine().isTurnedOn(),
-                "Speed: " + getSpeed() + "km/h",
+        String[] specHud = new String[] {
                 "Trim Factor: " + trimFactor,
                 "Nr of doors: " + getNrOfDoors()
         };
+        return concatenateStrArr(super.getHudInfo(), specHud);
     }
 
     public double speedFactor() {

@@ -32,14 +32,11 @@ public final class TowingTruck extends Car {
 
     @Override
     public String[] getHudInfo() {
-        return new String[] {
-                "Model: " + getModelName(),
-                "Engine On: " + getEngine().isTurnedOn(),
-                "Speed: " + getSpeed() + "km/h",
-                "Nr of doors: " + getNrOfDoors(),
+        String[] specHud = new String[] {
                 "Ramp lowered: " + flatbed.isLowered(),
                 "Loaded cars: " + Arrays.toString(ct.getCarNames())
         };
+        return concatenateStrArr(super.getHudInfo(), specHud);
     }
 
     public boolean loadCar(Car car) {

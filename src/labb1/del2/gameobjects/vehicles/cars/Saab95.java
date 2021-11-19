@@ -20,13 +20,10 @@ public final class Saab95 extends Car {
 
     @Override
     public String[] getHudInfo() {
-        return new String[] {
-                "Model: " + getModelName(),
-                "Engine On: " + getEngine().isTurnedOn(),
-                "Speed: " + getSpeed() + "km/h",
-                "Turbo active: " + turboOn,
-                "Nr of doors: " + getNrOfDoors()
+        String[] specHud = new String[] {
+                "Turbo active: " + turboOn
         };
+        return concatenateStrArr(super.getHudInfo(), specHud);
     }
 
     @Override
