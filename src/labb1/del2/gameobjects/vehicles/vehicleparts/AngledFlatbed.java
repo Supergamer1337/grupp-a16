@@ -3,7 +3,7 @@ package labb1.del2.gameobjects.vehicles.vehicleparts;
 import labb1.del2.View;
 
 public class AngledFlatbed implements IFlatbed{
-    private static final double maxFlatbedAngle = 70, minFlatbedAngle = 0, rotationSpeed = 5;
+    private static final double maxFlatbedAngle = 70, minFlatbedAngle = 0, rotationSpeed = 30;
     private double currentFlatbedAngle;
 
     public AngledFlatbed() {
