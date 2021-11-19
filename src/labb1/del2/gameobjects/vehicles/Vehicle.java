@@ -27,6 +27,19 @@ public abstract class Vehicle extends MovableObject {
 
     public abstract String[] getHudInfo();
 
+    public static String[] concatenateStrArr(String[] arr1, String[] arr2) {
+        String[] res = new String[arr1.length + arr2.length];
+        int i = 0;
+        for (; i < arr1.length; i++) {
+            res[i] = arr1[i];
+        }
+        for (String s : arr1) {
+            res[i] = s;
+            i++;
+        }
+        return res;
+    }
+
     public final void accelerate(double amount) throws IllegalArgumentException {
         if (0 <= amount && amount <= 1) {
             incrementSpeed(amount);
