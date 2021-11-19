@@ -109,6 +109,7 @@ public class View extends Application {
         switch (key) {
             // controls
             case L -> {
+                // FIXME: Smelly code, should be in TowTruck
                 if (controlledVehicle instanceof TowingTruck car) {
                     vehicles.sort(new VehicleComparator(car));
                     if (vehicles.get(0) instanceof Car car2) {
@@ -137,7 +138,7 @@ public class View extends Application {
         timeSinceLastTick = now;
     }
 
-    public static double getdTime() { return dTime; }
+    public static double getDeltaTime() { return dTime; }
 
     public static void main(String[] args) {
         launch(args);

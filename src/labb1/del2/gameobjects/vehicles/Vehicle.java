@@ -63,8 +63,8 @@ public abstract class Vehicle extends MovableObject {
         switch(key) {
             case W -> accelerate(1);
             case S -> decelerate(1);
-            case A -> turnLeft(View.getdTime());
-            case D -> turnRight(View.getdTime());
+            case A -> turnLeft(View.getDeltaTime());
+            case D -> turnRight(View.getDeltaTime());
         }
     }
 
