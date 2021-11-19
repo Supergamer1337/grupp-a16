@@ -33,7 +33,7 @@ public abstract class Vehicle extends MovableObject {
         for (; i < arr1.length; i++) {
             res[i] = arr1[i];
         }
-        for (String s : arr1) {
+        for (String s : arr2) {
             res[i] = s;
             i++;
         }
