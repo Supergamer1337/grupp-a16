@@ -4,5 +4,5 @@ import javafx.scene.input.KeyCode;
 
 public interface IControllable {
     void handleReleasedKey(KeyCode key);
-    void handlePressedKey(KeyCode Key);
+    void handlePressedKey(KeyCode key);
 }
