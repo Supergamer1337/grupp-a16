@@ -40,8 +40,8 @@ public final class TowingTruck extends Car {
     }
 
     @Override
-    public void handleReleasedSpecialKeys(KeyCode key) {
-        super.handleReleasedSpecialKeys(key);
+    public void handleReleasedKey(KeyCode key) {
+        super.handleReleasedKey(key);
         switch (key) {
             case R -> raiseRamp();
             case F -> lowerRamp();

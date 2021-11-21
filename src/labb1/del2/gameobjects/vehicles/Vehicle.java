@@ -4,8 +4,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import labb1.del2.View;
 import labb1.del2.gameobjects.MovableObject;
+import labb1.del2.helpers.IControllable;
 
-public abstract class Vehicle extends MovableObject {
+public abstract class Vehicle extends MovableObject implements IControllable {
     private static final double TURN_SPEED_CONSTANT = 100;
 
     private double turnSpeed;
@@ -71,8 +72,8 @@ public abstract class Vehicle extends MovableObject {
         }
     }
 
-    public void handleReleasedSpecialKeys(KeyCode key) {}
-    public void handlePressedSpecialKeys(KeyCode key) {
+    @Override
+    public void handlePressedKey(KeyCode key) {
         switch(key) {
             case W -> accelerate(1);
             case S -> decelerate(1);

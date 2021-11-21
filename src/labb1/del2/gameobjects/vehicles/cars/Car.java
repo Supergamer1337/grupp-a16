@@ -24,7 +24,7 @@ public abstract class Car extends Vehicle {
     }
 
     @Override
-    public void handleReleasedSpecialKeys(KeyCode key) {
+    public void handleReleasedKey(KeyCode key) {
         if (key == KeyCode.Q) {
             getEngine().toggleEngineOn();
         }

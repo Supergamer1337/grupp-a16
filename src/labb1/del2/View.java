@@ -101,7 +101,7 @@ public class View extends Application {
 
     public void handleKeyPressed(KeyEvent keyEvent) {
         KeyCode key = keyEvent.getCode();
-        controlledVehicle.handlePressedSpecialKeys(key);
+        controlledVehicle.handlePressedKey(key);
     }
 
     public void handleKeyReleased(KeyEvent keyEvent) {
@@ -123,7 +123,7 @@ public class View extends Application {
             case DIGIT3 -> switchVehicle(new Scania(controlledVehicle.getPosV()));
             case DIGIT4 -> switchVehicle(new TowingTruck(controlledVehicle.getPosV()));
         }
-        controlledVehicle.handleReleasedSpecialKeys(key);
+        controlledVehicle.handleReleasedKey(key);
     }
 
     private void switchVehicle(Vehicle nv) {
