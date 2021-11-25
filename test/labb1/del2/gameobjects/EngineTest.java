@@ -1,4 +1,4 @@
-package labb1.del2;
+package labb1.del2.gameobjects;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
