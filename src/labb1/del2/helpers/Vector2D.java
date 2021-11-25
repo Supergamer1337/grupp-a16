@@ -2,10 +2,10 @@ package labb1.del2.helpers;
 
 
 public class Vector2D {
-    private double x,y;
+    private final double x,y;
 
     public Vector2D(double x, double y) {
-        this.x  = x;
+        this.x = x;
         this.y = y;
     }
 
