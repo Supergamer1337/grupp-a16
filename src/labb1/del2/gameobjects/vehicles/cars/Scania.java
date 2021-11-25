@@ -1,19 +1,26 @@
 package labb1.del2.gameobjects.vehicles.cars;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import labb1.del2.gameobjects.vehicles.vehicleparts.AngledFlatbed;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
 
 import labb1.del2.helpers.Vector2D;
 
 public final class Scania extends Car {
+    private static final double DEF_WIDTH = 118.66, DEF_HEIGHT = 75;
 
     private final AngledFlatbed flatbed;
 
-    public Scania(Vector2D pos) {
-        super(pos.getX(), pos.getY(), 118.66, 75, Color.BLUE, "Scania", 2, new Engine(90));
+    public Scania(Rectangle rect) {
+        super(rect, Color.BLUE, "Scania", 2, new Engine(90));
+        rect.setWidth(DEF_WIDTH);
+        rect.setHeight(DEF_HEIGHT);
         flatbed = new AngledFlatbed();
+    }
+
+    public Scania(double x, double y) {
+        this(new Rectangle(x, y, DEF_WIDTH,DEF_HEIGHT));
     }
 
     @Override
@@ -25,16 +32,6 @@ public final class Scania extends Car {
     }
 
     @Override
-    public void handlePressedKey(KeyCode key) {
-        super.handlePressedKey(key);
-        if (key == KeyCode.R && getSpeed() == 0) {
-            flatbed.raiseFlatbed();
-        } else if (key == KeyCode.F) {
-            flatbed.lowerFlatbed();
-        }
-    }
-
-    @Override
     public String[] getHudInfo() {
         String[] specHud = new String[] {
                 String.format("Flatbed angle: %.2f", flatbed.getFlatbedAngle()),
@@ -43,6 +40,7 @@ public final class Scania extends Car {
         return concatenateStrArr(super.getHudInfo(), specHud);
     }
 
-
-
+    public AngledFlatbed getFlatbed() {
+        return flatbed;
+    }
 }

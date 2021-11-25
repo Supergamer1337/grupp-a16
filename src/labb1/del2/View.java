@@ -25,12 +25,12 @@ public class View extends Application {
     private static double dTime;
     private GraphicsContext gc;
     private Group map;
-    private Vehicle controlledVehicle;
+    private PlayerVehicle playerVehicle;
     private ArrayList<Vehicle> vehicles;
 
     @Override
     public void init() throws Exception {
-        controlledVehicle = new Saab95(new Vector2D(GAME_WIDTH / 2.0, GAME_HEIGHT / 2.0));
+        playerVehicle = new PlayerVehicle(new Saab95(GAME_WIDTH / 2.0, GAME_HEIGHT / 2.0));
         timeSinceLastTick = 0;
         vehicles = new ArrayList<>();
     }
@@ -71,15 +71,15 @@ public class View extends Application {
         // add cars, building etc, to root
         // TODO: Add more to environment
         // TODO: Learn how to add a background color
-        map.getChildren().add(controlledVehicle.getRect());
-        vehicles.add(new Volvo240(new Vector2D(GAME_WIDTH-200, GAME_HEIGHT - 100)));
+        map.getChildren().add(playerVehicle.getRect());
+        vehicles.add(new Volvo240(GAME_WIDTH-200, GAME_HEIGHT - 100));
         map.getChildren().add(vehicles.get(0).getRect());
     }
 
     private void render() {
         gc.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         gc.setFill(Color.BLACK);
-        String[] hudText = controlledVehicle.getHudInfo();
+        String[] hudText = playerVehicle.getHudInfo();
         for (int i = 0; i < hudText.length; i++) {
             gc.fillText(hudText[i], 10, 20 + 20 * i);
         }
@@ -87,50 +87,17 @@ public class View extends Application {
 
     private void update(long now) {
         updateDeltaTime(now);
-        updateVehicleMovement(dTime);
-    }
-
-    private void updateVehicleMovement(double dTime) {
-        controlledVehicle.move(dTime);
-        if (controlledVehicle instanceof Car car) {
-            if (!car.getEngine().isTurnedOn()) {
-                car.decelerate(0.15);
-            }
-        }
+        playerVehicle.update(dTime);
     }
 
     public void handleKeyPressed(KeyEvent keyEvent) {
         KeyCode key = keyEvent.getCode();
-        controlledVehicle.handlePressedKey(key);
+        playerVehicle.handleKeyPressed(key);
     }
 
     public void handleKeyReleased(KeyEvent keyEvent) {
         KeyCode key = keyEvent.getCode();
-        switch (key) {
-            // controls
-            case L -> {
-                // FIXME: Smelly code, should be in TowTruck
-                if (controlledVehicle instanceof TowingTruck car) {
-                    vehicles.sort(new VehicleComparator(car));
-                    if (vehicles.get(0) instanceof Car car2) {
-                        car.loadCar(car2);
-                    }
-                }
-            }
-            // Switch cars
-            case DIGIT1 -> switchVehicle(new Saab95(controlledVehicle.getPosV()));
-            case DIGIT2 -> switchVehicle(new Volvo240(controlledVehicle.getPosV()));
-            case DIGIT3 -> switchVehicle(new Scania(controlledVehicle.getPosV()));
-            case DIGIT4 -> switchVehicle(new TowingTruck(controlledVehicle.getPosV()));
-        }
-        controlledVehicle.handleReleasedKey(key);
-    }
-
-    private void switchVehicle(Vehicle nv) {
-        nv.setRotation(controlledVehicle.getRotation());
-        controlledVehicle = nv;
-        map.getChildren().remove(0);
-        map.getChildren().add(0, controlledVehicle.getRect());
+        playerVehicle.handleKeyReleased(key);
     }
 
     private void updateDeltaTime(long now) {
@@ -140,7 +107,7 @@ public class View extends Application {
 
     public static double getDeltaTime() { return dTime; }
 
-    public static void main(String[] args) {
+    public static void start(String[] args) {
         launch(args);
     }
 }

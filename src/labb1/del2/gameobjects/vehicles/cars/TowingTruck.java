@@ -1,7 +1,7 @@
 package labb1.del2.gameobjects.vehicles.cars;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import labb1.del2.gameobjects.vehicles.vehicleparts.CarTransporter;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
 import labb1.del2.gameobjects.vehicles.vehicleparts.SimpleFlatbed;
@@ -11,15 +11,22 @@ import java.util.Arrays;
 
 public final class TowingTruck extends Car {
     private static final int BASE_CAR_LOAD_LIMIT = 2;
+    private static final double DEF_PICKUP_RADIUS = 20, DEF_WIDTH = 323, DEF_HEIGHT = 75;
     private final CarTransporter ct;
     private final SimpleFlatbed flatbed;
     private final double pickupRadius;
 
-    public TowingTruck(Vector2D pos) {
-        super(pos.getX(), pos.getY(), 323, 75, Color.TURQUOISE, "Towing Truck", 2, new Engine(80));
+    public TowingTruck(Rectangle rect) {
+        super(rect, Color.TURQUOISE, "Towing Truck", 2, new Engine(80));
+        rect.setWidth(DEF_WIDTH);
+        rect.setHeight(DEF_HEIGHT);
         ct = new CarTransporter(BASE_CAR_LOAD_LIMIT);
         flatbed = new SimpleFlatbed();
-        pickupRadius = 20;
+        pickupRadius = DEF_PICKUP_RADIUS;
+    }
+
+    public TowingTruck(double x, double y) {
+        this(new Rectangle(x, y, DEF_WIDTH, DEF_HEIGHT));
     }
 
     @Override
@@ -39,18 +46,9 @@ public final class TowingTruck extends Car {
         return concatenateStrArr(super.getHudInfo(), specHud);
     }
 
-    @Override
-    public void handleReleasedKey(KeyCode key) {
-        super.handleReleasedKey(key);
-        switch (key) {
-            case R -> raiseRamp();
-            case F -> lowerRamp();
-        }
-    }
-
     // TODO: Implement fully
     public boolean loadCar(Car car) {
-        if (flatbed.isLowered() && isWithinRange(car.getPosV())) {
+        if (flatbed.isLowered() && isWithinRange(new Vector2D(car.getPosX(), car.getPosY()))) {
             ct.loadCar(car);
             return true;
         }

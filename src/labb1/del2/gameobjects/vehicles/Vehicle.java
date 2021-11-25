@@ -1,29 +1,32 @@
 package labb1.del2.gameobjects.vehicles;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import labb1.del2.View;
+import javafx.scene.shape.Rectangle;
+import labb1.del2.controllers.IControllable;
 import labb1.del2.gameobjects.MovableObject;
-import labb1.del2.helpers.IControllable;
 
-public abstract class Vehicle extends MovableObject implements IControllable {
+public abstract class Vehicle extends MovableObject {
     private static final double TURN_SPEED_CONSTANT = 100;
 
     private double turnSpeed;
     private final String modelName;
     private Color color;
 
-    protected Vehicle(double x, double y, double width, double height, double turnSpeed, Color color, String modelName) {
-        super(x, y, width, height);
+    protected Vehicle(Rectangle rect, double turnSpeed, Color color, String modelName) {
+        super(rect);
         this.turnSpeed = turnSpeed;
         this.modelName = modelName;
         this.color = color;
         getRect().setFill(color);
     }
 
-    protected Vehicle(double x, double y, double width, double height, Color color, String modelName) {
-        this(x, y, width, height, 0, color, modelName);
+    protected Vehicle(Rectangle rect, Color color, String modelName) {
+        this(rect, 0, color, modelName);
         turnSpeed = TURN_SPEED_CONSTANT * Math.PI / getWidth();
+    }
+
+    protected Vehicle(double x, double y, double width, double height, Color color, String modelName) {
+        this(new Rectangle(x, y, width, height), color, modelName);
     }
 
     public abstract String[] getHudInfo();
@@ -72,20 +75,12 @@ public abstract class Vehicle extends MovableObject implements IControllable {
         }
     }
 
-    @Override
-    public void handlePressedKey(KeyCode key) {
-        switch(key) {
-            case W -> accelerate(1);
-            case S -> decelerate(1);
-            case A -> turnLeft(View.getDeltaTime());
-            case D -> turnRight(View.getDeltaTime());
-        }
-    }
-
     public final Color getColor() {
         return color;
     }
     public final String getModelName() {
         return modelName;
     }
+
+    public abstract IControllable getController();
 }

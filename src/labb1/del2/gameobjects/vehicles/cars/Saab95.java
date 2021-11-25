@@ -1,7 +1,7 @@
 package labb1.del2.gameobjects.vehicles.cars;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
 import labb1.del2.helpers.Vector2D;
 
@@ -9,13 +9,17 @@ public final class Saab95 extends Car {
 
     private boolean turboOn;
 
-    public Saab95(Vector2D pos) {
-        super(pos.getX(), pos.getY(), 100.20, 50.0, Color.RED, "Saab95", 2, new Engine(125));
+    public Saab95(Rectangle rect) {
+        super(rect, Color.RED, "Saab95", 2, new Engine(125));
         turboOn = false;
     }
 
+    public Saab95(double x, double y) {
+        this(new Rectangle(x, y, 100.20, 50));
+    }
+
     public Saab95() {
-        this(new Vector2D());
+        this(0, 0);
     }
 
     @Override
@@ -24,14 +28,6 @@ public final class Saab95 extends Car {
                 "Turbo active: " + turboOn
         };
         return concatenateStrArr(super.getHudInfo(), specHud);
-    }
-
-    @Override
-    public void handleReleasedKey(KeyCode key) {
-        super.handleReleasedKey(key);
-        if (key == KeyCode.E) {
-            toggleTurbo();
-        }
     }
 
     public double speedFactor() {

@@ -8,10 +8,14 @@ public abstract class GameObject {
     private Rectangle objectRect;
     private double rotation;
 
-    protected GameObject(double x, double y, double width, double height, double rotation) {
-        objectRect = new Rectangle(x, y, width, height);
+    protected GameObject(Rectangle rect, double rotation) {
+        this.objectRect = rect;
         this.rotation = rotation;
         getRect().setRotate(getRotation() * 180 / Math.PI);
+    }
+
+    protected GameObject(double x, double y, double width, double height, double rotation) {
+        this(new Rectangle(x, y, width, height), rotation);
     }
 
     protected GameObject(double x, double y, double width, double height) {
@@ -20,9 +24,6 @@ public abstract class GameObject {
 
     public final Rectangle getRect() {
         return objectRect;
-    }
-    public final Vector2D getPosV() {
-        return new Vector2D(getPosX(), getPosY());
     }
     public final double getPosX() {
         return objectRect.getX();
