@@ -2,7 +2,7 @@ package labb1.del2.gameobjects.vehicles.cars;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
+import labb1.del2.vehicleparts.Engine;
 
 public final class Saab95 extends Car {
 

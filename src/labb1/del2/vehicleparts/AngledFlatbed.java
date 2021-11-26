@@ -1,4 +1,4 @@
-package labb1.del2.gameobjects.vehicles.vehicleparts;
+package labb1.del2.vehicleparts;
 
 import labb1.del2.View;
 

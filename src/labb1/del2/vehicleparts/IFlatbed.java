@@ -1,4 +1,4 @@
-package labb1.del2.gameobjects.vehicles.vehicleparts;
+package labb1.del2.vehicleparts;
 
 public interface IFlatbed {
     void raiseFlatbed();

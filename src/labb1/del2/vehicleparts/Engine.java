@@ -1,4 +1,4 @@
-package labb1.del2.gameobjects.vehicles.vehicleparts;
+package labb1.del2.vehicleparts;
 
 public class Engine {
     private static final double DEF_ENGINE_CONST = 0.01;

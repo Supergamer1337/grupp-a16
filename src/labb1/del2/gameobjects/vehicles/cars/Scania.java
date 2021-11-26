@@ -2,8 +2,8 @@ package labb1.del2.gameobjects.vehicles.cars;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import labb1.del2.gameobjects.vehicles.vehicleparts.AngledFlatbed;
-import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
+import labb1.del2.vehicleparts.AngledFlatbed;
+import labb1.del2.vehicleparts.Engine;
 
 public final class Scania extends Car {
     private static final double DEF_WIDTH = 118.66, DEF_HEIGHT = 75;
