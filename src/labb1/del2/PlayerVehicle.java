@@ -20,12 +20,12 @@ public class PlayerVehicle {
 
     public void handleKeyReleased(KeyCode key) {
         switch(key) {
-            case DIGIT1 -> switchVehicle(new Volvo240(vehicle.getRect()));
-            case DIGIT2 -> switchVehicle(new Saab95(vehicle.getRect()));
+            case DIGIT1 -> switchVehicle(new Saab95(vehicle.getRect()));
+            case DIGIT2 -> switchVehicle(new Volvo240(vehicle.getRect()));
             case DIGIT3 -> switchVehicle(new Scania(vehicle.getRect()));
             case DIGIT4 -> switchVehicle(new TowingTruck(vehicle.getRect()));
+            default -> controller.handleKeyReleased(key);
         }
-        controller.handleKeyReleased(key);
     }
 
     public void update(double dTime) {

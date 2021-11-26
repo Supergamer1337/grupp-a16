@@ -4,9 +4,9 @@ import javafx.scene.input.KeyCode;
 import labb1.del2.View;
 import labb1.del2.vehicles.Scania;
 
-public class ScaniaController implements IControllable {
+public final class ScaniaController implements IControllable {
 
-    private Scania car;
+    private final Scania car;
 
     public ScaniaController(Scania car) {
         this.car = car;

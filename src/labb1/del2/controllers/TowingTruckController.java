@@ -4,9 +4,9 @@ import javafx.scene.input.KeyCode;
 import labb1.del2.View;
 import labb1.del2.vehicles.TowingTruck;
 
-public class TowingTruckController implements IControllable {
+public final class TowingTruckController implements IControllable {
 
-    private TowingTruck car;
+    private final TowingTruck car;
 
     public TowingTruckController(TowingTruck car) {
         this.car = car;

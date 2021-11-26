@@ -4,9 +4,9 @@ import javafx.scene.input.KeyCode;
 import labb1.del2.View;
 import labb1.del2.vehicles.Saab95;
 
-public class Saab95Controller implements IControllable {
+public final class Saab95Controller implements IControllable {
 
-    private Saab95 car;
+    private final Saab95 car;
 
     public Saab95Controller(Saab95 car) {
         this.car = car;
@@ -14,10 +14,9 @@ public class Saab95Controller implements IControllable {
 
     @Override
     public void handleKeyReleased(KeyCode key) {
-        if (key == KeyCode.Q) {
-            car.getEngine().toggleEngineOn();
-        } else if (key == KeyCode.E) {
-            car.toggleTurbo();
+        switch (key) {
+            case Q -> car.getEngine().toggleEngineOn();
+            case E -> car.toggleTurbo();
         }
     }
 
