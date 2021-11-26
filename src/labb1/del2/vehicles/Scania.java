@@ -2,6 +2,8 @@ package labb1.del2.vehicles;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import labb1.del2.controllers.IControllable;
+import labb1.del2.controllers.ScaniaController;
 import labb1.del2.utils.StringHelper;
 import labb1.del2.vehicleparts.AngledFlatbed;
 import labb1.del2.vehicleparts.Engine;
@@ -33,10 +35,14 @@ public final class Scania extends Car {
     @Override
     public String[] getHudInfo() {
         String[] specHud = new String[] {
-                String.format("Flatbed angle: %.2f", flatbed.getFlatbedAngle()),
-                "Nr of doors: " + getNrOfDoors()
+                String.format("Flatbed angle: %.2f", flatbed.getFlatbedAngle())
         };
         return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
+    }
+
+    @Override
+    public IControllable getController() {
+        return new ScaniaController(this);
     }
 
     public AngledFlatbed getFlatbed() {

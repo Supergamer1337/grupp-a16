@@ -2,6 +2,8 @@ package labb1.del2.vehicles;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import labb1.del2.controllers.IControllable;
+import labb1.del2.controllers.Saab95Controller;
 import labb1.del2.utils.StringHelper;
 import labb1.del2.vehicleparts.Engine;
 
@@ -40,4 +42,8 @@ public final class Saab95 extends Car {
         turboOn = !turboOn;
     }
 
+    @Override
+    public IControllable getController() {
+        return new Saab95Controller(this);
+    }
 }

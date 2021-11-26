@@ -2,6 +2,8 @@ package labb1.del2.vehicles;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import labb1.del2.controllers.IControllable;
+import labb1.del2.controllers.TowingTruckController;
 import labb1.del2.utils.StringHelper;
 import labb1.del2.vehicleparts.CarTransporter;
 import labb1.del2.vehicleparts.Engine;
@@ -68,5 +70,10 @@ public final class TowingTruck extends Car {
         if (getSpeed() == 0) {
             flatbed.lowerFlatbed();
         }
+    }
+
+    @Override
+    public IControllable getController() {
+        return new TowingTruckController(this);
     }
 }
