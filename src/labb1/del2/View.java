@@ -112,26 +112,3 @@ public class View extends Application {
         launch(args);
     }
 }
-
-class VehicleComparator implements Comparator<Vehicle> {
-    Vehicle car;
-    VehicleComparator(Vehicle baseCar) {
-        car = baseCar;
-    }
-
-    @Override
-    public int compare(Vehicle o1, Vehicle o2) {
-        double dist1 = calcDist(o1);
-        double dist2 = calcDist(o2);
-        if (o1 instanceof Car && !(o2 instanceof Car)) {
-            return -1;
-        }
-        if (!(o1 instanceof Car) && o2 instanceof Car) {
-            return 1;
-        }
-        return Double.compare(dist1, dist2);
-    }
-    private double calcDist(Vehicle v) {
-        return Math.sqrt(Math.pow((car.getPosX() - v.getPosX()), 2) + Math.pow((car.getPosY() - v.getPosX()), 2));
-    }
-}
