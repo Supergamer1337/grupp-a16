@@ -1,4 +1,4 @@
-package labb1.del2;
+package labb1.del2.vehicles;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;

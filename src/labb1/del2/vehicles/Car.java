@@ -5,14 +5,15 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.CarController;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.vehicleparts.Engine;
+import labb1.del2.vehicleparts.VehicleBody;
 
 public abstract class Car extends Vehicle {
 
-    private int nrOfDoors;
-    private Engine engine;
+    private final int nrOfDoors;
+    private final Engine engine;
 
     Car(Rectangle rect, Color color, String modelName, int nrOfDoors, Engine engine) {
-        super(rect, color, modelName);
+        super(new VehicleBody(rect, color), modelName);
         this.nrOfDoors = nrOfDoors;
         this.engine = engine;
     }
@@ -22,10 +23,16 @@ public abstract class Car extends Vehicle {
     }
 
     @Override
-    public void incrementSpeed(double amount){
-        if(engine.isTurnedOn()) {
-            setSpeed(Math.min(getSpeed() + speedFactor() * amount, engine.getPower()));
+    public void incrementSpeed(double amount) {
+        if(!engine.isTurnedOn()) {
+            throw new IllegalStateException("Can't increment speed unless engine is turned on");
         }
+        setSpeed(Math.min(getSpeed() + speedFactor() * amount, engine.getPower()));
+    }
+
+    @Override
+    public void decrementSpeed(double amount) {
+        setSpeed(Math.max(getSpeed() - speedFactor() * amount, 0));
     }
 
     @Override
@@ -38,11 +45,6 @@ public abstract class Car extends Vehicle {
         };
     }
 
-    @Override
-    public void decrementSpeed(double amount) {
-        setSpeed(Math.max(getSpeed() - speedFactor() * amount, 0));
-    }
-
     public abstract double speedFactor();
 
     public final int getNrOfDoors() {
@@ -53,7 +55,7 @@ public abstract class Car extends Vehicle {
     }
 
     @Override
-    public IControllable getController() {
+    IControllable getController() {
         return new CarController(this);
     }
 }

@@ -2,6 +2,7 @@ package labb1.del2;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import labb1.del2.vehicles.PlayerVehicle;
 import labb1.del2.vehicles.Saab95;
 import labb1.del2.vehicles.Vehicle;
 

@@ -4,115 +4,85 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import labb1.del2.IMovable;
 import labb1.del2.controllers.IControllable;
-import labb1.del2.utils.Vector2D;
+import labb1.del2.vehicleparts.VehicleBody;
 
 public abstract class Vehicle implements IMovable {
-    private static final double TURN_SPEED_CONSTANT = 100;
-    private static final double BASE_ROTATION = 0;
-    private Rectangle objectRect;
-    private double rotation;
-    private double turnSpeed;
+
     private final String modelName;
-    private Color color;
-    private double speed;
+    private final VehicleBody body;
 
-
-    protected Vehicle(Rectangle rect, double rotation, double turnSpeed, Color color, String modelName) {
-        this.objectRect = rect;
-        this.rotation = rotation;
-        getRect().setRotate(getRotation() * 180 / Math.PI);
-        this.turnSpeed = turnSpeed;
+    Vehicle(VehicleBody body, String modelName) {
+        this.body = body;
         this.modelName = modelName;
-        this.color = color;
-        getRect().setFill(color);
     }
 
-    protected Vehicle(Rectangle rect, Color color, String modelName) {
-        this(rect, 0,0, color, modelName);
-        turnSpeed = TURN_SPEED_CONSTANT * Math.PI / getWidth();
+    public final void accelerate(double amount) throws IllegalArgumentException {
+        if (amount < 0 || amount > 1) {
+            throw new IllegalArgumentException("Accelerate amount must be between 0 and 1");
+        }
+        incrementSpeed(amount);
     }
 
-    protected Vehicle(double x, double y, double width, double height, Color color, String modelName) {
-        this(new Rectangle(x, y, width, height), color, modelName);
+    public final void decelerate(double amount) throws IllegalArgumentException {
+        if (amount < 0 || amount > 1) {
+            throw new IllegalArgumentException("Decelerate amount must be between 0 and 1");
+        }
+        decrementSpeed(amount);
+    }
+
+    @Override
+    public void move(double dTime) {
+        body.move(dTime);
+    }
+
+    @Override
+    public void turnRight(double dTime) {
+        body.turnRight(dTime);
+    }
+
+    @Override
+    public void turnLeft(double dTime) {
+        body.turnLeft(dTime);
     }
 
     public abstract String[] getHudInfo();
 
-    public final void accelerate(double amount) throws IllegalArgumentException {
-        if (0 <= amount && amount <= 1) {
-            incrementSpeed(amount);
-        } else {
-            throw new IllegalArgumentException("Accelerate amount must be between 0 and 1");
-        }
-    }
-
-    public final void decelerate(double amount) throws IllegalArgumentException {
-        if (0 <= amount && amount <= 1) {
-            decrementSpeed(amount);
-        } else {
-            throw new IllegalArgumentException("Decelerate amount must be between 0 and 1");
-        }
-    }
-
     public abstract void incrementSpeed(double amount);
-
     public abstract void decrementSpeed(double amount);
 
-    public final void move(double dTime) {
-        Vector2D direction = Vector2D.angleToVector2D(getRotation());
-        getRect().setX(getPosX() + dTime * speed * direction.getX());
-        getRect().setY(getPosY() + dTime * speed * direction.getY());
-    }
-
-    public final void turnRight(double dTime) {
-        if(getSpeed() != 0) {
-            setRotation(getRotation() + turnSpeed * dTime);
-        }
-    }
-    public final void turnLeft(double dTime) {
-        if(getSpeed() != 0) {
-            setRotation(getRotation() - turnSpeed * dTime);
-        }
-    }
-
-
-
-    public final double getSpeed() {
-        return speed;
-    }
-    public final void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
     public final Color getColor() {
-        return color;
+        return body.getColor();
     }
     public final String getModelName() {
         return modelName;
     }
     public final Rectangle getRect() {
-        return objectRect;
+        return body.getRect();
     }
     public final double getPosX() {
-        return objectRect.getX();
+        return body.getPosX();
     }
     public final double getPosY() {
-        return objectRect.getY();
+        return body.getPosY();
     }
     public final double getWidth() {
-        return objectRect.getWidth();
+        return body.getWidth();
     }
     public final double getHeight() {
-        return objectRect.getHeight();
+        return body.getHeight();
+    }
+    public final double getSpeed() {
+        return body.getSpeed();
+    }
+    public final void setSpeed(double speed) {
+        body.setSpeed(speed);
     }
     public final double getRotation() {
-        return rotation;
+        return body.getRotation();
     }
     public final void setRotation(double rotation) {
-        this.rotation = rotation;
-        getRect().getTransforms().clear();
-        getRect().setRotate(rotation * 180 / Math.PI);
+        body.setRotation(rotation);
     }
 
-    public abstract IControllable getController();
+    abstract IControllable getController();
 }
