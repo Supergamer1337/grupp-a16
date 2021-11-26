@@ -1,7 +1,7 @@
 package labb1.del2;
 
 import javafx.scene.Group;
-import labb1.del2.gameobjects.vehicles.Vehicle;
+import labb1.del2.vehicles.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;

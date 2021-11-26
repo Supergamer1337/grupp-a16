@@ -2,7 +2,7 @@ package labb1.del2.controllers;
 
 import javafx.scene.input.KeyCode;
 import labb1.del2.View;
-import labb1.del2.gameobjects.vehicles.cars.Scania;
+import labb1.del2.vehicles.Scania;
 
 public class ScaniaController implements IControllable {
 

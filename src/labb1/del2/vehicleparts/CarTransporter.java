@@ -1,6 +1,6 @@
 package labb1.del2.vehicleparts;
 
-import labb1.del2.gameobjects.vehicles.cars.Car;
+import labb1.del2.vehicles.Car;
 
 import java.util.ArrayList;
 

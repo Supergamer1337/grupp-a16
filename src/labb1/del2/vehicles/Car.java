@@ -1,10 +1,9 @@
-package labb1.del2.gameobjects.vehicles.cars;
+package labb1.del2.vehicles;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.CarController;
 import labb1.del2.controllers.IControllable;
-import labb1.del2.gameobjects.vehicles.Vehicle;
 import labb1.del2.vehicleparts.Engine;
 
 public abstract class Car extends Vehicle {

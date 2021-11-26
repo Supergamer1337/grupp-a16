@@ -2,7 +2,7 @@ package labb1.del2.controllers;
 
 import javafx.scene.input.KeyCode;
 import labb1.del2.View;
-import labb1.del2.gameobjects.vehicles.cars.TowingTruck;
+import labb1.del2.vehicles.TowingTruck;
 
 public class TowingTruckController implements IControllable {
 

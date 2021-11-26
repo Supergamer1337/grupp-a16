@@ -1,4 +1,4 @@
-package labb1.del2.gameobjects.vehicles;
+package labb1.del2.vehicles;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
