@@ -1,4 +1,4 @@
-package labb1.del2.helpers;
+package labb1.del2.utils;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
