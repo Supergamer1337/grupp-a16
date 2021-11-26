@@ -1,7 +1,6 @@
 package labb1.del2.gameobjects;
 
 import javafx.scene.shape.Rectangle;
-import labb1.del2.helpers.Vector2D;
 
 public abstract class GameObject {
     private static final double BASE_ROTATION = 0;

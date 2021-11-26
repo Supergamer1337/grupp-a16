@@ -1,7 +1,7 @@
 package labb1.del2.gameobjects;
 
 import javafx.scene.shape.Rectangle;
-import labb1.del2.helpers.Vector2D;
+import labb1.del2.utils.Vector2D;
 
 public abstract class MovableObject extends GameObject {
 

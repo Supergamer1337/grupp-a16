@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.gameobjects.vehicles.vehicleparts.CarTransporter;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
 import labb1.del2.gameobjects.vehicles.vehicleparts.SimpleFlatbed;
-import labb1.del2.helpers.Vector2D;
+import labb1.del2.utils.Vector2D;
 
 import java.util.Arrays;
 

@@ -5,8 +5,6 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.gameobjects.vehicles.vehicleparts.AngledFlatbed;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
 
-import labb1.del2.helpers.Vector2D;
-
 public final class Scania extends Car {
     private static final double DEF_WIDTH = 118.66, DEF_HEIGHT = 75;
 

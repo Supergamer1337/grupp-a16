@@ -3,7 +3,6 @@ package labb1.del2.gameobjects.vehicles.cars;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import labb1.del2.gameobjects.vehicles.vehicleparts.Engine;
-import labb1.del2.helpers.Vector2D;
 
 public final class Volvo240 extends Car {
     private static final double DEF_WIDTH = 95.6, DEF_HEIGHT = 50.0;
