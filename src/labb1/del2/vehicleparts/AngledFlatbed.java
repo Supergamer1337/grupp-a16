@@ -1,5 +1,6 @@
 package labb1.del2.vehicleparts;
 
+import labb1.del2.Main;
 import labb1.del2.View;
 
 public class AngledFlatbed implements IFlatbed{
@@ -12,13 +13,13 @@ public class AngledFlatbed implements IFlatbed{
 
     @Override
     public void raiseFlatbed() {
-        currentFlatbedAngle = Math.min(rotationSpeed * View.getDeltaTime() + currentFlatbedAngle, maxFlatbedAngle);
+        currentFlatbedAngle = Math.min(rotationSpeed * Main.getDeltaTime() + currentFlatbedAngle, maxFlatbedAngle);
 
     }
 
     @Override
     public void lowerFlatbed() {
-        currentFlatbedAngle = Math.max(currentFlatbedAngle - rotationSpeed * View.getDeltaTime(), minFlatbedAngle);
+        currentFlatbedAngle = Math.max(currentFlatbedAngle - rotationSpeed * Main.getDeltaTime(), minFlatbedAngle);
     }
 
     @Override
