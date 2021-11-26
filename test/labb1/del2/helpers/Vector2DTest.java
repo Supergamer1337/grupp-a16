@@ -2,7 +2,7 @@ package labb1.del2.helpers;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import labb1.del2.helpers.Vector2D;
+import labb1.del2.utils.Vector2D;
 
 public class Vector2DTest {
     @Test

@@ -1,4 +1,4 @@
-package labb1.del2.helpers;
+package labb1.del2.utils;
 
 
 public class Vector2D {
