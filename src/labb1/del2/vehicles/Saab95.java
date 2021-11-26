@@ -2,6 +2,7 @@ package labb1.del2.vehicles;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import labb1.del2.utils.StringHelper;
 import labb1.del2.vehicleparts.Engine;
 
 public final class Saab95 extends Car {
@@ -26,7 +27,7 @@ public final class Saab95 extends Car {
         String[] specHud = new String[] {
                 "Turbo active: " + turboOn
         };
-        return concatenateStrArr(super.getHudInfo(), specHud);
+        return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
     public double speedFactor() {

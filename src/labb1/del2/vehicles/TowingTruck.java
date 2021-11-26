@@ -2,6 +2,7 @@ package labb1.del2.vehicles;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import labb1.del2.utils.StringHelper;
 import labb1.del2.vehicleparts.CarTransporter;
 import labb1.del2.vehicleparts.Engine;
 import labb1.del2.vehicleparts.SimpleFlatbed;
@@ -43,7 +44,7 @@ public final class TowingTruck extends Car {
                 "Ramp lowered: " + flatbed.isLowered(),
                 "Loaded cars: " + Arrays.toString(ct.getCarNames())
         };
-        return concatenateStrArr(super.getHudInfo(), specHud);
+        return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
     // TODO: Implement fully
