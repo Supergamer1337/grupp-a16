@@ -18,7 +18,7 @@ public class Vector2DTest {
     }
 
     @Test
-    public void addVectors() {
+    public void testAddVectors() {
         Vector2D vector = new Vector2D(2, 1);
         Vector2D vector2 = new Vector2D(3, 2);
         Vector2D result = vector.add(vector2);
@@ -27,7 +27,7 @@ public class Vector2DTest {
     }
 
     @Test
-    public void addXY() {
+    public void testAddXY() {
         Vector2D vector = new Vector2D(2, 1);
         Vector2D result = vector.add(2, 3);
         assertEquals(4.0, result.getX());
