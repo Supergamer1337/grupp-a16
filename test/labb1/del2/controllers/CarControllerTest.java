@@ -1,4 +1,4 @@
-package labb1.del2;
+package labb1.del2.controllers;
 
 import org.junit.jupiter.api.Test;
 

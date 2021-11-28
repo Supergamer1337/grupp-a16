@@ -1,4 +1,4 @@
-package labb1.del2.gameobjects;
+package labb1.del2.vehicles;
 
 import labb1.del2.vehicleparts.Engine;
 import labb1.del2.vehicles.Car;

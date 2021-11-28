@@ -1,4 +1,4 @@
-package labb1.del2.gameobjects;
+package labb1.del2.vehicleparts;
 
 import labb1.del2.vehicleparts.AngledFlatbed;
 import org.junit.jupiter.api.Test;
