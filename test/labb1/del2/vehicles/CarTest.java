@@ -10,15 +10,15 @@ public class CarTest {
     @Test
     public void testIncrementSpeed() {
         Car car = new Saab95();
-        car.getEngine().toggleEngineOn();
+        car.toggleEngineOn();
         car.incrementSpeed(1);
-        assertEquals(car.getEngine().speedFactor(), car.getSpeed());
+        assertEquals(car.speedFactor(), car.getSpeed());
     }
 
     @Test
     public void testDecrementSpeed() {
         Car car = new Saab95();
-        car.getEngine().toggleEngineOn();
+        car.toggleEngineOn();
         car.incrementSpeed(1);
         car.decrementSpeed(1);
         assertEquals(0, car.getSpeed());

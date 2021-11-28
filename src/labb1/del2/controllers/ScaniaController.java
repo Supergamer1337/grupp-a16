@@ -18,7 +18,7 @@ public final class ScaniaController implements IControllable {
     @Override
     public void handleKeyReleased(KeyCode key) {
         if (key == KeyCode.Q) {
-            car.getEngine().toggleEngineOn();
+            car.toggleEngineOn();
         }
     }
 
