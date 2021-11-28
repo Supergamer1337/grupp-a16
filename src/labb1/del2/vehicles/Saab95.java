@@ -32,6 +32,7 @@ public final class Saab95 extends Car {
         return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
+    @Override
     public double speedFactor() {
         double turbo = 1;
         if (turboOn) turbo = 1.3;
