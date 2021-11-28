@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     private long timeSinceLastTick;
-    private static double dTime;
+    private static double dTime = 1;
 
     @Override
     public void init() {
