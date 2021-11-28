@@ -5,6 +5,8 @@ import labb1.del2.Main;
 import labb1.del2.View;
 import labb1.del2.vehicles.Car;
 
+import java.util.Objects;
+
 public final class CarController implements IControllable {
 
     private final Car car;
@@ -28,5 +30,18 @@ public final class CarController implements IControllable {
         if (key == KeyCode.Q) {
             car.getEngine().toggleEngineOn();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CarController that = (CarController) o;
+        return car.equals(that.car);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(car);
     }
 }
