@@ -14,20 +14,24 @@ public final class CarTransporter {
     }
 
     public void loadCar(Car car) {
-        if (loadedCars.size() < limit) {
-            loadedCars.add(car);
+        if (loadedCars.size() >= limit) {
+            throw new ArrayStoreException("Can't load more cars than the limit");
         }
+        loadedCars.add(car);
     }
 
     public Car unloadCar() {
+        if(loadedCars.size() < 1) {
+            throw new ArrayIndexOutOfBoundsException("Can't unload a nonexistent car");
+        }
         return loadedCars.remove(loadedCars.size() - 1);
     }
 
     public Car getCarAtIndex(int index) throws IllegalArgumentException {
-        if(index < loadedCars.size()) {
-            return loadedCars.get(index);
+        if(index >= loadedCars.size() || index < 0) {
+            throw new IllegalArgumentException("CarTransporter, getCarAtIndex(): Given index is out of bounds");
         }
-        throw new IllegalArgumentException("CarTransporter, getCarAtIndex(): Given index is out of bounds");
+        return loadedCars.get(index);
     }
 
     public String[] getCarNames() {
