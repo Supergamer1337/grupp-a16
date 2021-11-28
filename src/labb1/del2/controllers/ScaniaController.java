@@ -30,10 +30,12 @@ public final class ScaniaController implements IControllable {
             case A -> car.turnLeft(Main.getDeltaTime());
             case D -> car.turnRight(Main.getDeltaTime());
         }
-        if (key == KeyCode.R && car.getSpeed() == 0) {
-            car.getFlatbed().raiseFlatbed();
-        } else if (key == KeyCode.F) {
-            car.getFlatbed().lowerFlatbed();
+        if (car.getSpeed() == 0) {
+            if (key == KeyCode.R) {
+                car.getFlatbed().raiseFlatbed();
+            } else if (key == KeyCode.F) {
+                car.getFlatbed().lowerFlatbed();
+            }
         }
     }
 

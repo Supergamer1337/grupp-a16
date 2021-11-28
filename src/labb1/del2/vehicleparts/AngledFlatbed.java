@@ -26,7 +26,8 @@ public class AngledFlatbed implements IFlatbed{
         return currentFlatbedAngle == minFlatbedAngle;
     }
 
-    public final double getFlatbedAngle() {
-        return currentFlatbedAngle;
-    }
+    public final double getFlatbedAngle() { return currentFlatbedAngle; }
+    public final double getMaxFlatbedAngle() { return maxFlatbedAngle; }
+    public final double getMinFlatbedAngle() { return minFlatbedAngle; }
+
 }
