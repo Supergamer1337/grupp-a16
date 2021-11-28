@@ -14,7 +14,6 @@ public class AngledFlatbed implements IFlatbed{
     @Override
     public void raiseFlatbed() {
         currentFlatbedAngle = Math.min(rotationSpeed * Main.getDeltaTime() + currentFlatbedAngle, maxFlatbedAngle);
-
     }
 
     @Override
