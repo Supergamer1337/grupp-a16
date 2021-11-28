@@ -27,7 +27,7 @@ public final class Scania extends Car {
     @Override
     public double speedFactor() {
         if (flatbed.isLowered()) {
-            return getEngine().getPower() * 0.01;
+            return getEnginePower() * 0.01;
         }
         return 0;
     }

@@ -35,7 +35,7 @@ public final class TowingTruck extends Car {
     @Override
     public double speedFactor() {
         if (flatbed.isLowered()) {
-            return 0.01 * getEngine().getPower();
+            return 0.01 * getEnginePower();
         }
         return 0;
     }

@@ -39,7 +39,7 @@ public abstract class Car extends Vehicle {
     public String[] getHudInfo() {
         return new String[] {
                 "Model: " + getModelName(),
-                "Engine On: " + getEngine().isTurnedOn(),
+                "Engine On: " + isEngineOn(),
                 String.format("Speed: %.0fkm/h", getSpeed()),
                 "Nr of doors: " + getNrOfDoors()
         };
@@ -47,11 +47,28 @@ public abstract class Car extends Vehicle {
 
     public abstract double speedFactor();
 
+    public double getEnginePower() {
+        return engine.getPower();
+    }
+
+    public boolean isEngineOn() {
+        return engine.isTurnedOn();
+    }
+
+    public void turnOn() {
+        engine.turnOn();
+    }
+
+    public void turnOff() {
+        engine.turnOff();
+    }
+
+    public void toggleEngineOn() {
+        engine.toggleEngineOn();
+    }
+
     public final int getNrOfDoors() {
         return nrOfDoors;
-    }
-    public final Engine getEngine() {
-        return engine;
     }
 
     @Override
