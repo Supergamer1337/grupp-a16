@@ -69,6 +69,9 @@ public class VehicleBody implements IMovable {
     public final Color getColor() {
         return color;
     }
+    public double getTurnSpeed() {
+        return turnSpeed;
+    }
 
     public final double getRotation() {
         return rotation;
