@@ -77,6 +77,9 @@ public abstract class Vehicle implements IMovable {
     public final void setSpeed(double speed) {
         body.setSpeed(speed);
     }
+    public final double getTurnSpeed() {
+        return body.getTurnSpeed();
+    }
     public final double getRotation() {
         return body.getRotation();
     }

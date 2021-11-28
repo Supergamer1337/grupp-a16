@@ -41,16 +41,6 @@ public class CarTest {
     }
 
     @Test
-    public void testGetEngine() {
-        Car car = new Saab95();
-        Engine engine = car.getEngine();
-        assertNotEquals(engine, new Engine(5));
-        assertEquals(engine, car.getEngine());
-        assertEquals(engine.hashCode(), car.getEngine().hashCode());
-        assertNotEquals(engine, new Engine(10));
-    }
-
-    @Test
     public void testGetController() {
         Car car = new Saab95();
 
