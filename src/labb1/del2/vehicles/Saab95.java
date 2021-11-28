@@ -39,6 +39,10 @@ public final class Saab95 extends Car {
         return getEnginePower() * 0.01 * turbo;
     }
 
+    public boolean getTurboState() {
+        return turboOn;
+    }
+
     public void toggleTurbo() {
         turboOn = !turboOn;
     }
@@ -47,4 +51,5 @@ public final class Saab95 extends Car {
     public IControllable getController() {
         return new Saab95Controller(this);
     }
+
 }

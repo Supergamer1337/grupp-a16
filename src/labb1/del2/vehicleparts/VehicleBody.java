@@ -5,6 +5,8 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.IMovable;
 import labb1.del2.utils.Vector2D;
 
+import java.util.Objects;
+
 public class VehicleBody implements IMovable {
     private static final double TURN_SPEED_CONSTANT = 100, DEF_ROTATION = 0, DEF_SPEED = 0;
 
@@ -54,6 +56,12 @@ public class VehicleBody implements IMovable {
     public final Rectangle getRect() {
         return bodyRect;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bodyRect);
+    }
+
     public final double getPosX() {
         return bodyRect.getX();
     }

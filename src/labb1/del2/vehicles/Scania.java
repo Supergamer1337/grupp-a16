@@ -8,6 +8,8 @@ import labb1.del2.utils.StringHelper;
 import labb1.del2.vehicleparts.AngledFlatbed;
 import labb1.del2.vehicleparts.Engine;
 
+import java.util.Objects;
+
 public final class Scania extends Car {
     private static final double DEF_WIDTH = 118.66, DEF_HEIGHT = 75;
 
@@ -23,6 +25,8 @@ public final class Scania extends Car {
     public Scania(double x, double y) {
         this(new Rectangle(x, y, DEF_WIDTH,DEF_HEIGHT));
     }
+
+    public Scania() { this(0,0); }
 
     @Override
     public double speedFactor() {
@@ -47,5 +51,10 @@ public final class Scania extends Car {
 
     public AngledFlatbed getFlatbed() {
         return flatbed;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(flatbed);
     }
 }
