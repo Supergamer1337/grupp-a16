@@ -33,4 +33,35 @@ public class Vector2DTest {
         assertEquals(4.0, result.getX());
         assertEquals(4.0, result.getY());
     }
+
+    @Test
+    public void testCopy() {
+        Vector2D vector = new Vector2D(2, 1);
+        Vector2D normalizedVector = vector.copy();
+        assertEquals(2.0, normalizedVector.getX());
+        assertEquals(1.0, normalizedVector.getY());
+    }
+
+    @Test
+    public void testGetNormalized() {
+        Vector2D vector = new Vector2D(2, 1);
+        Vector2D result = vector.getNormalized();
+        assertEquals(0.4, result.getX());
+        assertEquals(0.2, result.getY());
+    }
+
+    @Test
+    public void testAngleToVector() {
+        Vector2D angleVector = Vector2D.angleToVector2D(Math.PI / 2);
+        double margin = 0.00000001;
+        assertTrue(angleVector.getX() > -margin && angleVector.getX() < margin);
+        assertTrue(angleVector.getY() > 1 - margin && angleVector.getY() < 1 + margin);
+    }
+
+    @Test
+    public void testZeroVector() {
+        Vector2D v = new Vector2D();
+        assertEquals(0, v.getX());
+        assertEquals(0, v.getY());
+    }
 }
