@@ -14,12 +14,14 @@ public final class Scania extends Car {
     private static final double DEF_WIDTH = 118.66, DEF_HEIGHT = 75;
 
     private final AngledFlatbed flatbed;
+    private final Engine engine;
 
     public Scania(Rectangle rect) {
-        super(rect, Color.BLUE, "Scania", 2, new Engine(90));
+        super(rect, Color.BLUE, "Scania", 2);
         rect.setWidth(DEF_WIDTH);
         rect.setHeight(DEF_HEIGHT);
         flatbed = new AngledFlatbed();
+        engine = new Engine(90);
     }
 
     public Scania(double x, double y) {
@@ -31,7 +33,7 @@ public final class Scania extends Car {
     @Override
     public double speedFactor() {
         if (flatbed.isLowered()) {
-            return 0.01 * getEnginePower();
+            return 0.01 * getPower();
         }
         return 0;
     }
@@ -71,6 +73,31 @@ public final class Scania extends Car {
     @Override
     public IControllable getController() {
         return new ScaniaController(this);
+    }
+
+    @Override
+    public void turnOn() {
+        engine.turnOn();
+    }
+
+    @Override
+    public void turnOff() {
+        engine.turnOff();
+    }
+
+    @Override
+    public void toggleOn() {
+        engine.toggleOn();
+    }
+
+    @Override
+    public boolean isTurnedOn() {
+        return engine.isTurnedOn();
+    }
+
+    @Override
+    public double getPower() {
+        return engine.getPower();
     }
 
 }

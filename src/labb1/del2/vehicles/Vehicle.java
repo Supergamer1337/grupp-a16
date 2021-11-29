@@ -50,7 +50,7 @@ public abstract class Vehicle implements IMovable {
      * @param dTime The time since the last update.
      */
     @Override
-    public void move(double dTime) {
+    public final void move(double dTime) {
         body.move(dTime);
     }
 
@@ -59,7 +59,7 @@ public abstract class Vehicle implements IMovable {
      * @param dTime The time since the last update.
      */
     @Override
-    public void turnRight(double dTime) {
+    public final void turnRight(double dTime) {
         body.turnRight(dTime);
     }
 
@@ -68,7 +68,7 @@ public abstract class Vehicle implements IMovable {
      * @param dTime The time since the last update.
      */
     @Override
-    public void turnLeft(double dTime) {
+    public final void turnLeft(double dTime) {
         body.turnLeft(dTime);
     }
 

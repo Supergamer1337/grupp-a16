@@ -5,15 +5,15 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.controllers.Saab95Controller;
 import labb1.del2.utils.StringHelper;
-import labb1.del2.vehicleparts.Engine;
+import labb1.del2.vehicleparts.TurboEngine;
 
 public final class Saab95 extends Car {
 
-    private boolean turboOn;
+    private final TurboEngine engine;
 
     public Saab95(Rectangle rect) {
-        super(rect, Color.RED, "Saab95", 2, new Engine(125));
-        turboOn = false;
+        super(rect, Color.RED, "Saab95", 2);
+        engine = new TurboEngine(125);
     }
 
     public Saab95(double x, double y) {
@@ -27,24 +27,47 @@ public final class Saab95 extends Car {
     @Override
     public String[] getHudInfo() {
         String[] specHud = new String[] {
-                "Turbo active: " + turboOn
+                "Turbo active: " + getTurboState()
         };
         return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
-    @Override
-    public double speedFactor() {
-        double turbo = 1;
-        if (turboOn) turbo = 1.3;
-        return getEnginePower() * 0.01 * turbo;
-    }
-
     public boolean getTurboState() {
-        return turboOn;
+        return engine.getTurboState();
     }
 
     public void toggleTurbo() {
-        turboOn = !turboOn;
+        engine.toggleTurbo();
+    }
+
+    @Override
+    public void toggleOn() {
+        engine.toggleOn();
+    }
+
+    @Override
+    public double getPower() {
+        return engine.getPower();
+    }
+
+    @Override
+    public void turnOn() {
+        engine.turnOn();
+    }
+
+    @Override
+    public void turnOff() {
+        engine.turnOff();
+    }
+
+    @Override
+    public boolean isTurnedOn() {
+        return engine.isTurnedOn();
+    }
+
+    @Override
+    public double speedFactor() {
+        return engine.speedFactor();
     }
 
     @Override

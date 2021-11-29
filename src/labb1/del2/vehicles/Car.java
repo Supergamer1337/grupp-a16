@@ -8,33 +8,32 @@ import labb1.del2.vehicleparts.Engine;
 import labb1.del2.vehicleparts.IEngine;
 import labb1.del2.vehicleparts.VehicleBody;
 
-public abstract class Car extends Vehicle {
+public abstract class Car extends Vehicle implements IEngine {
 
     private final int nrOfDoors;
-    private final Engine engine;
 
-    Car(Rectangle rect, Color color, String modelName, int nrOfDoors, Engine engine) {
+    /**
+     * Creates a new Car object
+     * @param rect Rectangle representing the car
+     * @param color Color of the car
+     * @param modelName Name of the car model
+     * @param nrOfDoors The amount of doors the car has
+     */
+    Car(Rectangle rect, Color color, String modelName, int nrOfDoors) {
         super(new VehicleBody(rect, color), modelName);
         this.nrOfDoors = nrOfDoors;
-        this.engine = engine;
     }
-
-    /*
-    Car(double x, double y, double width, double height, Color color, String modelName, int nrOfDoors, Engine engine) {
-        this(new Rectangle(x, y, width, height), color, modelName, nrOfDoors, engine);
-    }
-    */
 
     @Override
-    public void incrementSpeed(double amount) {
-        if(!engine.isTurnedOn()) {
+    public final void incrementSpeed(double amount) {
+        if(!isTurnedOn()) {
             throw new IllegalStateException("Can't increment speed unless engine is turned on");
         }
-        setSpeed(Math.min(getSpeed() + speedFactor() * amount, engine.getPower()));
+        setSpeed(Math.min(getSpeed() + speedFactor() * amount, getPower()));
     }
 
     @Override
-    public void decrementSpeed(double amount) {
+    public final void decrementSpeed(double amount) {
         setSpeed(Math.max(getSpeed() - speedFactor() * amount, 0));
     }
 
@@ -42,32 +41,10 @@ public abstract class Car extends Vehicle {
     public String[] getHudInfo() {
         return new String[] {
                 "Model: " + getModelName(),
-                "Engine On: " + isEngineOn(),
+                "Engine On: " + isTurnedOn(),
                 String.format("Speed: %.0fkm/h", getSpeed()),
                 "Nr of doors: " + getNrOfDoors()
         };
-    }
-
-    public abstract double speedFactor();
-
-    public double getEnginePower() {
-        return engine.getPower();
-    }
-
-    public boolean isEngineOn() {
-        return engine.isTurnedOn();
-    }
-
-    public void turnOn() {
-        engine.turnOn();
-    }
-
-    public void turnOff() {
-        engine.turnOff();
-    }
-
-    public void toggleEngineOn() {
-        engine.toggleOn();
     }
 
     public final int getNrOfDoors() {

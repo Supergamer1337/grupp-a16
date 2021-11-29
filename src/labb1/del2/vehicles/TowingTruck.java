@@ -17,14 +17,16 @@ public final class TowingTruck extends Car {
     private final Loader<Car> ct;
     private final SimpleFlatbed flatbed;
     private final double pickupRadius;
+    private final Engine engine;
 
     public TowingTruck(Rectangle rect) {
-        super(rect, Color.TURQUOISE, "Towing Truck", 2, new Engine(80));
+        super(rect, Color.TURQUOISE, "Towing Truck", 2);
         rect.setWidth(DEF_WIDTH);
         rect.setHeight(DEF_HEIGHT);
         ct = new Loader<>(BASE_CAR_LOAD_LIMIT);
         flatbed = new SimpleFlatbed();
         pickupRadius = DEF_PICKUP_RADIUS;
+        engine = new Engine(80);
     }
 
     public TowingTruck(double x, double y) {
@@ -36,10 +38,11 @@ public final class TowingTruck extends Car {
     @Override
     public double speedFactor() {
         if (!flatbed.isLowered()) {
-            return 0.01 * getEnginePower();
+            return 0.01 * getPower();
         }
         return 0;
     }
+
 
     @Override
     public String[] getHudInfo() {
@@ -82,5 +85,31 @@ public final class TowingTruck extends Car {
     @Override
     public IControllable getController() {
         return new TowingTruckController(this);
+    }
+
+
+    @Override
+    public void turnOn() {
+        engine.turnOn();
+    }
+
+    @Override
+    public void turnOff() {
+        engine.turnOff();
+    }
+
+    @Override
+    public void toggleOn() {
+        engine.toggleOn();
+    }
+
+    @Override
+    public boolean isTurnedOn() {
+        return engine.isTurnedOn();
+    }
+
+    @Override
+    public double getPower() {
+        return engine.getPower();
     }
 }

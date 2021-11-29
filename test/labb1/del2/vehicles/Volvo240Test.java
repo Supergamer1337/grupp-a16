@@ -20,6 +20,6 @@ class Volvo240Test {
     @Test
     void speedFactor() {
         Volvo240 volvo = new Volvo240();
-        assertEquals(volvo.getEnginePower() * 0.01 * Volvo240.getTrimFactor(), volvo.speedFactor());
+        assertEquals(volvo.getPower() * 0.01 * volvo.getTrimFactor(), volvo.speedFactor());
     }
 }
