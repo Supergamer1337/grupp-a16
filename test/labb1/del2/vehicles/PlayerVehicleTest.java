@@ -1,6 +1,7 @@
 package labb1.del2.vehicles;
 
 import javafx.scene.input.KeyCode;
+import javafx.scene.shape.Rectangle;
 import org.junit.jupiter.api.Test;
 
 import java.security.Key;
@@ -50,12 +51,28 @@ public class PlayerVehicleTest {
     }
 
     @Test
-    void testGetRect() {
+    void testGetVehicle() {
+        Car car = new Saab95();
+        PlayerVehicle playerVehicle = new PlayerVehicle(car);
+        assertTrue(playerVehicle.getVehicle() instanceof Saab95);
+    }
 
+    @Test
+    void testGetRect() {
+        Car car = new Saab95();
+        PlayerVehicle playerVehicle = new PlayerVehicle(car);
+        assertNotNull(playerVehicle.getRect());
     }
 
     @Test
     void testGetHudInfo() {
-
+        Car car = new Saab95();
+        PlayerVehicle playerVehicle = new PlayerVehicle(car);
+        String[] info = playerVehicle.getHudInfo();
+        assertEquals("Model: Saab95", info[0]);
+        assertEquals("Engine On: false", info[1]);
+        assertEquals("Speed: 0km/h", info[2]);
+        assertEquals("Nr of doors: 2", info[3]);
+        assertEquals("Turbo active: false", info[4]);
     }
 }
