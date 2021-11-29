@@ -44,13 +44,33 @@ public final class Scania extends Car {
         return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
+    public void raiseFlatbed() {
+        flatbed.raiseFlatbed();
+    }
+
+    public void lowerFlatbed() {
+        flatbed.lowerFlatbed();
+    }
+
+    public boolean isFlatbedLowered() {
+        return flatbed.isLowered();
+    }
+
+    public double getFlatbedAngle() {
+        return flatbed.getFlatbedAngle();
+    }
+
+    public double getMaxFlatbedAngle() {
+        return flatbed.getMaxAngle();
+    }
+
+    public double getMinFlatbedAngle() {
+        return flatbed.getMinAngle();
+    }
+
     @Override
     public IControllable getController() {
         return new ScaniaController(this);
-    }
-
-    public AngledFlatbed getFlatbed() {
-        return flatbed;
     }
 
     @Override

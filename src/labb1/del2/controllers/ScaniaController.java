@@ -32,9 +32,9 @@ public final class ScaniaController implements IControllable {
         }
         if (car.getSpeed() == 0) {
             if (key == KeyCode.R) {
-                car.getFlatbed().raiseFlatbed();
+                car.raiseFlatbed();
             } else if (key == KeyCode.F) {
-                car.getFlatbed().lowerFlatbed();
+                car.lowerFlatbed();
             }
         }
     }
