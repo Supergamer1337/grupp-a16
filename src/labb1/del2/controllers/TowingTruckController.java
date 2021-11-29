@@ -16,14 +16,14 @@ public final class TowingTruckController implements IControllable {
     }
 
     @Override
-    public void handleKeyPressed(KeyCode key) {
+    public void handleKeyReleased(KeyCode key) {
         if (key == KeyCode.Q) {
             car.toggleEngineOn();
         }
     }
 
     @Override
-    public void handleKeyReleased(KeyCode key) {
+    public void handleKeyPressed(KeyCode key) {
         switch(key) {
             case W -> car.accelerate(1);
             case S -> car.decelerate(1);

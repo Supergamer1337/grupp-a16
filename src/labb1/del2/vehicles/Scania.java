@@ -31,7 +31,7 @@ public final class Scania extends Car {
     @Override
     public double speedFactor() {
         if (flatbed.isLowered()) {
-            return getEnginePower() * 0.01;
+            return 0.01 * getEnginePower();
         }
         return 0;
     }
@@ -73,8 +73,4 @@ public final class Scania extends Car {
         return new ScaniaController(this);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(flatbed);
-    }
 }

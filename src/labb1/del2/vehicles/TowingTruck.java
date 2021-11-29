@@ -32,9 +32,11 @@ public final class TowingTruck extends Car {
         this(new Rectangle(x, y, DEF_WIDTH, DEF_HEIGHT));
     }
 
+    public TowingTruck() { this(0, 0); }
+
     @Override
     public double speedFactor() {
-        if (flatbed.isLowered()) {
+        if (!flatbed.isLowered()) {
             return 0.01 * getEnginePower();
         }
         return 0;
@@ -67,10 +69,10 @@ public final class TowingTruck extends Car {
     }
 
     public void lowerRamp() {
-        if (getSpeed() == 0) {
-            flatbed.lowerFlatbed();
-        }
+        flatbed.lowerFlatbed();
     }
+
+    public boolean isFlatbedLowered() { return flatbed.isLowered(); }
 
     @Override
     public IControllable getController() {

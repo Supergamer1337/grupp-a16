@@ -41,6 +41,8 @@ public class PlayerVehicle {
         controller = vehicle.getController();
     }
 
+    public Vehicle getVehicle() { return vehicle; }
+
     public Rectangle getRect() {
         return vehicle.getRect();
     }

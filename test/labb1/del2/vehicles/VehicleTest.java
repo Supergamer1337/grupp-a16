@@ -142,7 +142,7 @@ public class VehicleTest {
         assertEquals(10, car.getRotation());
     }
 
-    public void assertPos(Car car, double expectedX, double expectedY) {
+    private void assertPos(Car car, double expectedX, double expectedY) {
         assertEquals(expectedX, car.getPosX());
         assertEquals(expectedY, car.getPosY());
     }

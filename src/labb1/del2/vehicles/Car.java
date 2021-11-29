@@ -18,9 +18,11 @@ public abstract class Car extends Vehicle {
         this.engine = engine;
     }
 
+    /*
     Car(double x, double y, double width, double height, Color color, String modelName, int nrOfDoors, Engine engine) {
         this(new Rectangle(x, y, width, height), color, modelName, nrOfDoors, engine);
     }
+    */
 
     @Override
     public void incrementSpeed(double amount) {

@@ -1,16 +1,25 @@
 package labb1.del2.vehicles;
 
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import labb1.del2.vehicleparts.Engine;
 import labb1.del2.vehicles.Car;
 import labb1.del2.vehicles.Saab95;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CarTest {
+
     @Test
     public void testIncrementSpeed() {
         Car car = new Saab95();
-        car.toggleEngineOn();
+        try { car.incrementSpeed(1); }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        car.turnOn();
         car.incrementSpeed(1);
         assertEquals(car.speedFactor(), car.getSpeed());
     }
@@ -41,8 +50,45 @@ public class CarTest {
     }
 
     @Test
-    public void testGetController() {
+    public void testGetEnginePower() {
         Car car = new Saab95();
-        // TODO: Vet inte vad jag ska göra!
+        assertEquals(125, car.getEnginePower());
     }
+
+    @Test
+    public void testIsEngineOn() {
+        Car car = new Saab95();
+        assertFalse(car.isEngineOn());
+    }
+
+    @Test
+    public void testTurnOn() {
+        Car car = new Saab95();
+        car.turnOn();
+        assertTrue(car.isEngineOn());
+    }
+
+    @Test
+    public void testTurnOff() {
+        Car car = new Saab95();
+        car.turnOff();
+        assertFalse(car.isEngineOn());
+    }
+
+    @Test
+    public void testToggleEngineOn() {
+        Car car = new Saab95();
+        car.toggleEngineOn();
+        assertTrue(car.isEngineOn());
+        car.toggleEngineOn();
+        assertFalse(car.isEngineOn());
+    }
+
+    @Test
+    public void testGetController() {
+        Volvo240 car = new Volvo240();
+        assertNotEquals(null, car.getController());
+    }
+
+
 }
