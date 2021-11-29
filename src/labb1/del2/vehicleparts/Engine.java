@@ -31,15 +31,32 @@ public class Engine {
     public final double getPower() {
         return this.power;
     }
+
+    /**
+     * Gets the engine's status.
+     * @return Whether the engine is turned on or off.
+     */
     public final boolean isTurnedOn() {
         return turnedOn;
     }
+
+    /**
+     * Turns on the engine.
+     */
     public final void turnOn() {
         turnedOn = true;
     }
+
+    /**
+     * Turns off the engine.
+     */
     public final void turnOff() {
         turnedOn = false;
     }
+
+    /**
+     * Toggles the engine's status.
+     */
     public final void toggleEngineOn() {
         turnedOn = !turnedOn;
     }
