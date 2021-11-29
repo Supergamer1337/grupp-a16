@@ -5,17 +5,16 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.controllers.TowingTruckController;
 import labb1.del2.utils.StringHelper;
-import labb1.del2.vehicleparts.CarTransporter;
+import labb1.del2.vehicleparts.Loader;
 import labb1.del2.vehicleparts.Engine;
 import labb1.del2.vehicleparts.SimpleFlatbed;
-import labb1.del2.utils.Vector2D;
 
 import java.util.Arrays;
 
 public final class TowingTruck extends Car {
     private static final int BASE_CAR_LOAD_LIMIT = 2;
     private static final double DEF_PICKUP_RADIUS = 20, DEF_WIDTH = 323, DEF_HEIGHT = 75;
-    private final CarTransporter ct;
+    private final Loader<Car> ct;
     private final SimpleFlatbed flatbed;
     private final double pickupRadius;
 
@@ -23,7 +22,7 @@ public final class TowingTruck extends Car {
         super(rect, Color.TURQUOISE, "Towing Truck", 2, new Engine(80));
         rect.setWidth(DEF_WIDTH);
         rect.setHeight(DEF_HEIGHT);
-        ct = new CarTransporter(BASE_CAR_LOAD_LIMIT);
+        ct = new Loader<>(BASE_CAR_LOAD_LIMIT);
         flatbed = new SimpleFlatbed();
         pickupRadius = DEF_PICKUP_RADIUS;
     }
@@ -46,22 +45,28 @@ public final class TowingTruck extends Car {
     public String[] getHudInfo() {
         String[] specHud = new String[] {
                 "Ramp lowered: " + flatbed.isLowered(),
-                "Loaded cars: " + Arrays.toString(ct.getCarNames())
+                "Loaded cars: " + Arrays.toString(ct.getNames())
         };
         return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
     // TODO: Implement fully
-    public boolean loadCar(Car car) {
-        if (flatbed.isLowered() && isWithinRange(new Vector2D(car.getPosX(), car.getPosY()))) {
-            ct.loadCar(car);
-            return true;
+    public void loadCar(Car car) {
+        if (!flatbed.isLowered() && !isWithinRange(car.getPosX(), car.getPosY())) {
+            throw new RuntimeException("Given car is outside of pickup range");
         }
-        return false;
+        ct.load(car);
     }
 
-    private boolean isWithinRange(Vector2D pos) {
-        return pos.getX() - getPosX() < pickupRadius && pos.getY() - getPosY() < pickupRadius;
+    public Car unloadCar() {
+        if (!flatbed.isLowered()) {
+            throw new RuntimeException("Unable to unload car when ramp isn't lowered");
+        }
+        return ct.unload();
+    }
+
+    private boolean isWithinRange(double x, double y) {
+        return x - getPosX() < pickupRadius && y - getPosY() < pickupRadius;
     }
 
     public void raiseRamp() {

@@ -99,6 +99,14 @@ public abstract class Vehicle implements IMovable {
     }
 
     /**
+     * Changes the color of the vehicle.
+     * @param color The new color of the vehicle.
+     */
+    public final void setColor(Color color) {
+        body.setColor(color);
+    }
+
+    /**
      * Gets the model name of the vehicle.
      * @return The model name of the vehicle.
      */

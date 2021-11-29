@@ -114,6 +114,15 @@ public class VehicleBody implements IMovable {
     }
 
     /**
+     * Sets the color of the body.
+     * @param color The new color of the body.
+     */
+    public final void setColor(Color color) {
+        bodyRect.setFill(color);
+        this.color = color;
+    }
+
+    /**
      * Gets the turn speed of the body.
      * @return The turn speed of the body.
      */

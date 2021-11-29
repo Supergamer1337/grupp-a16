@@ -5,6 +5,7 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.CarController;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.vehicleparts.Engine;
+import labb1.del2.vehicleparts.IEngine;
 import labb1.del2.vehicleparts.VehicleBody;
 
 public abstract class Car extends Vehicle {
@@ -66,7 +67,7 @@ public abstract class Car extends Vehicle {
     }
 
     public void toggleEngineOn() {
-        engine.toggleEngineOn();
+        engine.toggleOn();
     }
 
     public final int getNrOfDoors() {
