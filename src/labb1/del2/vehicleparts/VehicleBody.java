@@ -66,49 +66,91 @@ public class VehicleBody implements IMovable {
     }
 
     /**
-     *
-     * @return
+     * Gets the <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Rectangle.html">Rectangle</a> representing the body.
+     * @return The <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Rectangle.html">Rectangle</a> representing the body.
      */
     public final Rectangle getRect() {
         return bodyRect;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(bodyRect);
-    }
-
+    /**
+     * Gets the x-coordinate of the body.
+     * @return The x-coordinate of the body.
+     */
     public final double getPosX() {
         return bodyRect.getX();
     }
+
+    /**
+     * Gets the y-coordinate of the body.
+     * @return The y-coordinate of the body.
+     */
     public final double getPosY() {
         return bodyRect.getY();
     }
+
+    /**
+     * Gets the width of the body.
+     * @return The width of the body.
+     */
     public final double getWidth() {
         return bodyRect.getWidth();
     }
+
+    /**
+     * Gets the height of the body.
+     * @return The height of the body.
+     */
     public final double getHeight() {
         return bodyRect.getHeight();
     }
+
+    /**
+     * Gets the <a href="https://docs.oracle.com/javase/7/docs/api/java/awt/Color.html">Color</a> of the body.
+     * @return The <a href="https://docs.oracle.com/javase/7/docs/api/java/awt/Color.html">Color</a> of the body.
+     */
     public final Color getColor() {
         return color;
     }
+
+    /**
+     * Gets the turn speed of the body.
+     * @return The turn speed of the body.
+     */
     public double getTurnSpeed() {
         return turnSpeed;
     }
 
+    /**
+     * Gets the rotation of the body.
+     * @return The rotation of the body.
+     */
     public final double getRotation() {
         return rotation;
     }
+
+    /**
+     * Sets the rotation of the body.
+     * @param rotation The new rotation of the body.
+     */
     public final void setRotation(double rotation) {
         this.rotation = rotation;
         getRect().getTransforms().clear();
         getRect().setRotate(rotation * 180 / Math.PI);
     }
 
+    /**
+     * Gets the speed of the body.
+     * @return The speed of the body.
+     */
     public final double getSpeed() {
         return speed;
     }
+
+    /**
+     * Sets the speed of the body.
+     * @param speed The new speed of the body.
+     */
     public final void setSpeed(double speed) {
         this.speed = speed;
     }
