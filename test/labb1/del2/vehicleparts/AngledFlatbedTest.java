@@ -1,6 +1,5 @@
 package labb1.del2.vehicleparts;
 
-import labb1.del2.vehicleparts.AngledFlatbed;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,9 +22,9 @@ public class AngledFlatbedTest {
     @Test
     public void testRaiseFlatbedToMax() {
         AngledFlatbed flatbed = new AngledFlatbed();
-        while(flatbed.getFlatbedAngle() < flatbed.getMaxFlatbedAngle())
+        while(flatbed.getFlatbedAngle() < flatbed.getMaxAngle())
             flatbed.raiseFlatbed();
-        assertEquals(flatbed.getMaxFlatbedAngle(), flatbed.getFlatbedAngle());
+        assertEquals(flatbed.getMaxAngle(), flatbed.getFlatbedAngle());
     }
 
     @Test
@@ -33,9 +32,9 @@ public class AngledFlatbedTest {
         AngledFlatbed flatbed = new AngledFlatbed();
         while(flatbed.getFlatbedAngle() < 10)
             flatbed.raiseFlatbed();
-        while(flatbed.getFlatbedAngle() > flatbed.getMinFlatbedAngle())
+        while(flatbed.getFlatbedAngle() > flatbed.getMinAngle())
             flatbed.lowerFlatbed();
-        assertEquals(flatbed.getMinFlatbedAngle(), flatbed.getFlatbedAngle());
+        assertEquals(flatbed.getMinAngle(), flatbed.getFlatbedAngle());
     }
 
     @Test
