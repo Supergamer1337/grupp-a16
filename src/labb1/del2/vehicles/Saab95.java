@@ -8,16 +8,19 @@ import labb1.del2.utils.StringHelper;
 import labb1.del2.vehicleparts.TurboEngine;
 
 public final class Saab95 extends Car {
+    private static final double DEF_WIDTH = 100.20, DEF_HEIGHT = 50;
 
     private final TurboEngine engine;
 
     public Saab95(Rectangle rect) {
         super(rect, Color.RED, "Saab95", 2);
         engine = new TurboEngine(125);
+        rect.setWidth(DEF_WIDTH);
+        rect.setHeight(DEF_HEIGHT);
     }
 
     public Saab95(double x, double y) {
-        this(new Rectangle(x, y, 100.20, 50));
+        this(new Rectangle(x, y, DEF_WIDTH, DEF_HEIGHT));
     }
 
     public Saab95() {
