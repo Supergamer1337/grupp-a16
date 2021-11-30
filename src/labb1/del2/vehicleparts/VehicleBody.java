@@ -28,9 +28,12 @@ public class VehicleBody implements IMovable {
         this(rect, DEF_SPEED, DEF_ROTATION, color);
     }
 
+    /*
+    Används inte
     public VehicleBody(double x, double y, double width, double height, Color color) {
         this(new Rectangle(x,y,width,height), color);
     }
+    */
 
     @Override
     public void move(double dTime) {

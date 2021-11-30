@@ -1,5 +1,7 @@
 package labb1.del2.vehicleparts;
 
+import labb1.del2.vehicles.Car;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -22,6 +24,10 @@ public final class Loader<T> {
             throw new ArrayStoreException("Unable to load more objects than the limit");
         }
         loaded.add(t);
+    }
+
+    public List<T> getLoaded() {
+        return loaded;
     }
 
     /**

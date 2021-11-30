@@ -14,7 +14,7 @@ import java.util.Arrays;
 public final class TowingTruck extends Car {
     private static final int BASE_CAR_LOAD_LIMIT = 2;
     private static final double DEF_PICKUP_RADIUS = 20, DEF_WIDTH = 323, DEF_HEIGHT = 75;
-    private final Loader<Car> ct;
+    private final Loader<Car> loader;
     private final SimpleFlatbed flatbed;
     private final double pickupRadius;
     private final Engine engine;
@@ -23,7 +23,7 @@ public final class TowingTruck extends Car {
         super(rect, Color.TURQUOISE, "Towing Truck", 2);
         rect.setWidth(DEF_WIDTH);
         rect.setHeight(DEF_HEIGHT);
-        ct = new Loader<>(BASE_CAR_LOAD_LIMIT);
+        loader = new Loader<>(BASE_CAR_LOAD_LIMIT);
         flatbed = new SimpleFlatbed();
         pickupRadius = DEF_PICKUP_RADIUS;
         engine = new Engine(80);
@@ -48,7 +48,7 @@ public final class TowingTruck extends Car {
     public String[] getHudInfo() {
         String[] specHud = new String[] {
                 "Ramp lowered: " + flatbed.isLowered(),
-                "Loaded cars: " + Arrays.toString(ct.getNames())
+                "Loaded cars: " + Arrays.toString(loader.getNames())
         };
         return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
@@ -63,7 +63,7 @@ public final class TowingTruck extends Car {
         if (!flatbed.isLowered() && !isWithinRange(car.getPosX(), car.getPosY())) {
             throw new RuntimeException("Given car is outside of pickup range");
         }
-        ct.load(car);
+        loader.load(car);
     }
 
     /**
@@ -74,7 +74,7 @@ public final class TowingTruck extends Car {
         if (!flatbed.isLowered()) {
             throw new RuntimeException("Unable to unload car when ramp isn't lowered");
         }
-        return ct.unload();
+        return loader.unload();
     }
 
     /**
@@ -137,4 +137,6 @@ public final class TowingTruck extends Car {
     public double getPower() {
         return engine.getPower();
     }
+
+    public Loader<Car> getLoader() { return loader;}
 }

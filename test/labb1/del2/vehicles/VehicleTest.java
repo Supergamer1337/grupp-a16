@@ -120,6 +120,14 @@ public class VehicleTest {
     }
 
     @Test
+    public void testSetColor() {
+        Car car = new Saab95();
+        Car car2 = new Saab95();
+        car.setColor(Color.BLUE);
+        assertNotEquals(car.getColor(), car2.getColor());
+    }
+
+    @Test
     public void testGetTurnSpeed() {
         Car car = new Saab95();
         assertEquals(100 * Math.PI / car.getWidth(), car.getTurnSpeed());
