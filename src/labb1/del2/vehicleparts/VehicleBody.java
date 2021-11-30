@@ -32,10 +32,6 @@ public class VehicleBody implements IMovable {
         this(new Rectangle(x,y,width,height), color);
     }
 
-    /**
-     * Moves the body in the direction it is facing.
-     * @param dTime The time since the last update.
-     */
     @Override
     public void move(double dTime) {
         Vector2D direction = Vector2D.angleToVector2D(getRotation());
@@ -43,10 +39,6 @@ public class VehicleBody implements IMovable {
         getRect().setY(getPosY() + dTime * speed * direction.getY());
     }
 
-    /**
-     * Turns the body to the left.
-     * @param dTime The time since the last update.
-     */
     @Override
     public void turnRight(double dTime) {
         if(getSpeed() != 0) {
@@ -54,10 +46,6 @@ public class VehicleBody implements IMovable {
         }
     }
 
-    /**
-     * Turns the body to the right.
-     * @param dTime The time since the last update.
-     */
     @Override
     public void turnLeft(double dTime) {
         if(getSpeed() != 0) {

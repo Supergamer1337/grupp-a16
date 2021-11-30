@@ -8,10 +8,17 @@ public class TurboEngine extends Engine {
         turboOn = false;
     }
 
+    /**
+     * Gets the turbo status.
+     * @return true if turbo is on, false otherwise.
+     */
     public final boolean getTurboState() {
         return turboOn;
     }
 
+    /**
+     * Toggles the turbo status. Makes false -> true and true -> false.
+     */
     public final void toggleTurbo() {
         turboOn = !turboOn;
     }

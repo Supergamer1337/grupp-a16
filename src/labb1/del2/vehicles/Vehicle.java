@@ -45,28 +45,16 @@ public abstract class Vehicle implements IMovable {
         decrementSpeed(amount);
     }
 
-    /**
-     * Moves the vehicle in the direction it is facing.
-     * @param dTime The time since the last update.
-     */
     @Override
     public final void move(double dTime) {
         body.move(dTime);
     }
 
-    /**
-     * Turns the vehicle to the right.
-     * @param dTime The time since the last update.
-     */
     @Override
     public final void turnRight(double dTime) {
         body.turnRight(dTime);
     }
 
-    /**
-     * Turns the vehicle to the left.
-     * @param dTime The time since the last update.
-     */
     @Override
     public final void turnLeft(double dTime) {
         body.turnLeft(dTime);

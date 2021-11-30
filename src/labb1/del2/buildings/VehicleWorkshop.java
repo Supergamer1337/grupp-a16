@@ -41,10 +41,20 @@ public class VehicleWorkshop<T extends Vehicle> {
         return loader.unload();
     }
 
+    /**
+     * Gets the vehicle at the given index.
+     * @param index The index of the vehicle.
+     * @return The vehicle at the given index.
+     * @throws IllegalArgumentException If the index is out of bounds.
+     */
     public T getAtIndex(int index) throws IllegalArgumentException {
         return loader.getAtIndex(index);
     }
 
+    /**
+     * Gets the names of the vehicles in the VehicleWorkshop.
+     * @return The array of vehicle names.
+     */
     public String[] getNames() {
         return loader.getNames();
     }

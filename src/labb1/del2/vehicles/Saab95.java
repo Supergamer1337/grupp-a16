@@ -35,10 +35,17 @@ public final class Saab95 extends Car {
         return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
+    /**
+     * Gets the turbo state.
+     * @return true if turbo is on, false otherwise.
+     */
     public boolean getTurboState() {
         return engine.getTurboState();
     }
 
+    /**
+     * Toggles the turbo on/off. True -> false, false -> true.
+     */
     public void toggleTurbo() {
         engine.toggleTurbo();
     }

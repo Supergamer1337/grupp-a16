@@ -33,6 +33,10 @@ public final class Volvo240 extends Car {
         return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
+    /**
+     * Gets the speed factor.
+     * @return the speed factor
+     */
     public double speedFactor() {
         return engine.speedFactor();
     }

@@ -47,6 +47,10 @@ public abstract class Car extends Vehicle implements IEngine {
         };
     }
 
+    /**
+     * Gets the number of doors the car has.
+     * @return The number of doors on the car.
+     */
     public final int getNrOfDoors() {
         return nrOfDoors;
     }

@@ -46,26 +46,48 @@ public final class Scania extends Car {
         return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
+    /**
+     * Raises the flatbed.
+     */
     public void raiseFlatbed() {
         flatbed.raiseFlatbed();
     }
 
+    /**
+     * Lowers the flatbed.
+     */
     public void lowerFlatbed() {
         flatbed.lowerFlatbed();
     }
 
+    /**
+     * Gets whether the flatbed is lowered.
+     * @return true if the flatbed is lowered, false otherwise.
+     */
     public boolean isFlatbedLowered() {
         return flatbed.isLowered();
     }
 
+    /**
+     * Gets the current flatbed angle.
+     * @return The angle of the flatbed.
+     */
     public double getFlatbedAngle() {
         return flatbed.getFlatbedAngle();
     }
 
+    /**
+     * Gets the maximum angle of the flatbed.
+     * @return The maximum angle of the flatbed.
+     */
     public double getMaxFlatbedAngle() {
         return flatbed.getMaxAngle();
     }
 
+    /**
+     * Gets the minimum angle of the flatbed.
+     * @return The minimum angle of the flatbed.
+     */
     public double getMinFlatbedAngle() {
         return flatbed.getMinAngle();
     }

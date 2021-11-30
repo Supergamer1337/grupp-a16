@@ -54,6 +54,11 @@ public final class TowingTruck extends Car {
     }
 
     // TODO: Implement fully
+
+    /**
+     * Loads a car into the towing truck.
+     * @param car The car to load.
+     */
     public void loadCar(Car car) {
         if (!flatbed.isLowered() && !isWithinRange(car.getPosX(), car.getPosY())) {
             throw new RuntimeException("Given car is outside of pickup range");
@@ -61,6 +66,10 @@ public final class TowingTruck extends Car {
         ct.load(car);
     }
 
+    /**
+     * Unloads last loaded car from the towing truck.
+     * @return The unloaded car.
+     */
     public Car unloadCar() {
         if (!flatbed.isLowered()) {
             throw new RuntimeException("Unable to unload car when ramp isn't lowered");
@@ -68,18 +77,34 @@ public final class TowingTruck extends Car {
         return ct.unload();
     }
 
+    /**
+     * Checks whether the given car is within the pickup radius of the towing truck.
+     * @param x The x-coordinate of the car.
+     * @param y The y-coordinate of the car.
+     * @return Whether the car is within the pickup radius.
+     */
     private boolean isWithinRange(double x, double y) {
         return x - getPosX() < pickupRadius && y - getPosY() < pickupRadius;
     }
 
+    /**
+     * Raises the ramp of the towing truck.
+     */
     public void raiseRamp() {
         flatbed.raiseFlatbed();
     }
 
+    /**
+     * Lowers the ramp of the towing truck.
+     */
     public void lowerRamp() {
         flatbed.lowerFlatbed();
     }
 
+    /**
+     * Checks whether the ramp is lowered.
+     * @return Whether the ramp is lowered.
+     */
     public boolean isFlatbedLowered() { return flatbed.isLowered(); }
 
     @Override
