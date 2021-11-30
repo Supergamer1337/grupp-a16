@@ -20,9 +20,9 @@ class Saab95Test {
     @Test
     void testSpeedFactor() {
         Saab95 saab = new Saab95();
-        assertEquals(saab.getEnginePower() * 0.01 * 1, saab.speedFactor());
+        assertEquals(saab.getPower() * 0.01 * 1, saab.speedFactor());
         saab.toggleTurbo();
-        assertEquals(saab.getEnginePower() * 0.01 * 1.3, saab.speedFactor());
+        assertEquals(saab.getPower() * 0.01 * 1.3, saab.speedFactor());
     }
 
     @Test

@@ -9,7 +9,7 @@ class TowingTruckTest {
     @Test
     void testSpeedFactor() {
         TowingTruck towingTruck = new TowingTruck();
-        assertEquals(towingTruck.getEnginePower() * 0.01, towingTruck.speedFactor());
+        assertEquals(towingTruck.getPower() * 0.01, towingTruck.speedFactor());
         towingTruck.lowerRamp();
         assertEquals(0, towingTruck.speedFactor());
     }

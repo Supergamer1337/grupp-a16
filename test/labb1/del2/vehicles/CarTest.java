@@ -27,7 +27,7 @@ public class CarTest {
     @Test
     public void testDecrementSpeed() {
         Car car = new Saab95();
-        car.toggleEngineOn();
+        car.toggleOn();
         car.incrementSpeed(1);
         car.decrementSpeed(1);
         assertEquals(0, car.getSpeed());
@@ -52,36 +52,36 @@ public class CarTest {
     @Test
     public void testGetEnginePower() {
         Car car = new Saab95();
-        assertEquals(125, car.getEnginePower());
+        assertEquals(125, car.getPower());
     }
 
     @Test
     public void testIsEngineOn() {
         Car car = new Saab95();
-        assertFalse(car.isEngineOn());
+        assertFalse(car.isTurnedOn());
     }
 
     @Test
     public void testTurnOn() {
         Car car = new Saab95();
         car.turnOn();
-        assertTrue(car.isEngineOn());
+        assertTrue(car.isTurnedOn());
     }
 
     @Test
     public void testTurnOff() {
         Car car = new Saab95();
         car.turnOff();
-        assertFalse(car.isEngineOn());
+        assertFalse(car.isTurnedOn());
     }
 
     @Test
     public void testToggleEngineOn() {
         Car car = new Saab95();
-        car.toggleEngineOn();
-        assertTrue(car.isEngineOn());
-        car.toggleEngineOn();
-        assertFalse(car.isEngineOn());
+        car.toggleOn();
+        assertTrue(car.isTurnedOn());
+        car.toggleOn();
+        assertFalse(car.isTurnedOn());
     }
 
     @Test
@@ -89,6 +89,4 @@ public class CarTest {
         Volvo240 car = new Volvo240();
         assertNotEquals(null, car.getController());
     }
-
-
 }

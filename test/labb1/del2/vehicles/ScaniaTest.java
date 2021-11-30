@@ -9,7 +9,7 @@ class ScaniaTest {
     @Test
     void testSpeedFactor() {
         Scania scania = new Scania();
-        assertEquals(scania.getEnginePower() * 0.01, scania.speedFactor());
+        assertEquals(scania.getPower() * 0.01, scania.speedFactor());
         scania.raiseFlatbed();
         assertEquals(0, scania.speedFactor());
     }

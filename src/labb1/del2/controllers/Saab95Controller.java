@@ -18,7 +18,7 @@ public final class Saab95Controller implements IControllable {
     @Override
     public void handleKeyReleased(KeyCode key) {
         switch (key) {
-            case Q -> car.toggleEngineOn();
+            case Q -> car.toggleOn();
             case E -> car.toggleTurbo();
         }
     }
