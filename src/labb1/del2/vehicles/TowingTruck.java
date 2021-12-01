@@ -5,16 +5,18 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.controllers.TowingTruckController;
 import labb1.del2.utils.StringHelper;
-import labb1.del2.vehicleparts.loaders.Loader;
+import labb1.del2.vehicleparts.loaders.VehicleLoader;
 import labb1.del2.vehicleparts.Engine;
 import labb1.del2.vehicleparts.SimpleFlatbed;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.Arrays;
+import java.util.List;
 
 public final class TowingTruck extends Car {
     private static final int BASE_CAR_LOAD_LIMIT = 2;
     private static final double DEF_PICKUP_RADIUS = 20, DEF_WIDTH = 323, DEF_HEIGHT = 75;
-    private final Loader<Car> loader;
+    private final VehicleLoader<Car> loader;
     private final SimpleFlatbed flatbed;
     private final double pickupRadius;
     private final Engine engine;
@@ -23,7 +25,8 @@ public final class TowingTruck extends Car {
         super(rect, Color.TURQUOISE, "Towing Truck", 2);
         rect.setWidth(DEF_WIDTH);
         rect.setHeight(DEF_HEIGHT);
-        loader = new Loader<>(BASE_CAR_LOAD_LIMIT);
+        rect.setRotate(getRotation());
+        loader = new VehicleLoader<>(BASE_CAR_LOAD_LIMIT);
         flatbed = new SimpleFlatbed();
         pickupRadius = DEF_PICKUP_RADIUS;
         engine = new Engine(80);
@@ -45,15 +48,12 @@ public final class TowingTruck extends Car {
 
 
     @Override
-    public String[] getHudInfo() {
-        String[] specHud = new String[] {
+    protected String[] specificHudInfo() {
+        return new String[] {
                 "Ramp lowered: " + flatbed.isLowered(),
                 "Loaded cars: " + Arrays.toString(loader.getNames())
         };
-        return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
-
-    // TODO: Implement fully
 
     /**
      * Loads a car into the towing truck.
@@ -107,6 +107,32 @@ public final class TowingTruck extends Car {
      */
     public boolean isFlatbedLowered() { return flatbed.isLowered(); }
 
+    /**
+     * Gets the last loaded car.
+     * @return The last loaded car.
+     */
+    public List<Car> getLoaded() {
+        return loader.getLoaded();
+    }
+
+    /**
+     * Gets the car loaded at the given index.
+     * @param index The index of the car to get.
+     * @return The car loaded at the given index.
+     * @throws IllegalArgumentException If the index is out of bounds.
+     */
+    public Car getAtIndex(int index) throws IllegalArgumentException {
+        return loader.getAtIndex(index);
+    }
+
+    /**
+     * Gets the names of the cars loaded.
+     * @return String array of the names of the cars loaded.
+     */
+    public String[] getNames() {
+        return loader.getNames();
+    }
+
     @Override
     public IControllable getController() {
         return new TowingTruckController(this);
@@ -137,6 +163,4 @@ public final class TowingTruck extends Car {
     public double getPower() {
         return engine.getPower();
     }
-
-    public Loader<Car> getLoader() { return loader;}
 }

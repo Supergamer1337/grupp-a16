@@ -15,7 +15,6 @@ public class PlayerVehicleTest {
         Car car = new Saab95();
         PlayerVehicle playerVehicle = new PlayerVehicle(car);
 
-        PlayerVehicle temp = new PlayerVehicle(car);
         playerVehicle.handleKeyReleased(KeyCode.DIGIT1);
         assertTrue(playerVehicle.getVehicle() instanceof Saab95);
 
@@ -68,11 +67,13 @@ public class PlayerVehicleTest {
     void testGetHudInfo() {
         Car car = new Saab95();
         PlayerVehicle playerVehicle = new PlayerVehicle(car);
-        String[] info = playerVehicle.getHudInfo();
-        assertEquals("Model: Saab95", info[0]);
-        assertEquals("Engine On: false", info[1]);
-        assertEquals("Speed: 0km/h", info[2]);
-        assertEquals("Nr of doors: 2", info[3]);
-        assertEquals("Turbo active: false", info[4]);
+        String[] info = {
+                "Model: Saab95",
+                "Engine On: false",
+                "Speed: 0km/h",
+                "Nr of doors: 2",
+                "Turbo active: false"
+        };
+        assertArrayEquals(info, playerVehicle.getHudInfo());
     }
 }

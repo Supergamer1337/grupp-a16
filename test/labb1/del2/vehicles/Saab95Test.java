@@ -9,12 +9,14 @@ class Saab95Test {
     @Test
     void testGetHudInfo() {
         Saab95 saab = new Saab95();
-        String[] info = saab.getHudInfo();
-        assertEquals("Model: Saab95", info[0]);
-        assertEquals("Engine On: false", info[1]);
-        assertEquals("Speed: 0km/h", info[2]);
-        assertEquals("Nr of doors: 2", info[3]);
-        assertEquals("Turbo active: false", info[4]);
+        String[] info = {
+                "Model: Saab95",
+                "Engine On: false",
+                "Speed: 0km/h",
+                "Nr of doors: 2",
+                "Turbo active: false"
+        };
+        assertArrayEquals(info, saab.getHudInfo());
     }
 
     @Test

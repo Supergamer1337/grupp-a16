@@ -15,10 +15,7 @@ public class CarTest {
     @Test
     public void testIncrementSpeed() {
         Car car = new Saab95();
-        try { car.incrementSpeed(1); }
-        catch (Exception e) {
-            System.out.println(e);
-        }
+        assertThrows(IllegalStateException.class, () -> car.incrementSpeed(1));
         car.turnOn();
         car.incrementSpeed(1);
         assertEquals(car.speedFactor(), car.getSpeed());

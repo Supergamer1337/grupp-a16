@@ -31,24 +31,4 @@ public final class CarController implements IControllable {
             car.toggleOn();
         }
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CarController that = (CarController) o;
-        return car.equals(that.car);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(car);
-    }
-
-    @Override
-    public String toString() {
-        return "CarController{" +
-                "car=" + car +
-                '}';
-    }
 }

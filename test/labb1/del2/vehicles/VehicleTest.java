@@ -13,8 +13,7 @@ public class VehicleTest {
         car.turnOn();
         car.accelerate(1);
         assertEquals(car.speedFactor(), car.getSpeed());
-        try { car.accelerate(2);}
-        catch (Exception e) { System.out.println(e); }
+        assertThrows(IllegalArgumentException.class, () -> car.accelerate(2));
     }
 
     @Test
@@ -26,8 +25,7 @@ public class VehicleTest {
         assertNotEquals(0, car.getSpeed());
         car.decelerate(0.5);
         assertEquals(0, car.getSpeed());
-        try { car.decelerate(2);}
-        catch (Exception e) { System.out.println(e); }
+        assertThrows(IllegalArgumentException.class, () -> car.decelerate(2));
     }
 
     @Test

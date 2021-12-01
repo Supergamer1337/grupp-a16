@@ -9,12 +9,14 @@ class Volvo240Test {
     @Test
     void getHudInfo() {
         Volvo240 volvo = new Volvo240();
-        String[] info = volvo.getHudInfo();
-        assertEquals("Model: Volvo240", info[0]);
-        assertEquals("Engine On: false", info[1]);
-        assertEquals("Speed: 0km/h", info[2]);
-        assertEquals("Nr of doors: 4", info[3]);
-        assertEquals("Trim Factor: 1.25", info[4]);
+        String[] info = {
+                "Model: Volvo240",
+                "Engine On: false",
+                "Speed: 0km/h",
+                "Nr of doors: 4",
+                "Trim Factor: 1.25"
+        };
+        assertArrayEquals(info, volvo.getHudInfo());
     }
 
     @Test

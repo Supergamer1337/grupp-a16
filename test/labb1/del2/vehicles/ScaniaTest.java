@@ -17,12 +17,14 @@ class ScaniaTest {
     @Test
     void testGetHudInfo() {
         Scania scania = new Scania();
-        String[] info = scania.getHudInfo();
-        assertEquals("Model: Scania", info[0]);
-        assertEquals("Engine On: false", info[1]);
-        assertEquals("Speed: 0km/h", info[2]);
-        assertEquals("Nr of doors: 2", info[3]);
-        assertEquals("Flatbed angle: 0.00", info[4]);
+        String[] info = {
+                "Model: Scania",
+                "Engine On: false",
+                "Speed: 0km/h",
+                "Nr of doors: 2",
+                "Flatbed angle: 0,00"
+        };
+        assertArrayEquals(info, scania.getHudInfo());
     }
 
     @Test

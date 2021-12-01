@@ -2,6 +2,8 @@ package labb1.del2.vehicles;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TowingTruckTest {
@@ -17,12 +19,25 @@ class TowingTruckTest {
     @Test
     void testGetHudInfo() {
         TowingTruck towingTruck = new TowingTruck();
-        String[] info = towingTruck.getHudInfo();
-        assertEquals("Model: Towing Truck", info[0]);
-        assertEquals("Engine On: false", info[1]);
-        assertEquals("Speed: 0km/h", info[2]);
-        assertEquals("Nr of doors: 2", info[3]);
-        assertEquals("Ramp lowered: false", info[4]);
+        String[] info = {
+                "Model: Towing Truck",
+                "Engine On: false",
+                "Speed: 0km/h",
+                "Nr of doors: 2",
+                "Ramp lowered: false",
+                "Loaded cars: []"
+        };
+        assertArrayEquals(info, towingTruck.getHudInfo(), "Tests something");
+    }
+
+    @Test
+    void testSpecificHudInfo() {
+        TowingTruck towingTruck = new TowingTruck();
+        String[] info = {
+            "Ramp lowered: false",
+            "Loaded cars: []"
+        };
+        assertArrayEquals(info, towingTruck.specificHudInfo());
     }
 
     @Test

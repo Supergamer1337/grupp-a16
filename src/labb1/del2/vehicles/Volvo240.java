@@ -14,6 +14,7 @@ public final class Volvo240 extends Car {
         super(rect, Color.BLACK, "Volvo240", 4);
         rect.setWidth(DEF_WIDTH);
         rect.setHeight(DEF_HEIGHT);
+        rect.setRotate(getRotation());
         engine = new TrimmedEngine(100, 1.25);
     }
 
@@ -26,11 +27,10 @@ public final class Volvo240 extends Car {
     }
 
     @Override
-    public String[] getHudInfo() {
-        String[] specHud = new String[] {
+    public String[] specificHudInfo() {
+        return new String[] {
                 "Trim Factor: " + engine.getTrimFactor()
         };
-        return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
     /**

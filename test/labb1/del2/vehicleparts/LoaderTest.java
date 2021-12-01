@@ -14,22 +14,31 @@ class LoaderTest {
     void testLoad() {
         TowingTruck towingTruck = new TowingTruck();
         Car car = new Saab95();
+        towingTruck.lowerRamp();
+        towingTruck.loadCar(car);
+        assertTrue(towingTruck.getLoaded().size() > 0);
+    }
+
+    @Test
+    void testOverload() {
+        TowingTruck towingTruck = new TowingTruck();
+        Car car = new Saab95();
         Car car2 = new Volvo240();
         Car car3 = new Saab95();
+        towingTruck.lowerRamp();
         towingTruck.loadCar(car);
-        assertTrue(towingTruck.getLoader().getLoaded().size() > 0);
         towingTruck.loadCar(car2);
-        try { towingTruck.loadCar(car3); }
-        catch (Exception e) { System.out.println(e); }
+        assertThrows(ArrayStoreException.class, () -> towingTruck.loadCar(car3));
     }
 
     @Test
     void testUnload() {
         TowingTruck towingTruck = new TowingTruck();
         Car car = new Saab95();
+        towingTruck.lowerRamp();
         towingTruck.loadCar(car);
         towingTruck.unloadCar();
-        assertEquals(0, towingTruck.getLoader().getLoaded().size());
+        assertEquals(0, towingTruck.getLoaded().size());
     }
 
     @Test
@@ -37,7 +46,7 @@ class LoaderTest {
         TowingTruck towingTruck = new TowingTruck();
         Car car = new Saab95();
         towingTruck.loadCar(car);
-        assertEquals(car, towingTruck.getLoader().getAtIndex(0));
+        assertEquals(car, towingTruck.getAtIndex(0));
     }
 
     @Test
@@ -47,8 +56,6 @@ class LoaderTest {
         Car car2 = new Volvo240();
         towingTruck.loadCar(car);
         towingTruck.loadCar(car2);
-        String[] carNames = towingTruck.getLoader().getNames();
-        assertEquals("Saab95", carNames[0]);
-        assertEquals("Volvo240", carNames[1]);
+        assertArrayEquals(new String[] { "Saab95", "Volvo240" }, towingTruck.getNames());
     }
 }

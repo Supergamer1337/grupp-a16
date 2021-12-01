@@ -74,10 +74,4 @@ public class PlayerVehicle {
         return vehicle.getHudInfo();
     }
 
-    @Override
-    public String toString() {
-        return "PlayerVehicle{" +
-                "vehicle=" + vehicle +
-                '}';
-    }
 }

@@ -20,6 +20,7 @@ public final class Scania extends Car {
         super(rect, Color.BLUE, "Scania", 2);
         rect.setWidth(DEF_WIDTH);
         rect.setHeight(DEF_HEIGHT);
+        rect.setRotate(getRotation());
         flatbed = new AngledFlatbed();
         engine = new Engine(90);
     }
@@ -39,11 +40,10 @@ public final class Scania extends Car {
     }
 
     @Override
-    public String[] getHudInfo() {
-        String[] specHud = new String[] {
+    public String[] specificHudInfo() {
+        return new String[] {
                 String.format("Flatbed angle: %.2f", flatbed.getFlatbedAngle())
         };
-        return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
     /**
@@ -120,15 +120,5 @@ public final class Scania extends Car {
     @Override
     public double getPower() {
         return engine.getPower();
-    }
-
-    @Override
-    public String toString() {
-        return "Scania{" +
-                "modelName=" + getModelName() +
-                ", nrOfDoors=" + getNrOfDoors() +
-                ", engine=" + engine +
-                ", flatbed=" + flatbed +
-                '}';
     }
 }

@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.CarController;
 import labb1.del2.controllers.IControllable;
+import labb1.del2.utils.StringHelper;
 import labb1.del2.vehicleparts.Engine;
 import labb1.del2.vehicleparts.IEngine;
 import labb1.del2.vehicleparts.VehicleBody;
@@ -38,14 +39,17 @@ public abstract class Car extends Vehicle implements IEngine {
     }
 
     @Override
-    public String[] getHudInfo() {
-        return new String[] {
+    public final String[] getHudInfo() {
+        String[] baseInfo = new String[] {
                 "Model: " + getModelName(),
                 "Engine On: " + isTurnedOn(),
                 String.format("Speed: %.0fkm/h", getSpeed()),
                 "Nr of doors: " + getNrOfDoors()
         };
+        return StringHelper.concatenateStrArr(baseInfo, specificHudInfo());
     }
+
+    protected abstract String[] specificHudInfo();
 
     /**
      * Gets the number of doors the car has.

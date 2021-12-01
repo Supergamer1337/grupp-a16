@@ -17,6 +17,7 @@ public final class Saab95 extends Car {
         engine = new TurboEngine(125);
         rect.setWidth(DEF_WIDTH);
         rect.setHeight(DEF_HEIGHT);
+        rect.setRotate(getRotation());
     }
 
     public Saab95(double x, double y) {
@@ -28,11 +29,10 @@ public final class Saab95 extends Car {
     }
 
     @Override
-    public String[] getHudInfo() {
-        String[] specHud = new String[] {
+    public String[] specificHudInfo() {
+        return new String[] {
                 "Turbo active: " + getTurboState()
         };
-        return StringHelper.concatenateStrArr(super.getHudInfo(), specHud);
     }
 
     /**
@@ -85,13 +85,4 @@ public final class Saab95 extends Car {
         return new Saab95Controller(this);
     }
 
-    @Override
-    public String toString() {
-        return "Saab95{" +
-                "modelName=" + getModelName() +
-                ", vehicleBody=" +
-                ", nrOfDoors=" + getNrOfDoors() +
-                ", engine=" + engine +
-                '}';
-    }
 }

@@ -32,17 +32,4 @@ public final class Saab95Controller implements IControllable {
             case D -> car.turnRight(Main.getDeltaTime());
         }
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Saab95Controller that = (Saab95Controller) o;
-        return car.equals(that.car);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(car);
-    }
 }
