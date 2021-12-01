@@ -22,7 +22,7 @@ class ScaniaTest {
         assertEquals("Engine On: false", info[1]);
         assertEquals("Speed: 0km/h", info[2]);
         assertEquals("Nr of doors: 2", info[3]);
-        assertEquals("Flatbed angle: 0,00", info[4]);
+        assertEquals("Flatbed angle: 0.00", info[4]);
     }
 
     @Test
