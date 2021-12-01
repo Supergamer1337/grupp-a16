@@ -38,7 +38,15 @@ public class View {
 
     private void displayHUD() {
         String str = game.getPlayer().toString();
+        System.out.println(str);
+        char[] charArray = str.toCharArray();
+        int start = 0, end = 0;
+        for (int i = 0, charArrayLength = charArray.length; i < charArrayLength; i++) {
+            char c = charArray[i];
+            if (c == ',' || c == '}') {
 
+            }
+        }
     }
 
     void update(double dTime) {

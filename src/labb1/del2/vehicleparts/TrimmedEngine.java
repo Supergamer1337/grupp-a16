@@ -26,4 +26,13 @@ public class TrimmedEngine extends Engine {
     public double getTrimFactor() {
         return trimFactor;
     }
+
+    @Override
+    public String toString() {
+        return "TrimmedEngine{" +
+                "power=" + getPower() +
+                ", turnedOn=" + isTurnedOn() +
+                "trimFactor=" + trimFactor +
+                '}';
+    }
 }

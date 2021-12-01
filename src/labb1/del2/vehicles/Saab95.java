@@ -85,4 +85,12 @@ public final class Saab95 extends Car {
         return new Saab95Controller(this);
     }
 
+    @Override
+    public String toString() {
+        return "Saab95{" +
+                "modelName=" + getModelName() +
+                ", nrOfDoors=" + getNrOfDoors() +
+                ", engine=" + engine +
+                '}';
+    }
 }

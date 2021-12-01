@@ -29,4 +29,13 @@ public class TurboEngine extends Engine {
         if (turboOn) turbo = 1.3;
         return super.speedFactor() * turbo;
     }
+
+    @Override
+    public String toString() {
+        return "TurboEngine{" +
+                "power=" + getPower() +
+                ", turnedOn=" + isTurnedOn() +
+                ", turboOn=" + turboOn +
+                '}';
+    }
 }
