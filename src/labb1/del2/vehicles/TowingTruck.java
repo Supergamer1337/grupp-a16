@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.controllers.TowingTruckController;
 import labb1.del2.utils.StringHelper;
-import labb1.del2.vehicleparts.Loader;
+import labb1.del2.vehicleparts.loaders.Loader;
 import labb1.del2.vehicleparts.Engine;
 import labb1.del2.vehicleparts.SimpleFlatbed;
 

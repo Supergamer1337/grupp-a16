@@ -89,6 +89,7 @@ public final class Saab95 extends Car {
     public String toString() {
         return "Saab95{" +
                 "modelName=" + getModelName() +
+                ", vehicleBody=" +
                 ", nrOfDoors=" + getNrOfDoors() +
                 ", engine=" + engine +
                 '}';

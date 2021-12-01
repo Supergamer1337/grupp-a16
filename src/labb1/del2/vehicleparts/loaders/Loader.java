@@ -1,4 +1,4 @@
-package labb1.del2.vehicleparts;
+package labb1.del2.vehicleparts.loaders;
 
 import labb1.del2.vehicles.Car;
 
@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-public final class Loader<T> {
-    private final List<T> loaded;
+public class Loader<T> {
+    protected final List<T> loaded;
     private final int limit;
 
     public Loader(int limit) {
@@ -52,18 +52,6 @@ public final class Loader<T> {
             throw new IllegalArgumentException("Given index is out of bounds");
         }
         return loaded.get(index);
-    }
-
-    /**
-     * Gets the names (model names) of the objects loaded.
-     * @return Array of the names of the objects loaded.
-     */
-    public String[] getNames() {
-        String[] strings = new String[loaded.size()];
-        for (int i = 0; i < loaded.size(); i++) {
-            strings[i] = loaded.get(i).toString();
-        }
-        return strings;
     }
 
 }

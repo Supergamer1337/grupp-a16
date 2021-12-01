@@ -39,14 +39,18 @@ public class View {
 
     private void displayHUD() {
         String str = game.getPlayer().toString();
+        str = str.substring(str.indexOf('=') + 1, str.length() - 1);
         System.out.println(str);
         char[] charArray = str.toCharArray();
         int start = 0, end = 0;
         for (int i = 0, charArrayLength = charArray.length; i < charArrayLength; i++) {
             char c = charArray[i];
-            if (c == ',' || c == '}') {
-
+            if (c == '{') {
+                start = i;
+            } else if (c == ',') {
+                end = i;
             }
+            System.out.println(String.format("Iteration: %d\n\tstart: %d\n\tend: %d", i, start, end));
         }
     }
 

@@ -1,7 +1,7 @@
 package labb1.del2.buildings;
 
 import javafx.scene.paint.Color;
-import labb1.del2.vehicleparts.Loader;
+import labb1.del2.vehicleparts.loaders.Loader;
 import labb1.del2.vehicles.Vehicle;
 
 public class VehicleWorkshop<T extends Vehicle> {
