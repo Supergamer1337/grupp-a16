@@ -44,4 +44,11 @@ public final class CarController implements IControllable {
     public int hashCode() {
         return Objects.hash(car);
     }
+
+    @Override
+    public String toString() {
+        return "CarController{" +
+                "car=" + car +
+                '}';
+    }
 }

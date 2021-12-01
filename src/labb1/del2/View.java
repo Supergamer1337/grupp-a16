@@ -27,7 +27,6 @@ public class View {
         view.getChildren().add(game.getPlayer().getRect());
     }
 
-
     private void render() {
         gc.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         gc.setFill(Color.BLACK);
@@ -35,6 +34,11 @@ public class View {
         for (int i = 0; i < hudText.length; i++) {
             gc.fillText(hudText[i], 10, 20 + 20 * i);
         }
+    }
+
+    private void displayHUD() {
+        String str = game.getPlayer().toString();
+
     }
 
     void update(double dTime) {

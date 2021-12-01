@@ -122,4 +122,12 @@ public final class Scania extends Car {
         return engine.getPower();
     }
 
+    @Override
+    public String toString() {
+        return "Scania{" +
+                "modelName=" + getModelName() +
+                ", engine=" + engine +
+                ", flatbed=" + flatbed +
+                '}';
+    }
 }
