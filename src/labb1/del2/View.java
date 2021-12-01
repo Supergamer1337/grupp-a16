@@ -34,6 +34,7 @@ public class View {
         for (int i = 0; i < hudText.length; i++) {
             gc.fillText(hudText[i], 10, 20 + 20 * i);
         }
+        displayHUD();
     }
 
     private void displayHUD() {

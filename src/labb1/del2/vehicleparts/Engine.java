@@ -38,4 +38,12 @@ public class Engine implements IEngine {
     public double speedFactor() {
         return SPEED_FACTOR_CONST * power;
     }
+
+    @Override
+    public String toString() {
+        return "Engine{" +
+                "power=" + power +
+                ", turnedOn=" + turnedOn +
+                '}';
+    }
 }

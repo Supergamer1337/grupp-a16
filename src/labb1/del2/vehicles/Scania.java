@@ -126,6 +126,7 @@ public final class Scania extends Car {
     public String toString() {
         return "Scania{" +
                 "modelName=" + getModelName() +
+                ", nrOfDoors=" + getNrOfDoors() +
                 ", engine=" + engine +
                 ", flatbed=" + flatbed +
                 '}';
