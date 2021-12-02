@@ -23,6 +23,20 @@ public class TurboEngine extends Engine {
         turboOn = !turboOn;
     }
 
+    /**
+     * Turns the turbo on.
+     */
+    public final void turboOn() {
+        turboOn = true;
+    }
+
+    /**
+     * Turns the turbo off.
+     */
+    public final void turboOff() {
+        turboOn = false;
+    }
+
     @Override
     public double speedFactor() {
         double turbo = 1;
