@@ -85,4 +85,17 @@ public final class Saab95 extends Car {
         return new Saab95Controller(this);
     }
 
+    /**
+     * Turns the turbo on.
+     */
+    public void turboOn() {
+        engine.turboOn();
+    }
+
+    /**
+     * Turns the turbo off.
+     */
+    public void turboOff() {
+        engine.turboOff();
+    }
 }

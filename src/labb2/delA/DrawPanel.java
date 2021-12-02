@@ -1,7 +1,10 @@
+package labb2.delA;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -11,10 +14,10 @@ public class DrawPanel extends JPanel{
 
     // Just a single image, TODO: Generalize
     BufferedImage volvoImage;
-    // To keep track of a singel cars position
+    // To keep track of a single cars position
     Point volvoPoint = new Point();
 
-    // TODO: Make this genereal for all cars
+    // TODO: Make this general for all cars
     void moveit(int x, int y){
         volvoPoint.x = x;
         volvoPoint.y = y;
@@ -33,7 +36,7 @@ public class DrawPanel extends JPanel{
 
             // Remember to right-click src New -> Package -> name: pics -> MOVE *.jpg to pics.
             // if you are starting in IntelliJ.
-            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
+            volvoImage = ImageIO.read(Objects.requireNonNull(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")));
         } catch (IOException ex)
         {
             ex.printStackTrace();

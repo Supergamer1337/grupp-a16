@@ -1,3 +1,11 @@
+package labb2.delA;
+
+import labb1.del2.Main;
+import labb1.del2.vehicles.Car;
+import labb1.del2.vehicles.Saab95;
+import labb1.del2.vehicles.Scania;
+import labb1.del2.vehicles.Volvo240;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +29,7 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ArrayList<ACar> cars = new ArrayList<>();
+    ArrayList<Car> cars = new ArrayList<>();
 
     //methods:
 
@@ -43,10 +51,10 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (ACar car : cars) {
-                car.move();
-                int x = (int) Math.round(car.getPosition().getX());
-                int y = (int) Math.round(car.getPosition().getY());
+            for (Car car : cars) {
+                car.move(1); // wants a dTime
+                int x = (int) Math.round(car.getPosX());
+                int y = (int) Math.round(car.getPosY());
                 frame.drawPanel.moveit(x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
@@ -57,9 +65,61 @@ public class CarController {
     // Calls the accelerate method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-        for (ACar car : cars
-                ) {
-            car.gas(gas);
+        for (Car car : cars) {
+            car.accelerate(gas);
+        }
+    }
+
+    public void brake(int amount) {
+        double gas = ((double) amount) / 100;
+        for (Car car : cars) {
+            car.decelerate(gas);
+        }
+    }
+
+    // Calls the turn on method for each car once
+    public void start() {
+        for (Car car : cars) {
+            car.turnOn();
+        }
+    }
+
+    //
+    public void stop() {
+        for (Car car : cars) {
+            car.turnOff();
+        }
+    }
+
+    public void turboOn() {
+        for (Car car : cars) {
+            if (car instanceof Saab95 saab) {
+                saab.turboOn();
+            }
+        }
+    }
+
+    public void turboOff() {
+        for (Car car : cars) {
+            if (car instanceof Saab95 saab) {
+                saab.turboOff();
+            }
+        }
+    }
+
+    public void liftBed() {
+        for (Car car : cars) {
+            if (car instanceof Scania scania) {
+                scania.raiseFlatbed();
+            }
+        }
+    }
+
+    public void lowerBed() {
+        for (Car car : cars) {
+            if (car instanceof Scania scania) {
+                scania.lowerFlatbed();
+            }
         }
     }
 }
