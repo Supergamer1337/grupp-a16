@@ -14,6 +14,7 @@ public abstract class Vehicle implements IMovable {
 
     private final String modelName;
     private final VehicleBody body;
+    private List<IObserver> observers;
 
     /**
      * Instantiates a new Vehicle.
