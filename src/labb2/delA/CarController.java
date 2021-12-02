@@ -37,10 +37,16 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
-        cc.cars.add(new Volvo240());
+        cc.cars.add(new Volvo240(0, 0));
+        cc.cars.add(new Scania(0, 100));
+        cc.cars.add(new Saab95(0, 200));
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
+
+        for (Car car : cc.cars) {
+            cc.frame.drawPanel.createDrawComponent(car);
+        }
 
         // Start the timer
         cc.timer.start();
@@ -55,11 +61,21 @@ public class CarController {
                 car.move(1); // wants a dTime
                 int x = (int) Math.round(car.getPosX());
                 int y = (int) Math.round(car.getPosY());
-                frame.drawPanel.moveit(x, y);
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
+                outsideOfWindow(car);
             }
+            // repaint() calls the paintComponent method of the panel
+            frame.drawPanel.repaint();
         }
+    }
+
+    private void outsideOfWindow(Car car) {
+        if (outOfBounds(car)) {
+            car.setRotation(car.getRotation() + Math.PI);
+        }
+    }
+
+    private boolean outOfBounds(Car car) {
+        return car.getPosX() + car.getWidth() > 800 || car.getPosX() < 0;
     }
 
     // Calls the accelerate method for each car once

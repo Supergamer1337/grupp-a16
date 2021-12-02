@@ -5,6 +5,10 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.IMovable;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.vehicleparts.VehicleBody;
+import labb2.delA.IObserver;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Vehicle implements IMovable {
 
@@ -17,6 +21,7 @@ public abstract class Vehicle implements IMovable {
      * @param modelName The model name of the vehicle to instantiate.
      */
     Vehicle(VehicleBody body, String modelName) {
+        observers = new ArrayList<>();
         this.body = body;
         this.modelName = modelName;
     }
@@ -48,6 +53,7 @@ public abstract class Vehicle implements IMovable {
     @Override
     public final void move(double dTime) {
         body.move(dTime);
+        notifyObservers();
     }
 
     @Override
@@ -187,4 +193,14 @@ public abstract class Vehicle implements IMovable {
      * @return The controller of the vehicle.
      */
     abstract IControllable getController();
+
+    public void subscribe(IObserver o) {
+        observers.add(o);
+    }
+
+    public void notifyObservers() {
+        for (IObserver o : observers) {
+            o.update(this);
+        }
+    }
 }
