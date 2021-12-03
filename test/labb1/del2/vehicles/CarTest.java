@@ -1,11 +1,5 @@
 package labb1.del2.vehicles;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import labb1.del2.vehicleparts.Engine;
-import labb1.del2.vehicles.Car;
-import labb1.del2.vehicles.Saab95;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;

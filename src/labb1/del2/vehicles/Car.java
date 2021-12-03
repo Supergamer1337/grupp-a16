@@ -5,11 +5,9 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.CarController;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.utils.StringHelper;
-import labb1.del2.vehicleparts.Engine;
-import labb1.del2.vehicleparts.IEngine;
 import labb1.del2.vehicleparts.VehicleBody;
 
-public abstract class Car extends Vehicle implements IEngine {
+public abstract class Car extends Vehicle {
 
     private final int nrOfDoors;
 
@@ -32,6 +30,16 @@ public abstract class Car extends Vehicle implements IEngine {
         }
         setSpeed(Math.min(getSpeed() + speedFactor() * amount, getPower()));
     }
+
+    public abstract double getPower();
+
+    public abstract double speedFactor();
+
+    public abstract boolean isTurnedOn();
+
+    public abstract void turnOn();
+
+    public abstract void turnOff();
 
     @Override
     public final void decrementSpeed(double amount) {
@@ -63,4 +71,7 @@ public abstract class Car extends Vehicle implements IEngine {
     IControllable getController() {
         return new CarController(this);
     }
+
+
+    public abstract void toggleOn();
 }

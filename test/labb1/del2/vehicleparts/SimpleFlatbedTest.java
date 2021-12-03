@@ -1,6 +1,6 @@
 package labb1.del2.vehicleparts;
 
-import labb1.del2.vehicleparts.SimpleFlatbed;
+import labb1.del2.vehicleparts.flatbeds.SimpleFlatbed;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

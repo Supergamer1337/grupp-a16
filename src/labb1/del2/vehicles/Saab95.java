@@ -4,8 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.controllers.Saab95Controller;
-import labb1.del2.utils.StringHelper;
-import labb1.del2.vehicleparts.TurboEngine;
+import labb1.del2.vehicleparts.engines.TurboEngine;
 
 public final class Saab95 extends Car {
     private static final double DEF_WIDTH = 100.20, DEF_HEIGHT = 50;

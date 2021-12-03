@@ -27,7 +27,7 @@ public class DrawComponent implements IObserver {
         return img;
     }
 
-    public void draw(Graphics g) {
+    public void render(Graphics g) {
         g.drawImage(img, getX(), getY(), null);
     }
 

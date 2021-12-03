@@ -1,4 +1,6 @@
-package labb1.del2.vehicleparts;
+package labb1.del2.vehicleparts.engines;
+
+import labb1.del2.vehicleparts.engines.Engine;
 
 public class TurboEngine extends Engine {
     private boolean turboOn;

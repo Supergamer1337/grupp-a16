@@ -1,4 +1,4 @@
-package labb1.del2.vehicleparts;
+package labb1.del2.vehicleparts.flatbeds;
 
 public class SimpleFlatbed implements IFlatbed {
     private boolean isLowered;

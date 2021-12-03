@@ -1,5 +1,6 @@
 package labb1.del2.vehicleparts;
 
+import labb1.del2.vehicleparts.engines.Engine;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

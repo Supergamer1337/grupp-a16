@@ -4,11 +4,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.controllers.TowingTruckController;
-import labb1.del2.utils.StringHelper;
 import labb1.del2.vehicleparts.loaders.VehicleLoader;
-import labb1.del2.vehicleparts.Engine;
-import labb1.del2.vehicleparts.SimpleFlatbed;
-import org.junit.jupiter.api.function.Executable;
+import labb1.del2.vehicleparts.engines.Engine;
+import labb1.del2.vehicleparts.flatbeds.SimpleFlatbed;
 
 import java.util.Arrays;
 import java.util.List;

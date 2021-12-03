@@ -2,9 +2,7 @@ package labb1.del2.vehicles;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import labb1.del2.utils.StringHelper;
-import labb1.del2.vehicleparts.Engine;
-import labb1.del2.vehicleparts.TrimmedEngine;
+import labb1.del2.vehicleparts.engines.TrimmedEngine;
 
 public final class Volvo240 extends Car {
     private static final double DEF_WIDTH = 95.6, DEF_HEIGHT = 50.0;

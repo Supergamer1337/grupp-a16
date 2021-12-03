@@ -4,11 +4,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.controllers.ScaniaController;
-import labb1.del2.utils.StringHelper;
-import labb1.del2.vehicleparts.AngledFlatbed;
-import labb1.del2.vehicleparts.Engine;
-
-import java.util.Objects;
+import labb1.del2.vehicleparts.flatbeds.AngledFlatbed;
+import labb1.del2.vehicleparts.engines.Engine;
 
 public final class Scania extends Car {
     private static final double DEF_WIDTH = 118.66, DEF_HEIGHT = 75;

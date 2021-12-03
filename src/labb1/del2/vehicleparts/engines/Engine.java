@@ -1,4 +1,4 @@
-package labb1.del2.vehicleparts;
+package labb1.del2.vehicleparts.engines;
 
 public class Engine implements IEngine {
     private static final double SPEED_FACTOR_CONST = 0.01;

@@ -17,7 +17,7 @@ public class DrawPanel extends JPanel{
 
     // Just a single image, TODO: Generalize
     // To keep track of a single cars position
-    private final List<DrawComponent> components;
+    private final List<IObserver> components;
 
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
@@ -32,8 +32,8 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (DrawComponent c : components) {
-            c.draw(g);
+        for (IObserver c : components) {
+            c.render(g);
         }
         // g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null); // see javadoc for more info on the parameters
     }
