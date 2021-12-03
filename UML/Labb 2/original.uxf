@@ -1,0 +1,21 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>&lt;diagram program="umletino" version="14.4.0-SNAPSHOT"&gt;&lt;zoom_level&gt;10&lt;/zoom_level&gt;&lt;element&gt;&lt;id&gt;Relation&lt;/id&gt;&lt;coordinates&gt;&lt;x&gt;378&lt;/x&gt;&lt;y&gt;470&lt;/y&gt;&lt;w&gt;230&lt;/w&gt;&lt;h&gt;150&lt;/h&gt;&lt;/coordinates&gt;&lt;panel_attributes&gt;lt=&amp;lt;-&lt;/panel_attributes&gt;&lt;additional_attributes&gt;10;130;10;10;210;10&lt;/additional_attributes&gt;&lt;/element&gt;&lt;/diagram&gt;&lt;diagram program="umletino" version="14.4.0-SNAPSHOT"&gt;&lt;zoom_level&gt;10&lt;/zoom_level&gt;&lt;element&gt;&lt;id&gt;Relation&lt;/id&gt;&lt;coordinates&gt;&lt;x&gt;339&lt;/x&gt;&lt;y&gt;600&lt;/y&gt;&lt;w&gt;230&lt;/w&gt;&lt;h&gt;150&lt;/h&gt;&lt;/coordinates&gt;&lt;panel_attributes&gt;lt=&amp;lt;&amp;lt;.&lt;/panel_attributes&gt;&lt;additional_attributes&gt;10;130;10;10;210;10&lt;/additional_attributes&gt;&lt;/element&gt;&lt;/diagram&gt;Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>873</x><y>350</y><w>240</w><h>80</h></coordinates><panel_attributes>CarController
+--
+~ carView: CarView
+~ cars: ArrayList&lt;Car&gt;
+--
++ main(String[]): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>573</x><y>500</y><w>210</w><h>80</h></coordinates><panel_attributes>CarView
+--
+~ carC: CarController
+~ drawPanel: DrawPanel
+--
+- initComponents(String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1213</x><y>500</y><w>210</w><h>90</h></coordinates><panel_attributes>DrawPanel
+--
+- observers: List&lt;iObserver&gt;
+--
+# paintComponents(Graphics): void
++ createDrawComponent(Car): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>662</x><y>370</y><w>230</w><h>150</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;130;10;10;210;10</additional_attributes></element><element><id>Relation</id><coordinates><x>774</x><y>500</y><w>460</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>440;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1104</x><y>350</y><w>240</w><h>170</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>220;150;220;10;10;10</additional_attributes></element><element><id>UMLInterface</id><coordinates><x>1443</x><y>320</y><w>140</w><h>100</h></coordinates><panel_attributes>IObserver
+--
+update(Vehicle): void
+render(Graphics): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1413</x><y>400</y><w>100</w><h>150</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;130;80;130;80;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1253</x><y>660</y><w>120</w><h>40</h></coordinates><panel_attributes>DrawComponent
+--
+- img: BufferedImage</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1363</x><y>400</y><w>170</w><h>290</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;270;150;270;150;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1153</x><y>520</y><w>120</w><h>170</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>100;150;10;150;10;10;60;10</additional_attributes></element></diagram>
