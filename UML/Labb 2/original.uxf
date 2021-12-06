@@ -1,21 +1,623 @@
-<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>&lt;diagram program="umletino" version="14.4.0-SNAPSHOT"&gt;&lt;zoom_level&gt;10&lt;/zoom_level&gt;&lt;element&gt;&lt;id&gt;Relation&lt;/id&gt;&lt;coordinates&gt;&lt;x&gt;378&lt;/x&gt;&lt;y&gt;470&lt;/y&gt;&lt;w&gt;230&lt;/w&gt;&lt;h&gt;150&lt;/h&gt;&lt;/coordinates&gt;&lt;panel_attributes&gt;lt=&amp;lt;-&lt;/panel_attributes&gt;&lt;additional_attributes&gt;10;130;10;10;210;10&lt;/additional_attributes&gt;&lt;/element&gt;&lt;/diagram&gt;&lt;diagram program="umletino" version="14.4.0-SNAPSHOT"&gt;&lt;zoom_level&gt;10&lt;/zoom_level&gt;&lt;element&gt;&lt;id&gt;Relation&lt;/id&gt;&lt;coordinates&gt;&lt;x&gt;339&lt;/x&gt;&lt;y&gt;600&lt;/y&gt;&lt;w&gt;230&lt;/w&gt;&lt;h&gt;150&lt;/h&gt;&lt;/coordinates&gt;&lt;panel_attributes&gt;lt=&amp;lt;&amp;lt;.&lt;/panel_attributes&gt;&lt;additional_attributes&gt;10;130;10;10;210;10&lt;/additional_attributes&gt;&lt;/element&gt;&lt;/diagram&gt;Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>873</x><y>350</y><w>240</w><h>80</h></coordinates><panel_attributes>CarController
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <help_text>&lt;diagram program="umletino" version="14.4.0-SNAPSHOT"&gt;&lt;zoom_level&gt;10&lt;/zoom_level&gt;&lt;element&gt;&lt;id&gt;Relation&lt;/id&gt;&lt;coordinates&gt;&lt;x&gt;378&lt;/x&gt;&lt;y&gt;470&lt;/y&gt;&lt;w&gt;230&lt;/w&gt;&lt;h&gt;150&lt;/h&gt;&lt;/coordinates&gt;&lt;panel_attributes&gt;lt=&amp;lt;-&lt;/panel_attributes&gt;&lt;additional_attributes&gt;10;130;10;10;210;10&lt;/additional_attributes&gt;&lt;/element&gt;&lt;/diagram&gt;&lt;diagram program="umletino" version="14.4.0-SNAPSHOT"&gt;&lt;zoom_level&gt;10&lt;/zoom_level&gt;&lt;element&gt;&lt;id&gt;Relation&lt;/id&gt;&lt;coordinates&gt;&lt;x&gt;339&lt;/x&gt;&lt;y&gt;600&lt;/y&gt;&lt;w&gt;230&lt;/w&gt;&lt;h&gt;150&lt;/h&gt;&lt;/coordinates&gt;&lt;panel_attributes&gt;lt=&amp;lt;&amp;lt;.&lt;/panel_attributes&gt;&lt;additional_attributes&gt;10;130;10;10;210;10&lt;/additional_attributes&gt;&lt;/element&gt;&lt;/diagram&gt;Space for diagram notes</help_text>
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1020</x>
+      <y>1060</y>
+      <w>240</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>CarController
 --
 ~ carView: CarView
 ~ cars: ArrayList&lt;Car&gt;
 --
-+ main(String[]): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>573</x><y>500</y><w>210</w><h>80</h></coordinates><panel_attributes>CarView
++ main(String[]): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>720</x>
+      <y>1210</y>
+      <w>210</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>CarView
 --
 ~ carC: CarController
 ~ drawPanel: DrawPanel
 --
-- initComponents(String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1213</x><y>500</y><w>210</w><h>90</h></coordinates><panel_attributes>DrawPanel
+- initComponents(String): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1360</x>
+      <y>1210</y>
+      <w>230</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>DrawPanel
 --
 - observers: List&lt;iObserver&gt;
 --
 # paintComponents(Graphics): void
-+ createDrawComponent(Car): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>662</x><y>370</y><w>230</w><h>150</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;130;10;10;210;10</additional_attributes></element><element><id>Relation</id><coordinates><x>774</x><y>500</y><w>460</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>440;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1104</x><y>350</y><w>240</w><h>170</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>220;150;220;10;10;10</additional_attributes></element><element><id>UMLInterface</id><coordinates><x>1443</x><y>320</y><w>140</w><h>100</h></coordinates><panel_attributes>IObserver
++ createDrawComponent(Car): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>810</x>
+      <y>1080</y>
+      <w>230</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;130.0;10.0;10.0;210.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>920</x>
+      <y>1210</y>
+      <w>460</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>440.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1250</x>
+      <y>1060</y>
+      <w>240</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..</panel_attributes>
+    <additional_attributes>220.0;150.0;220.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>1580</x>
+      <y>1030</y>
+      <w>160</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>IObserver
 --
 update(Vehicle): void
-render(Graphics): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1413</x><y>400</y><w>100</w><h>150</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;130;80;130;80;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1253</x><y>660</y><w>120</w><h>40</h></coordinates><panel_attributes>DrawComponent
+render(Graphics): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1580</x>
+      <y>1110</y>
+      <w>80</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>60.0;10.0;60.0;130.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1400</x>
+      <y>1370</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>DrawComponent
 --
-- img: BufferedImage</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1363</x><y>400</y><w>170</w><h>290</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;270;150;270;150;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1153</x><y>520</y><w>120</w><h>170</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>100;150;10;150;10;10;60;10</additional_attributes></element></diagram>
+- img: BufferedImage</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1530</x>
+      <y>1110</y>
+      <w>150</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>130.0;10.0;130.0;270.0;10.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1300</x>
+      <y>1230</y>
+      <w>120</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>100.0;150.0;10.0;150.0;10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1090</x>
+      <y>630</y>
+      <w>110</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Car
+--
+- nrOfDoors: int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1120</x>
+      <y>670</y>
+      <w>30</w>
+      <h>410</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;390.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1260</x>
+      <y>570</y>
+      <w>210</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Vehicle
+--
+- modelName: string
+- body: VehicleBody
+- observers: List&lt;IObserver&gt;
+--
++ accelerate(double): void
++ decelerate(double): void
++ incrementSpeed(double): void
++ decrementSpeed(double): void
++ subscribe(IObserver): void
++ notifyObservers(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>1250</x>
+      <y>310</y>
+      <w>120</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>IMovable
+--
+move(): void
+turnRight(): void
+turnLeft(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1300</x>
+      <y>410</y>
+      <w>30</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1190</x>
+      <y>640</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1500</x>
+      <y>460</y>
+      <w>130</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>VehicleBody
+--
+- speed: double
+- rotation: double
+- turnSpeed: double
+- color: Color
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1350</x>
+      <y>360</y>
+      <w>220</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;200.0;10.0;200.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>730</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Volvo240
+--
+- engine: TrimmedEngine
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>630</y>
+      <w>160</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Scania
+--
+- flatbed: AngledFlatbed
+- engine: Engine</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>480</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Saab95
+--
+- engine: TurboEngine
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>730</y>
+      <w>240</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>TrimmedEngine
+--
+- trimFactor: double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>610</y>
+      <w>240</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Engine
+--
+- SPEED_FACTOR_CONST: double
+- power: double
+- turnedOn: boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>280</x>
+      <y>460</y>
+      <w>160</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>IEngine
+--
+turnOn(): void
+turnOff(): void
+toggleOn(): void
+isTurnedOn(): bolean
+speedFactor: double
+getPower: double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>460</y>
+      <w>240</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>TurboEngine
+--
+- turboOn: boolean
+--
++ toggleTurbo(): void
++ turboOn(): void
++ turboOff(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>580</x>
+      <y>550</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>580</x>
+      <y>680</y>
+      <w>30</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>350</x>
+      <y>610</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0;190.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>280</y>
+      <w>200</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>AngledFlatbed
+--
+- currentFlatbedAngle: double
+- maxAngle: double
+- minAngle: double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>270</x>
+      <y>230</y>
+      <w>160</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>IFlatbed
+--
+raiseFlatbed(): void
+lowerFlatbed(): void
+isLowered(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>280</y>
+      <w>140</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1460</x>
+      <y>540</y>
+      <w>120</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>91.0;10.0;90.0;70.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1460</x>
+      <y>620</y>
+      <w>220</w>
+      <h>430</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>200.0;410.0;200.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>280</y>
+      <w>200</w>
+      <h>400</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0;140.0;380.0;180.0;380.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>770</x>
+      <y>500</y>
+      <w>160</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;132.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>770</x>
+      <y>670</y>
+      <w>160</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;132.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>770</x>
+      <y>750</y>
+      <w>150</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1200</x>
+      <y>40</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Vector2D
+--
+- x: double
+- y: double
+--
++ add(Vector2D): Vector2D
++ add(double, double): Vector2D</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>870</x>
+      <y>60</y>
+      <w>320</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>StringHelper
+--
++ concatenateStringArr(String[], String[]): String[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1120</x>
+      <y>100</y>
+      <w>40</w>
+      <h>550</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..</panel_attributes>
+    <additional_attributes>20.0;10.0;18.0;530.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>240</x>
+      <y>220</y>
+      <w>1440</w>
+      <h>700</h>
+    </coordinates>
+    <panel_attributes>lt=.
+Model</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1210</x>
+      <y>130</y>
+      <w>310</w>
+      <h>370</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;350.0;290.0;350.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>860</x>
+      <y>0</y>
+      <w>610</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=.
+Utilities</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>590</x>
+      <y>980</y>
+      <w>1290</w>
+      <h>470</h>
+    </coordinates>
+    <panel_attributes>lt=.
+View &amp; Controller</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>490</y>
+      <w>60</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>40.0;170.0;20.0;170.0;20.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1030</x>
+      <y>650</y>
+      <w>80</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>650</y>
+      <w>60</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>40.0;10.0;20.0;10.0;20.0;110.0;10.0;110.0</additional_attributes>
+  </element>
+</diagram>
