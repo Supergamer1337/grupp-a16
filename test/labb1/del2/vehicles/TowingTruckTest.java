@@ -27,7 +27,7 @@ class TowingTruckTest {
                 "Ramp lowered: false",
                 "Loaded cars: []"
         };
-        assertArrayEquals(info, towingTruck.getHudInfo(), "Tests something");
+        assertArrayEquals(info, towingTruck.getHudInfo());
     }
 
     @Test
