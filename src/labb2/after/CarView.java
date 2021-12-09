@@ -1,7 +1,4 @@
-package labb2.before;
-
-import labb2.after.CarController;
-import labb2.after.DrawPanel;
+package labb2.after;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
