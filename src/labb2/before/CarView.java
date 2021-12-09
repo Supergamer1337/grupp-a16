@@ -1,4 +1,4 @@
-package labb2.delA;
+package labb2.before;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

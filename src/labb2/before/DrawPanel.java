@@ -1,4 +1,4 @@
-package labb2.delA;
+package labb2.before;
 
 import labb1.del2.vehicles.Car;
 
