@@ -658,7 +658,7 @@ isLowered(): boolean</panel_attributes>
     <panel_attributes>Observable
 --
 + subscribe(Observer): void
-+ notify(): void</panel_attributes>
++ update(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
