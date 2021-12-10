@@ -1,5 +1,7 @@
-package labb2.after.model.utils;
+package labb2.after.utils.utils;
 
+
+import static java.lang.Math.atan2;
 
 public class Vector2D {
     private final double x,y;
@@ -65,6 +67,15 @@ public class Vector2D {
     public Vector2D getNormalized() {
         double length = x * x + y * y;
         return new Vector2D(x / length, y / length);
+    }
+
+
+    /**
+     * Returns the vector represented in radians
+     * @return The vector in radians
+     */
+    public double getAsRadians() {
+        return atan2(y, x);
     }
 
     /**
