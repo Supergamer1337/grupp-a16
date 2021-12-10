@@ -3,7 +3,7 @@ package labb2.after.model.vehicles;
 import javafx.scene.paint.Color;
 import labb1.del2.vehicleparts.engines.Engine;
 import labb1.del2.vehicleparts.flatbeds.AngledFlatbed;
-import labb2.after.utils.utils.Vector2D;
+import labb2.after.utils.Vector2D;
 import labb2.after.model.vehicleparts.CarAppearance;
 import labb2.after.model.vehicleparts.CarPhysics;
 
