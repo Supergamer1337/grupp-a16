@@ -1,6 +1,6 @@
 package labb2.after.model.vehicleparts;
 
-import labb2.after.model.utils.Vector2D;
+import labb2.after.utils.Vector2D;
 
 public class CarPhysics {
     private Vector2D pos, direction;
@@ -26,12 +26,11 @@ public class CarPhysics {
     }
 
     public void move(double dTime) {
-        pos = pos.add(direction.getX() * dTime, direction.getY() * dTime);
-    
+        pos = pos.add(direction.getX() * speed * dTime, direction.getY() * speed * dTime);
     }
 
     public void turn(double degrees) {
-        if(speed > 0) {
+        if(speed != 0) {
             direction = direction.add(Vector2D.angleToVector2D(degrees));
         }
     }
@@ -44,16 +43,8 @@ public class CarPhysics {
         speed = Math.min(speed + amount, upperLimit);
     }
 
-    public void increaseSpeed(double amount) {
-        speed += amount;
-    }
-
     public void reduceSpeedWithLimit(double amount, double lowerLimit) {
         speed = Math.max(speed - amount, lowerLimit);
-    }
-
-    public void reduceSpeed(double amount) {
-        speed -= amount;
     }
 
     public Vector2D getPos() {

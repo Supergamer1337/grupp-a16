@@ -1,6 +1,6 @@
 package labb2.after.model;
 
-import labb2.after.model.utils.Vector2D;
+import labb2.after.utils.Vector2D;
 import labb2.after.model.vehicles.*;
 
 public class CarFactory {

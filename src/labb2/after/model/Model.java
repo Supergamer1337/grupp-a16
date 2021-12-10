@@ -3,7 +3,8 @@ package labb2.after.model;
 import labb2.after.model.vehicles.Car;
 import labb2.after.model.vehicles.Saab95;
 import labb2.after.model.vehicles.Scania;
-import labb2.after.view.Observer;
+import labb2.after.observers.Observable;
+import labb2.after.observers.Observer;
 import labb2.after.model.vehicles.IVehicle;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Model implements Observable {
-    private final static int TIMER_DELAY = 50; // Delay in ms
+    private final static int TIMER_DELAY = 10; // Delay in ms
 
     private final List<IVehicle> vehicles;
     private final List<Observer> observers;
@@ -21,14 +22,14 @@ public class Model implements Observable {
     public Model() {
         observers = new ArrayList<>();
         vehicles = Arrays.asList(CarFactory.createDefaultCarSetup());
-        timer = new Timer(TIMER_DELAY, e -> tick(TIMER_DELAY / 1000.0));
+        timer = new Timer(TIMER_DELAY, e -> tick(TIMER_DELAY / 100.0));
     }
 
     private void tick(double dTime) {
         for(IVehicle vehicle : vehicles) {
             vehicle.move(dTime);
         }
-        update();
+        notifyObservers();
     }
 
     public void run() {
@@ -107,7 +108,7 @@ public class Model implements Observable {
     }
 
     @Override
-    public void update() {
+    public void notifyObservers() {
         for(Observer observer : observers) {
             observer.update();
         }

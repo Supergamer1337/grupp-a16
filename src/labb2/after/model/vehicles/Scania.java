@@ -25,7 +25,7 @@ public final class Scania extends Car {
     }
 
     public Scania(Vector2D pos) {
-        this(pos, new Vector2D(0,1));
+        this(pos, new Vector2D(1,0));
     }
 
     public Scania() {
@@ -43,7 +43,10 @@ public final class Scania extends Car {
     /**
      * Raises the flatbed.
      */
-    public void raiseFlatbed() {
+    public void raiseFlatbed() throws IllegalStateException {
+        if (getSpeed() != 0) {
+            throw new IllegalStateException("Unable to raise flatbed whilst moving");
+        }
         flatbed.raiseFlatbed();
     }
 

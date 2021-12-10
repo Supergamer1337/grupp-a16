@@ -22,7 +22,7 @@ public final class Volvo240 extends Car {
     }
 
     public Volvo240(Vector2D pos) {
-        this(pos, new Vector2D(0,1));
+        this(pos, new Vector2D(1,0));
     }
 
     public Volvo240() {

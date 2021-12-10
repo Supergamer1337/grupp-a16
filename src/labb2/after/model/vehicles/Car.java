@@ -1,9 +1,7 @@
 package labb2.after.model.vehicles;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import labb1.del2.vehicleparts.VehicleBody;
-import labb2.after.model.utils.Vector2D;
+import labb2.after.utils.Vector2D;
 import labb2.after.model.vehicleparts.CarAppearance;
 import labb2.after.model.vehicleparts.CarPhysics;
 
@@ -48,6 +46,7 @@ public abstract class Car implements IVehicle {
         if (amount < 0 || amount > 1) {
             throw new IllegalArgumentException("Accelerate amount must be between 0 and 1");
         }
+        incrementSpeed(amount);
     }
 
     @Override
@@ -99,6 +98,14 @@ public abstract class Car implements IVehicle {
         return physics.getSpeed();
     }
 
+    public double getRotation() {
+        return physics.getDirection().asRadians();
+    }
+
+    public void setRotation(double newRotation) {
+        physics.setRotation(newRotation);
+    }
+
     @Override
     public void turnRight(double dTime) {
         physics.turn(dTime * turnSpeed);
@@ -108,6 +115,8 @@ public abstract class Car implements IVehicle {
     public void turnLeft(double dTime) {
         physics.turn(dTime * -turnSpeed);
     }
+
+
 
     @Override
     public double getX() {

@@ -22,7 +22,7 @@ public final class Saab95 extends Car {
     }
 
     public Saab95(Vector2D pos) {
-        this(pos, new Vector2D(0,1));
+        this(pos, new Vector2D(1,0));
     }
 
     public Saab95() {

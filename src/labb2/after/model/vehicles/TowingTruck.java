@@ -16,14 +16,15 @@ public final class TowingTruck extends Car {
 
     private final VehicleLoader<Car> loader;
     private final SimpleFlatbed flatbed;
-    private final double pickupRadius;
+    private final double pickupRadius, maxLoadWeight;
     private final Engine engine;
 
     public TowingTruck(CarPhysics physics) {
         super("Towing Truck", new CarPhysics(physics), new CarAppearance(2, Color.TURQUOISE));
-        loader = new VehicleLoader<Car>(BASE_CAR_LOAD_LIMIT);
+        loader = new VehicleLoader<>(BASE_CAR_LOAD_LIMIT);
         flatbed = new SimpleFlatbed();
         pickupRadius = DEF_PICKUP_RADIUS;
+        maxLoadWeight = 5000;
         engine = new Engine(80);    
     }
     
@@ -33,7 +34,7 @@ public final class TowingTruck extends Car {
 
 
     public TowingTruck(Vector2D pos) {
-        this(pos, new Vector2D(0,1));
+        this(pos, new Vector2D(1,0));
     }
 
     public TowingTruck() {
@@ -47,8 +48,6 @@ public final class TowingTruck extends Car {
         }
         return 0;
     }
-
-
 
     /**
      * Loads a car into the towing truck.
@@ -92,7 +91,10 @@ public final class TowingTruck extends Car {
     /**
      * Lowers the ramp of the towing truck.
      */
-    public void lowerRamp() {
+    public void lowerRamp() throws IllegalStateException {
+        if (getSpeed() != 0) {
+            throw new IllegalStateException("Unable to lower ramp whilst moving");
+        }
         flatbed.lowerFlatbed();
     }
 

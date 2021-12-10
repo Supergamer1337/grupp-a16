@@ -1,6 +1,7 @@
 package labb2.after.view;
 
 import labb2.after.model.vehicles.IVehicle;
+import labb2.after.observers.RenderedObserver;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-class DrawPanel extends JPanel implements Observer {
+class DrawPanel extends JPanel implements RenderedObserver {
 
     private final List<DrawComponent> components;
 
@@ -25,7 +26,10 @@ class DrawPanel extends JPanel implements Observer {
 
     @Override
     public void update() {
-        repaint();
+        for (DrawComponent component : components) {
+            component.update();
+        }
+        this.repaint();
     }
 
     @Override

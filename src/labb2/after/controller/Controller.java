@@ -1,13 +1,16 @@
 package labb2.after.controller;
 
-import labb1.del2.vehicles.Car;
+
 import labb2.after.model.Model;
+import labb2.after.model.vehicles.Car;
+import labb2.after.model.vehicles.IVehicle;
+import labb2.after.observers.Observer;
 import labb2.after.view.View;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class Controller {
+public class Controller implements Observer {
 
     private final Model model;
     private int gasAmount;
@@ -17,8 +20,18 @@ public class Controller {
     public Controller(Model model, View view, int width) {
         this.width = width;
         this.model = model;
+        model.subscribe(this);
         gasAmount = 0;
         createGUI(view);
+    }
+
+    @Override
+    public void update() {
+        for (IVehicle vehicle : model.getVehicles()) {
+            if (vehicle instanceof Car car) {
+                outsideOfWindow(car);
+            }
+        }
     }
 
     private void outsideOfWindow(Car car) {
@@ -28,7 +41,7 @@ public class Controller {
     }
 
     private boolean outOfBounds(Car car) {
-        return car.getPosX() + car.getWidth() > 800 || car.getPosX() < 0;
+        return car.getX() + car.getWidth() > width || car.getX() < 0;
     }
 
     private void createGUI(View view) {
@@ -105,5 +118,4 @@ public class Controller {
         stopButton.addActionListener(e -> model.stop());
         view.add(stopButton);
     }
-
 }
