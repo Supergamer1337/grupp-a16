@@ -37,8 +37,9 @@ public class View extends JFrame {
     }
 
     private void createDrawPanel() {
-        DrawPanel panel = new DrawPanel();
-        add();
+        DrawPanel panel = new DrawPanel(WINDOW_WIDTH, WINDOW_HEIGHT - 240);
+        model.subscribe(panel);
+        add(panel);
     }
 
 }

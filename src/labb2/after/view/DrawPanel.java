@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,10 +21,11 @@ class DrawPanel extends JPanel implements Observer{
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
+        this.components = new ArrayList<>();
     }
 
     @Override
-    public void update(Vehicle v) {
+    public void update() {
         repaint();
     }
 

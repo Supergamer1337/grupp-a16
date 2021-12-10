@@ -46,7 +46,7 @@ public class Model implements Observable {
     @Override
     public void update() {
         for(Observer observer : observers) {
-            observer.notify();
+            observer.update();
         }
     }
 
