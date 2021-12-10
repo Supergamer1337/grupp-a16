@@ -26,9 +26,6 @@ class DrawPanel extends JPanel implements RenderedObserver {
 
     @Override
     public void update() {
-        for (DrawComponent component : components) {
-            component.update();
-        }
         this.repaint();
     }
 
