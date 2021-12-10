@@ -74,7 +74,7 @@ public class Vector2D {
      * Returns the vector represented in radians
      * @return The vector in radians
      */
-    public double getAsRadians() {
+    public double asRadians() {
         return atan2(y, x);
     }
 
