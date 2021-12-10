@@ -1,11 +1,9 @@
 package labb2.after.model;
 
-import labb2.after.model.vehicles.Car;
-import labb2.after.model.vehicles.Saab95;
-import labb2.after.model.vehicles.Scania;
+import labb2.after.model.vehicles.*;
 import labb2.after.observers.Observable;
 import labb2.after.observers.Observer;
-import labb2.after.model.vehicles.IVehicle;
+import labb2.after.utils.Vector2D;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -21,7 +19,7 @@ public class Model implements Observable {
 
     public Model() {
         observers = new ArrayList<>();
-        vehicles = Arrays.asList(CarFactory.createDefaultCarSetup());
+        vehicles = Arrays.asList(createDefaultCarSetup());
         timer = new Timer(TIMER_DELAY, e -> tick(getDeltaTime()));
     }
 
@@ -46,6 +44,14 @@ public class Model implements Observable {
 
     public List<IVehicle> getVehicles() {
         return vehicles;
+    }
+
+    public static Car[] createDefaultCarSetup() {
+        return new Car[]{
+                new Volvo240(),
+                new Saab95(new Vector2D(0, 100)),
+                new Scania(new Vector2D(0, 200))
+        };
     }
 
     public void gas(int amount) {

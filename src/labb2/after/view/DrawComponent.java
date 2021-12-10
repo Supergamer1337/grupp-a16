@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 class DrawComponent {
     private final IVehicle vehicle;
-    private final BufferedImage img;
+    private final Image img;
 
     public DrawComponent(IVehicle vehicle, BufferedImage img) {
         this.vehicle = vehicle;

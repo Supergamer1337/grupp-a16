@@ -1,7 +1,6 @@
 package labb2.after.model.vehicles;
 
 import javafx.scene.paint.Color;
-import labb2.after.utils.Vector2D;
 import labb2.after.model.vehicleparts.CarAppearance;
 import labb2.after.model.vehicleparts.CarPhysics;
 
@@ -78,10 +77,6 @@ public abstract class Car implements IVehicle {
         return modelName;
     }
 
-    public Vector2D getPos() {
-        return physics.getPos();
-    }
-
     public double getWidth() {
         return physics.getWidth();
     }
@@ -116,15 +111,13 @@ public abstract class Car implements IVehicle {
         physics.turn(dTime * -turnSpeed);
     }
 
-
-
     @Override
     public double getX() {
-        return physics.getPos().getX();
+        return physics.getX();
     }
 
     @Override
     public double getY() {
-        return physics.getPos().getY();
+        return physics.getY();
     }
 }

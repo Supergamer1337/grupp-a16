@@ -5,7 +5,8 @@ import labb2.after.model.Model;
 public class AngledFlatbed implements IFlatbed{
     private static final double DEF_MAX_Angle = 70, DEF_MIN_ANGLE = 0, rotationSpeed = 30;
 
-    private double currentFlatbedAngle, maxAngle, minAngle;
+    private double currentFlatbedAngle;
+    private final double maxAngle, minAngle;
 
     public AngledFlatbed(double maxAngle, double minAngle) {
         this.maxAngle = maxAngle;

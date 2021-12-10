@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public class Loader<T> {
-    protected final List<T> loaded;
+    final List<T> loaded;
     private final int limit;
 
     public Loader(int limit) {

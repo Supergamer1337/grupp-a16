@@ -8,7 +8,7 @@ public class CarPhysics {
     private double speed;
 
     public CarPhysics(CarPhysics physics) {
-        this.pos = physics.getPos();
+        this.pos = new Vector2D(physics.getX(), physics.getY());
         this.direction = physics.getDirection();
         this.width = physics.getWidth();
         this.height = physics.getHeight();
@@ -47,8 +47,12 @@ public class CarPhysics {
         speed = Math.max(speed - amount, lowerLimit);
     }
 
-    public Vector2D getPos() {
-        return pos.copy();
+    public double getX() {
+        return pos.getX();
+    }
+
+    public double getY() {
+            return pos.getY();
     }
 
     public double getWidth() {
