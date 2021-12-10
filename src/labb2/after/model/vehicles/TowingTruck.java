@@ -32,7 +32,13 @@ public final class TowingTruck extends Car {
     }
 
 
-    public TowingTruck() { this(new Vector2D(), new Vector2D(0, 1)); }
+    public TowingTruck(Vector2D pos) {
+        this(pos, new Vector2D(0,1));
+    }
+
+    public TowingTruck() {
+        this(new Vector2D());
+    }
 
     @Override
     public double speedFactor() {

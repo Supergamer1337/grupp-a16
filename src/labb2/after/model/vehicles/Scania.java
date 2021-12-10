@@ -27,7 +27,13 @@ public final class Scania extends Car {
         this(new CarPhysics(pos, direction, DEF_WIDTH, DEF_HEIGHT, DEF_WEIGHT));
     }
 
-    public Scania() { this(new Vector2D(), new Vector2D(0, 1)); }
+    public Scania(Vector2D pos) {
+        this(pos, new Vector2D(0,1));
+    }
+
+    public Scania() {
+        this(new Vector2D());
+    }
 
     @Override
     public double speedFactor() {

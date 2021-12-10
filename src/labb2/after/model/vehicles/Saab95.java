@@ -24,8 +24,12 @@ public final class Saab95 extends Car {
         this(new CarPhysics(pos.copy(), direction.copy(), DEF_WIDTH, DEF_HEIGHT, DEF_WEIGHT));
     }
 
+    public Saab95(Vector2D pos) {
+        this(pos, new Vector2D(0,1));
+    }
+
     public Saab95() {
-        this(new Vector2D(), new Vector2D(0,1));
+        this(new Vector2D());
     }
 
     /**

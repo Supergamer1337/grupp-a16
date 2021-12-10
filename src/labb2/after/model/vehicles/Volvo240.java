@@ -22,8 +22,12 @@ public final class Volvo240 extends Car {
         this(new CarPhysics(pos, direction, DEF_WIDTH, DEF_HEIGHT, DEF_WEIGHT));
     }
 
+    public Volvo240(Vector2D pos) {
+        this(pos, new Vector2D(0,1));
+    }
+
     public Volvo240() {
-        this(new Vector2D(), new Vector2D(0, 1));
+        this(new Vector2D());
     }
 
     /**
