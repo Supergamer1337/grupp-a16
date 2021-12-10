@@ -33,11 +33,11 @@ public final class Scania extends Car {
     }
 
     @Override
-    public double speedFactor() {
-        if (flatbed.isLowered()) {
-            return 0.01 * getPower();
+    public double speedFactor() throws IllegalStateException {
+        if (!flatbed.isLowered()) {
+            throw new IllegalStateException("Flatbed must be lowered to accelerate");
         }
-        return 0;
+        return 0.01 * getPower();
     }
 
     /**

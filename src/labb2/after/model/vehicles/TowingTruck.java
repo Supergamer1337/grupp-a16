@@ -53,9 +53,19 @@ public final class TowingTruck extends Car {
      * Loads a car into the towing truck.
      * @param car The car to load.
      */
-    public void loadCar(Car car) {
-        if (!flatbed.isLowered() && !isWithinRange(car.getX(), car.getY())) {
-            throw new RuntimeException("Given car is outside of pickup range");
+    public void loadCar(Car car) throws IllegalStateException {
+        if (!flatbed.isLowered()) {
+            throw new IllegalStateException("Unable to load car because flatbed is not lowered.");
+        }
+        if (!isWithinRange(car.getX(), car.getY())) {
+            throw new IllegalStateException("Given car is outside of pickup range");
+        }
+        int loadedWeight = 0;
+        for (Car loadedCar : loader.getLoaded()) {
+            loadedWeight += loadedCar.getWeight();
+        }
+        if (car.getWeight() + loadedWeight > maxLoadWeight) {
+            throw new IllegalStateException("Total weight exceeds max load weight");
         }
         loader.load(car);
     }
@@ -66,7 +76,7 @@ public final class TowingTruck extends Car {
      */
     public Car unloadCar() {
         if (!flatbed.isLowered()) {
-            throw new RuntimeException("Unable to unload car when ramp isn't lowered");
+            throw new IllegalStateException("Unable to unload car when ramp isn't lowered");
         }
         return loader.unload();
     }
