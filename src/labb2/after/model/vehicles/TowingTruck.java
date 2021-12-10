@@ -1,7 +1,7 @@
 package labb2.after.model.vehicles;
 
 import javafx.scene.paint.Color;
-import labb2.after.model.utils.Vector2D;
+import labb2.after.utils.utils.Vector2D;
 import labb2.after.model.vehicleparts.CarAppearance;
 import labb2.after.model.vehicleparts.CarPhysics;
 import labb2.after.model.vehicleparts.engines.Engine;
