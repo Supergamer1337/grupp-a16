@@ -5,33 +5,27 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.controllers.Saab95Controller;
 import labb1.del2.vehicleparts.engines.TurboEngine;
+import labb2.after.model.utils.Vector2D;
+import labb2.after.model.vehicleparts.CarAppearance;
+import labb2.after.model.vehicleparts.CarPhysics;
 
 public final class Saab95 extends Car {
     private static final double DEF_WIDTH = 100.20, DEF_HEIGHT = 50;
+    private static final int DEF_WEIGHT = 1495;
 
     private final TurboEngine engine;
 
-    public Saab95(Rectangle rect) {
-        super(rect, Color.RED, "Saab95", 2);
+    public Saab95(CarPhysics physics) {
+        super("Saab95", new CarPhysics(physics), new CarAppearance(2, Color.RED));
         engine = new TurboEngine(125);
-        rect.setWidth(DEF_WIDTH);
-        rect.setHeight(DEF_HEIGHT);
-        rect.setRotate(getRotation());
     }
 
-    public Saab95(double x, double y) {
-        this(new Rectangle(x, y, DEF_WIDTH, DEF_HEIGHT));
+    public Saab95(Vector2D pos, Vector2D direction) {
+        this(new CarPhysics(pos.copy(), direction.copy(), DEF_WIDTH, DEF_HEIGHT, DEF_WEIGHT));
     }
 
     public Saab95() {
-        this(0, 0);
-    }
-
-    @Override
-    public String[] specificHudInfo() {
-        return new String[] {
-                "Turbo active: " + getTurboState()
-        };
+        this(new Vector2D(), new Vector2D(0,1));
     }
 
     /**

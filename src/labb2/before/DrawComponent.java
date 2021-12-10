@@ -1,7 +1,7 @@
 package labb2.before;
 
 import labb1.del2.vehicles.Vehicle;
-import labb2.after.IObserver;
+import labb2.before.IObserver;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

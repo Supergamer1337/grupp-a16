@@ -1,40 +1,38 @@
 package labb2.after.model.vehicles;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import labb1.del2.controllers.IControllable;
-import labb1.del2.controllers.TowingTruckController;
-import labb1.del2.vehicleparts.engines.Engine;
-import labb1.del2.vehicleparts.flatbeds.SimpleFlatbed;
-import labb1.del2.vehicleparts.loaders.VehicleLoader;
+import labb2.after.model.utils.Vector2D;
+import labb2.after.model.vehicleparts.CarAppearance;
+import labb2.after.model.vehicleparts.CarPhysics;
+import labb2.after.model.vehicleparts.engines.Engine;
+import labb2.after.model.vehicleparts.flatbeds.SimpleFlatbed;
+import labb2.after.model.vehicleparts.loaders.VehicleLoader;
 
-import java.util.Arrays;
 import java.util.List;
 
 public final class TowingTruck extends Car {
-    private static final int BASE_CAR_LOAD_LIMIT = 2;
+    private static final int BASE_CAR_LOAD_LIMIT = 2, DEF_WEIGHT = 9000;
     private static final double DEF_PICKUP_RADIUS = 20, DEF_WIDTH = 323, DEF_HEIGHT = 75;
+
     private final VehicleLoader<Car> loader;
     private final SimpleFlatbed flatbed;
     private final double pickupRadius;
     private final Engine engine;
 
-    public TowingTruck(Rectangle rect) {
-        super(rect, Color.TURQUOISE, "Towing Truck", 2);
-        rect.setWidth(DEF_WIDTH);
-        rect.setHeight(DEF_HEIGHT);
-        rect.setRotate(getRotation());
-        loader = new VehicleLoader<>(BASE_CAR_LOAD_LIMIT);
+    public TowingTruck(CarPhysics physics) {
+        super("Towing Truck", new CarPhysics(physics), new CarAppearance(2, Color.TURQUOISE));
+        loader = new VehicleLoader<Car>(BASE_CAR_LOAD_LIMIT);
         flatbed = new SimpleFlatbed();
         pickupRadius = DEF_PICKUP_RADIUS;
-        engine = new Engine(80);
+        engine = new Engine(80);    
+    }
+    
+    public TowingTruck(Vector2D pos, Vector2D direction) {
+        this(new CarPhysics(pos, direction, DEF_WIDTH, DEF_HEIGHT, DEF_WEIGHT));
     }
 
-    public TowingTruck(double x, double y) {
-        this(new Rectangle(x, y, DEF_WIDTH, DEF_HEIGHT));
-    }
 
-    public TowingTruck() { this(0, 0); }
+    public TowingTruck() { this(new Vector2D(), new Vector2D(0, 1)); }
 
     @Override
     public double speedFactor() {
@@ -45,20 +43,13 @@ public final class TowingTruck extends Car {
     }
 
 
-    @Override
-    protected String[] specificHudInfo() {
-        return new String[] {
-                "Ramp lowered: " + flatbed.isLowered(),
-                "Loaded cars: " + Arrays.toString(loader.getNames())
-        };
-    }
 
     /**
      * Loads a car into the towing truck.
      * @param car The car to load.
      */
     public void loadCar(Car car) {
-        if (!flatbed.isLowered() && !isWithinRange(car.getPosX(), car.getPosY())) {
+        if (!flatbed.isLowered() && !isWithinRange(car.getX(), car.getY())) {
             throw new RuntimeException("Given car is outside of pickup range");
         }
         loader.load(car);
@@ -82,7 +73,7 @@ public final class TowingTruck extends Car {
      * @return Whether the car is within the pickup radius.
      */
     private boolean isWithinRange(double x, double y) {
-        return x - getPosX() < pickupRadius && y - getPosY() < pickupRadius;
+        return x - getX() < pickupRadius && y - getY() < pickupRadius;
     }
 
     /**
@@ -130,12 +121,6 @@ public final class TowingTruck extends Car {
     public String[] getNames() {
         return loader.getNames();
     }
-
-    @Override
-    public IControllable getController() {
-        return new TowingTruckController(this);
-    }
-
 
     @Override
     public void turnOn() {

@@ -3,14 +3,18 @@ package labb2.after.model.vehicles;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import labb1.del2.vehicleparts.VehicleBody;
+import labb2.after.model.utils.Vector2D;
 import labb2.after.model.vehicleparts.CarAppearance;
 import labb2.after.model.vehicleparts.CarPhysics;
 
 public abstract class Car implements IVehicle {
 
+    private static final double TURN_SPEED_CONSTANT = 100;
+
     private final String modelName;
     private final CarPhysics physics;
     private final CarAppearance appearance;
+    private final double turnSpeed;
 
     /**
      * Creates a new Car object
@@ -20,14 +24,38 @@ public abstract class Car implements IVehicle {
         this.modelName = modelName;
         this.physics = physics;
         this.appearance = appearance;
+        turnSpeed = TURN_SPEED_CONSTANT * Math.PI / getWidth();
     }
 
-    @Override
     public final void incrementSpeed(double amount) {
         if(!isTurnedOn()) {
             throw new IllegalStateException("Can't increment speed unless engine is turned on");
         }
-        setSpeed(Math.min(getSpeed() + speedFactor() * amount, getPower()));
+        physics.increaseSpeedWithLimit(speedFactor() * amount, getPower());
+    }
+
+    public final void decrementSpeed(double amount) {
+        physics.reduceSpeedWithLimit(speedFactor() * amount, 0);
+    }
+
+    @Override
+    public void move(double dTime) {
+        physics.move(dTime);
+    }
+
+    @Override
+    public void accelerate(double amount) {
+        if (amount < 0 || amount > 1) {
+            throw new IllegalArgumentException("Accelerate amount must be between 0 and 1");
+        }
+    }
+
+    @Override
+    public void decelerate(double amount) {
+        if (amount < 0 || amount > 1) {
+            throw new IllegalArgumentException("Decelerate amount must be between 0 and 1");
+        }
+        decrementSpeed(amount);
     }
 
     public abstract double getPower();
@@ -40,14 +68,54 @@ public abstract class Car implements IVehicle {
 
     public abstract void turnOff();
 
+    public abstract void toggleOn();
+
     public void setColor(Color color) {
         appearance.setColor(color);
     }
 
     @Override
-    public final void decrementSpeed(double amount) {
-        setSpeed(Math.max(getSpeed() - speedFactor() * amount, 0));
+    public String getModelName() {
+        return modelName;
     }
 
-    public abstract void toggleOn();
+    public Vector2D getPos() {
+        return physics.getPos();
+    }
+
+    public double getWidth() {
+        return physics.getWidth();
+    }
+
+    public double getHeight() {
+        return physics.getHeight();
+    }
+
+    public double getWeight() {
+        return physics.getWeight();
+    }
+
+    public double getSpeed() {
+        return physics.getSpeed();
+    }
+
+    @Override
+    public void turnRight(double dTime) {
+        physics.turn(dTime * turnSpeed);
+    }
+
+    @Override
+    public void turnLeft(double dTime) {
+        physics.turn(dTime * -turnSpeed);
+    }
+
+    @Override
+    public double getX() {
+        return physics.getPos().getX();
+    }
+
+    @Override
+    public double getY() {
+        return physics.getPos().getY();
+    }
 }

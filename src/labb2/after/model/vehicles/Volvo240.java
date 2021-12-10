@@ -3,32 +3,27 @@ package labb2.after.model.vehicles;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import labb1.del2.vehicleparts.engines.TrimmedEngine;
+import labb2.after.model.utils.Vector2D;
+import labb2.after.model.vehicleparts.CarAppearance;
+import labb2.after.model.vehicleparts.CarPhysics;
 
 public final class Volvo240 extends Car {
     private static final double DEF_WIDTH = 95.6, DEF_HEIGHT = 50.0;
+    private static final int DEF_WEIGHT = 1243;
+
     private final TrimmedEngine engine;
 
-    public Volvo240(Rectangle rect) {
-        super(rect, Color.BLACK, "Volvo240", 4);
-        rect.setWidth(DEF_WIDTH);
-        rect.setHeight(DEF_HEIGHT);
-        rect.setRotate(getRotation());
+    public Volvo240(CarPhysics physics) {
+        super("Volvo240", new CarPhysics(physics), new CarAppearance(4, Color.BLACK));
         engine = new TrimmedEngine(100, 1.25);
     }
 
-    public Volvo240(double x, double y) {
-        this(new Rectangle(x, y, DEF_WIDTH, DEF_HEIGHT));
+    public Volvo240(Vector2D pos, Vector2D direction) {
+        this(new CarPhysics(pos, direction, DEF_WIDTH, DEF_HEIGHT, DEF_WEIGHT));
     }
 
     public Volvo240() {
-        this(0, 0);
-    }
-
-    @Override
-    public String[] specificHudInfo() {
-        return new String[] {
-                "Trim Factor: " + engine.getTrimFactor()
-        };
+        this(new Vector2D(), new Vector2D(0, 1));
     }
 
     /**

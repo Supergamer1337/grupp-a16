@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 import labb1.del2.IMovable;
 import labb1.del2.controllers.IControllable;
 import labb1.del2.vehicleparts.VehicleBody;
-import labb2.after.IObserver;
+import labb2.before.IObserver;
 
 import java.util.ArrayList;
 import java.util.List;

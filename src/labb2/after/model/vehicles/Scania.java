@@ -6,27 +6,28 @@ import labb1.del2.controllers.IControllable;
 import labb1.del2.controllers.ScaniaController;
 import labb1.del2.vehicleparts.engines.Engine;
 import labb1.del2.vehicleparts.flatbeds.AngledFlatbed;
+import labb2.after.model.utils.Vector2D;
+import labb2.after.model.vehicleparts.CarAppearance;
+import labb2.after.model.vehicleparts.CarPhysics;
 
 public final class Scania extends Car {
     private static final double DEF_WIDTH = 118.66, DEF_HEIGHT = 75;
+    private static final int DEF_WEIGHT = 18000 ;
 
     private final AngledFlatbed flatbed;
     private final Engine engine;
 
-    public Scania(Rectangle rect) {
-        super(rect, Color.BLUE, "Scania", 2);
-        rect.setWidth(DEF_WIDTH);
-        rect.setHeight(DEF_HEIGHT);
-        rect.setRotate(getRotation());
+    public Scania(CarPhysics physics) {
+        super("Scania", new CarPhysics(physics), new CarAppearance(2, Color.BLUE));
         flatbed = new AngledFlatbed();
         engine = new Engine(90);
     }
 
-    public Scania(double x, double y) {
-        this(new Rectangle(x, y, DEF_WIDTH,DEF_HEIGHT));
+    public Scania(Vector2D pos, Vector2D direction) {
+        this(new CarPhysics(pos, direction, DEF_WIDTH, DEF_HEIGHT, DEF_WEIGHT));
     }
 
-    public Scania() { this(0,0); }
+    public Scania() { this(new Vector2D(), new Vector2D(0, 1)); }
 
     @Override
     public double speedFactor() {
@@ -34,13 +35,6 @@ public final class Scania extends Car {
             return 0.01 * getPower();
         }
         return 0;
-    }
-
-    @Override
-    public String[] specificHudInfo() {
-        return new String[] {
-                String.format("Flatbed angle: %.2f", flatbed.getFlatbedAngle())
-        };
     }
 
     /**
@@ -87,11 +81,6 @@ public final class Scania extends Car {
      */
     public double getMinFlatbedAngle() {
         return flatbed.getMinAngle();
-    }
-
-    @Override
-    public IControllable getController() {
-        return new ScaniaController(this);
     }
 
     @Override

@@ -1,13 +1,14 @@
-package labb2.after;
+package labb2.after.view;
 
 import labb1.del2.vehicles.Vehicle;
+import labb2.before.IObserver;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class DrawComponent implements IObserver {
+class DrawComponent implements IObserver {
     private double x,y;
-    private BufferedImage img;
+    private final BufferedImage img;
 
     public DrawComponent(double x, double y, BufferedImage img) {
         this.x = x;
@@ -23,10 +24,7 @@ public class DrawComponent implements IObserver {
         return (int) y;
     }
 
-    public final BufferedImage getImg() {
-        return img;
-    }
-
+    @Override
     public void render(Graphics g) {
         g.drawImage(img, getX(), getY(), null);
     }
