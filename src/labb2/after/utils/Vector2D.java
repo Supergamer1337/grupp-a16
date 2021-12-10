@@ -1,4 +1,4 @@
-package labb2.after.utils.utils;
+package labb2.after.utils;
 
 
 import static java.lang.Math.atan2;
