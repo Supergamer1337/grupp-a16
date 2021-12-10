@@ -1,7 +1,6 @@
 package labb2.after.view;
 
-import labb1.del2.vehicles.Vehicle;
-import labb2.after.model.vehicles.Car;
+import labb2.after.model.vehicles.IVehicle;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-class DrawPanel extends JPanel implements Observer{
+class DrawPanel extends JPanel implements Observer {
 
-    private List<DrawComponent> components;
+    private final List<DrawComponent> components;
 
     // Initializes the panel and reads the images
-    public DrawPanel(int x, int y) {
+    DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
@@ -43,16 +42,23 @@ class DrawPanel extends JPanel implements Observer{
         }
     }
 
-    public void createDrawComponent(Car car) {
+    void createDrawComponent(IVehicle vehicle) {
         String folderPath = "pics/";
         String fileType = ".jpg";
         BufferedImage img = null;
         try {
-            String path = folderPath + car.getModelName() + fileType;
+            String path = folderPath + vehicle.getModelName() + fileType;
             img = ImageIO.read(Objects.requireNonNull(DrawPanel.class.getResourceAsStream(path)));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        DrawComponent c = new DrawComponent(car.getX(), car.getY(), img);
+        DrawComponent c = new DrawComponent(vehicle, img);
+        components.add(c);
+    }
+
+    public void createComponents(List<IVehicle> vehicles) {
+        for (IVehicle v : vehicles) {
+            createDrawComponent(v);
+        }
     }
 }

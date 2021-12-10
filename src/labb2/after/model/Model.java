@@ -20,7 +20,7 @@ public class Model implements Observable {
 
     public Model() {
         observers = new ArrayList<>();
-        vehicles = Arrays.asList(CarFactory.createDefaultCars());
+        vehicles = Arrays.asList(CarFactory.createDefaultCarSetup());
         timer = new Timer(TIMER_DELAY, e -> tick(TIMER_DELAY / 1000.0));
     }
 
@@ -42,19 +42,6 @@ public class Model implements Observable {
     public List<IVehicle> getVehicles() {
         return vehicles;
     }
-
-    @Override
-    public void update() {
-        for(Observer observer : observers) {
-            observer.update();
-        }
-    }
-
-    @Override
-    public void subscribe(Observer o) {
-        observers.add(o);
-    }
-
 
     public void gas(int amount) {
         double gas = ((double) amount) / 100;
@@ -79,7 +66,6 @@ public class Model implements Observable {
         }
     }
 
-    //
     public void stop() {
         for (IVehicle vehicle : vehicles) {
             if (vehicle instanceof Car car) {
@@ -118,6 +104,18 @@ public class Model implements Observable {
                 scania.lowerFlatbed();
             }
         }
+    }
+
+    @Override
+    public void update() {
+        for(Observer observer : observers) {
+            observer.update();
+        }
+    }
+
+    @Override
+    public void subscribe(Observer o) {
+        observers.add(o);
     }
 
 }

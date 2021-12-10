@@ -1,34 +1,14 @@
 package labb2.after.model;
 
+import labb2.after.model.utils.Vector2D;
 import labb2.after.model.vehicles.*;
 
 public class CarFactory {
-
-    public static Car[] createAllCars() {
+    public static Car[] createDefaultCarSetup() {
         return new Car[]{
-                makeSaab95(),
-                makeVolvo240(),
-                makeScania()
-        };
-    }
-
-    private static Scania makeScania() {
-        return new Scania();
-    }
-
-    private static Volvo240 makeVolvo240() {
-        return new Volvo240();
-    }
-
-    private static Saab95 makeSaab95() {
-        return new Saab95();
-    }
-
-    public static Car[] createDefaultCars() {
-        return new Car[]{
-                makeSaab95(),
-                makeVolvo240(),
-                makeScania()
+                new Volvo240(),
+                new Saab95(new Vector2D(0, 100)),
+                new Scania(new Vector2D(0, 200))
         };
     }
 }

@@ -7,26 +7,18 @@ import labb2.after.view.View;
 import javax.swing.*;
 import java.awt.*;
 
-public class Controller extends JPanel {
+public class Controller {
 
     private final Model model;
     private int gasAmount;
-    private JButton gasButton, brakeButton, turboOnButton, turboOffButton, liftBedButton, lowerBedButton,startButton, stopButton;
 
-    private final int width, height;
+    private final int width;
 
-    public Controller(Model model, View view) {
-        view.add(this);
-        width = view.getWidth();
-        height = view.getHeight() - 240;
+    public Controller(Model model, View view, int width) {
+        this.width = width;
         this.model = model;
-        this.setDoubleBuffered(true);
-        this.setPreferredSize(new Dimension(width, height));
-        this.setBackground(Color.green);
         gasAmount = 0;
         createGUI(view);
-        addListeners();
-
     }
 
     private void outsideOfWindow(Car car) {
@@ -40,20 +32,14 @@ public class Controller extends JPanel {
     }
 
     private void createGUI(View view) {
+        createGasPanel(view);
+        createControlPanel(view);
+        createStartButton(view);
+        createStopButton(view);
+    }
 
+    private void createGasPanel(View view) {
         JPanel gasPanel = new JPanel();
-
-        gasButton = new JButton("Gas");
-        brakeButton = new JButton("Brake");
-        turboOnButton = new JButton("Saab Turbo on");
-        turboOffButton = new JButton("Saab Turbo off");
-        liftBedButton = new JButton("Scania Lift Bed");
-        lowerBedButton = new JButton("Lower Lift Bed");
-
-        startButton = new JButton("Start all cars");
-        stopButton = new JButton("Stop all cars");
-
-        JLabel gasLabel = new JLabel("Amount of gas");
 
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
@@ -63,14 +49,26 @@ public class Controller extends JPanel {
         JSpinner gasSpinner = new JSpinner(spinnerModel);
         gasSpinner.addChangeListener(e -> gasAmount = (int) ((JSpinner)e.getSource()).getValue());
 
+        JLabel gasLabel = new JLabel("Amount of gas");
+
         gasPanel.setLayout(new BorderLayout());
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);
         gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
 
         view.add(gasPanel);
+    }
 
+    private void createControlPanel(View view) {
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new GridLayout(2,4));
+        controlPanel.setBackground(Color.CYAN);
+
+        JButton gasButton = new JButton("Gas");
+        JButton brakeButton = new JButton("Brake");
+        JButton turboOnButton = new JButton("Saab Turbo on");
+        JButton turboOffButton = new JButton("Saab Turbo off");
+        JButton liftBedButton = new JButton("Scania Lift Bed");
+        JButton lowerBedButton = new JButton("Lower Lift Bed");
 
         controlPanel.add(gasButton, 0);
         controlPanel.add(turboOnButton, 1);
@@ -79,39 +77,33 @@ public class Controller extends JPanel {
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
         controlPanel.setPreferredSize(new Dimension((width/2)+4, 200));
+
+        gasButton.addActionListener(e -> model.gas(gasAmount));
+        brakeButton.addActionListener(e -> model.brake(gasAmount));
+        turboOnButton.addActionListener(e -> model.turboOn());
+        turboOffButton.addActionListener(e -> model.turboOff());
+        liftBedButton.addActionListener(e -> model.liftBed());
+        lowerBedButton.addActionListener(e -> model.lowerBed());
+
         view.add(controlPanel);
-        controlPanel.setBackground(Color.CYAN);
+    }
 
-
+    private void createStartButton(View view) {
+        JButton startButton = new JButton("Start all cars");
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
         startButton.setPreferredSize(new Dimension(width/5-15,200));
+        startButton.addActionListener(e -> model.start());
         view.add(startButton);
+    }
 
-
+    private void createStopButton(View view) {
+        JButton stopButton = new JButton("Stop all cars");
         stopButton.setBackground(Color.red);
         stopButton.setForeground(Color.black);
         stopButton.setPreferredSize(new Dimension(width/5-15,200));
-        view.add(stopButton);
-
-        view.pack();
-    }
-
-    private void addListeners() {
-        gasButton.addActionListener(e -> model.gas(gasAmount));
-
-        brakeButton.addActionListener(e -> model.brake(gasAmount));
-
-        startButton.addActionListener(e -> model.start());
-
         stopButton.addActionListener(e -> model.stop());
-
-        turboOnButton.addActionListener(e -> model.turboOn());
-
-        turboOffButton.addActionListener(e -> model.turboOff());
-
-        liftBedButton.addActionListener(e -> model.liftBed());
-
-        lowerBedButton.addActionListener(e -> model.lowerBed());
+        view.add(stopButton);
     }
+
 }

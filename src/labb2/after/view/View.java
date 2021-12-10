@@ -1,5 +1,6 @@
 package labb2.after.view;
 
+import labb2.after.controller.Controller;
 import labb2.after.model.Model;
 
 import javax.swing.*;
@@ -17,29 +18,32 @@ public class View extends JFrame {
     public View(String title, Model model) {
         this.model = model;
         panels = new ArrayList<>();
-        initView(title);
-        createDrawPanel();
-    }
-
-    private void initView(String title) {
         this.setTitle(title);
         this.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        // Make sure the frame exits when "x" is pressed
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        createDrawPanel();
+
+        new Controller(model, this, WINDOW_WIDTH);
+
+        // Finishes the view layout
+        this.pack();
         // Get the computer screen resolution
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         // Center the frame
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         // Make the frame visible
         this.setVisible(true);
-        // Make sure the frame exits when "x" is pressed
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+
     private void createDrawPanel() {
-        DrawPanel panel = new DrawPanel(WINDOW_WIDTH, WINDOW_HEIGHT - 240);
-        model.subscribe(panel);
-        add(panel);
+        DrawPanel dPanel = new DrawPanel(WINDOW_WIDTH, WINDOW_HEIGHT - 240);
+        dPanel.createComponents(model.getVehicles());
+        model.subscribe(dPanel);
+        add(dPanel);
     }
 
 }

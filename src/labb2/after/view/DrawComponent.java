@@ -1,18 +1,19 @@
 package labb2.after.view;
 
-import labb1.del2.vehicles.Vehicle;
-import labb2.before.IObserver;
+import labb2.after.model.vehicles.IVehicle;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-class DrawComponent implements IObserver {
-    private double x,y;
+class DrawComponent implements Observer {
+    private final IVehicle vehicle;
+    private double x, y;
     private final BufferedImage img;
 
-    public DrawComponent(double x, double y, BufferedImage img) {
-        this.x = x;
-        this.y = y;
+    public DrawComponent(IVehicle vehicle, BufferedImage img) {
+        this.vehicle = vehicle;
+        x = vehicle.getX();
+        y = vehicle.getY();
         this.img = img;
     }
 
@@ -30,8 +31,8 @@ class DrawComponent implements IObserver {
     }
 
     @Override
-    public void update(Vehicle vehicle) {
-        x = vehicle.getPosX();
-        y = vehicle.getPosY();
+    public void update() {
+        x = vehicle.getX();
+        y = vehicle.getY();
     }
 }
