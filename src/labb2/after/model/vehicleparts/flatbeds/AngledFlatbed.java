@@ -1,6 +1,6 @@
 package labb2.after.model.vehicleparts.flatbeds;
 
-import labb1.del2.Main;
+import labb2.after.model.Model;
 
 public class AngledFlatbed implements IFlatbed{
     private static final double DEF_MAX_Angle = 70, DEF_MIN_ANGLE = 0, rotationSpeed = 30;
@@ -19,12 +19,12 @@ public class AngledFlatbed implements IFlatbed{
 
     @Override
     public void raiseFlatbed() {
-        currentFlatbedAngle = Math.min(rotationSpeed * Main.getDeltaTime() + currentFlatbedAngle, maxAngle);
+        currentFlatbedAngle = Math.min(rotationSpeed * Model.getDeltaTime() + currentFlatbedAngle, maxAngle);
     }
 
     @Override
     public void lowerFlatbed() {
-        currentFlatbedAngle = Math.max(currentFlatbedAngle - rotationSpeed * Main.getDeltaTime(), minAngle);
+        currentFlatbedAngle = Math.max(currentFlatbedAngle - rotationSpeed * Model.getDeltaTime(), minAngle);
     }
 
     @Override

@@ -36,7 +36,6 @@ class DrawPanel extends JPanel implements RenderedObserver {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         render(g);
-        // g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null); // see javadoc for more info on the parameters
     }
 
     @Override

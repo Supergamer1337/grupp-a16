@@ -1,7 +1,5 @@
 package labb2.after.model.vehicleparts.loaders;
 
-import labb1.del2.vehicles.Car;
-
 import java.util.List;
 import java.util.ArrayList;
 

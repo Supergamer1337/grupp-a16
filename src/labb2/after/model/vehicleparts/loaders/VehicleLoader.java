@@ -1,6 +1,5 @@
 package labb2.after.model.vehicleparts.loaders;
 
-import labb1.del2.vehicleparts.loaders.Loader;
 import labb2.after.model.vehicles.IVehicle;
 
 public class VehicleLoader<T extends IVehicle> extends Loader<T> {

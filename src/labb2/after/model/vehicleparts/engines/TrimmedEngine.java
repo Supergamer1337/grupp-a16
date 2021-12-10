@@ -1,7 +1,5 @@
 package labb2.after.model.vehicleparts.engines;
 
-import labb1.del2.vehicleparts.engines.Engine;
-
 public class TrimmedEngine extends Engine {
     private static final double DEF_TRIM_FACTOR = 1.3;
 

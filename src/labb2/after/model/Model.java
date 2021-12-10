@@ -22,7 +22,11 @@ public class Model implements Observable {
     public Model() {
         observers = new ArrayList<>();
         vehicles = Arrays.asList(CarFactory.createDefaultCarSetup());
-        timer = new Timer(TIMER_DELAY, e -> tick(TIMER_DELAY / 100.0));
+        timer = new Timer(TIMER_DELAY, e -> tick(getDeltaTime()));
+    }
+
+    public static double getDeltaTime() {
+        return TIMER_DELAY / 100.0;
     }
 
     private void tick(double dTime) {

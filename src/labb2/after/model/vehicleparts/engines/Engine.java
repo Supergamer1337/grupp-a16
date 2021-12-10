@@ -1,7 +1,5 @@
 package labb2.after.model.vehicleparts.engines;
 
-import labb1.del2.vehicleparts.engines.IEngine;
-
 public class Engine implements IEngine {
     private static final double SPEED_FACTOR_CONST = 0.01;
     private final double power;
